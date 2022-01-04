@@ -2,16 +2,15 @@ import {memo, useState} from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-import styles from './Form.module.css'
-import './util.css'
-import {validate} from '../asset/js/main.js'
+import styles from '../Common/Form.module.css'
+import '../Common/util.css'
+import {validate} from '../../asset/js/main.js'
 
-function SignUp(){
-    console.log("Sign-up component rendered");
+function ForgotPassword(){
+    console.log("ForgotPassword component rendered");
     
     const initValue = {
-        loginName:'',
-        password:''
+        loginName:''
     };
     const [input, setInput] = useState(initValue);
 
@@ -43,8 +42,9 @@ function SignUp(){
 
                         <form className={clsx(styles.login100Form, styles.validateForm)}>
                             <span className={styles.login100FormTitle}>
-                                Register
+                                Forgot Password
                             </span>
+                            
 
                             <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Valid email is required: ex@abc.xyz">
 
@@ -62,54 +62,19 @@ function SignUp(){
                                 </span>
                             </div>
 
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Password is required">
-                                <input className={styles.input100} type="password" name="password" 
-                                    placeholder="Password" onBlur={handleInputValidation}
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        password: e.target.value
-                                    })}}
-                                />
-                                
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-lock" aria-hidden="true"></i>
-                                </span>
-                            </div>
-
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Confirm-password is required">
-                                <input className={styles.input100} type="confirm-password" name="password" 
-                                    placeholder="Confirm-password" onBlur={handleInputValidation}
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        'confirm-password': e.target.value
-                                    })}}
-                                />
-                                
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-lock" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                            
                             <div className={styles.containerLogin100FormBtn}>
                                 <button className={styles.login100FormBtn} onClick={handleSubmit}>
-                                    Register
+                                    Send code
                                 </button>
                             </div>
 
                             <div className={styles.textCenter + " p-t-12"}>
-                                <span className={styles.txt1}>
-                                    Forgot 
-                                </span>
-                                <Link to='/forgot-password' className={styles.txt2}>
-                                    Username / Password?
-                                </Link>
+                                We will send recovery code to your email
                             </div>
 
                             <div className={styles.textCenter + " p-t-136"}>
                                 <Link to='/sign-in' className={styles.txt2}>
-                                    You have an account
+                                    Go back to login
                                     <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                                 </Link>
                             </div>
@@ -121,4 +86,4 @@ function SignUp(){
     )
 }
 
-export default memo(SignUp);
+export default memo(ForgotPassword);

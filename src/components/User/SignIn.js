@@ -2,12 +2,12 @@ import {memo, useState} from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-import styles from './Form.module.css'
-import './util.css'
-import {validate} from '../asset/js/main.js'
+import styles from '../Common/Form.module.css'
+import '../Common/util.css'
+import {validate} from '../../asset/js/main.js'
 
 function SignIn(){
-    console.log("Sign-up component rendered");
+    console.log("Sign-in component rendered");
     
     const initValue = {
         loginName:'',
@@ -62,7 +62,7 @@ function SignIn(){
                                 </span>
                             </div>
 
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Password is required">
+                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Password must be 8 chars include number and uppercase">
                                 <input className={styles.input100} type="password" name="password" 
                                     placeholder="Password" onBlur={handleInputValidation}
                                     onChange={e=>{setInput({
