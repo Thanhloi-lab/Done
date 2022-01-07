@@ -1,0 +1,120 @@
+.chatWrapper{
+    position:fixed;
+    width: 360px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 100px;
+    transition:0.3s;
+    right:-280px;
+    top:100px;
+    border: 1px solid rgb(160, 160, 160, 0.8);
+    box-shadow: 0 10px 15px rgba(0,0,0, 0.2);
+    opacity: 0;
+}
+
+
+#btn-message, #cancel-message{
+    position:fixed;
+    cursor: pointer;
+    border-radius: 3px;
+    transition:0.2s;
+}
+
+#btn-message{
+    background: linear-gradient(90deg, rgb(28, 27, 27, 0.5) 0%, rgb(26, 23, 23, 0.5) 100%);
+    z-index: 100;
+    right: 30px;
+    top:90px;
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 6px 12px;
+    transition: 0.2s;
+    opacity: 1;
+}
+
+#btn-message:hover{
+    transition:0.2s;
+    color:rgba(255, 255, 255, 1);
+    background: linear-gradient(90deg, rgb(28, 27, 27, 1) 0%, rgb(26, 23, 23, 1) 100%);
+}
+
+#cancel-message:hover{
+    transition:0.2s;
+    color:rgb(28, 27, 27, 1);
+}
+
+#check-message{
+    display:none;
+}
+
+#cancel-message{
+    background: rgb(255,255,255, 0.7);
+    z-index: 100;
+    right:-280px;
+    top:110px;
+    font-size: 3rem;
+    color:rgb(0, 0, 0, 0.4);
+    padding:4px 9px;
+    transition:0.5s;
+    opacity: 0;
+}
+
+#check-message:checked ~ .chatWrapper{
+    right:20px;
+    opacity: 1;
+    transition:0.5s;
+}
+
+#check-message:checked ~ label #btn-message{
+    right:-30px;
+    opacity: 0;
+    transition:0.4s;
+}
+
+#check-message:checked ~ label #cancel-message{
+    right:30px;
+    opacity: 1;
+    transition:0.5s;
+    background: rgb(255,255,255, 0.1);
+}
+
+
+@media (max-width: 960px) {
+    .chatWrapper{
+        width: 100%;
+        opacity: 0;
+        transition:0.5s;
+        z-index: 123;
+        right:-100%;
+    }
+
+    #check-message:checked ~ .chatWrapper{
+        right:0;
+        z-index: 123;
+    }
+
+    #check-message:checked ~ label #btn-message{
+        right:-30px;
+        opacity: 0;
+        transition:0.4s;
+    }
+    
+    #check-message:checked ~ label #cancel-message{
+        /* right:20px; */
+        opacity: 1;
+        transition:0.4s;
+        z-index: 124;
+        background: rgb(255,255,255, 0.1);
+    }
+
+    #cancel-message{
+        /* right:90%; */
+        font-size:4rem;
+        transition:0.5s;
+        z-index: 124;
+    }
+}

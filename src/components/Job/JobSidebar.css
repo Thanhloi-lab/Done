@@ -1,0 +1,181 @@
+.sideBar{
+    position:fixed;
+    left:0;
+    width:280px;
+    height: 100%;
+    background: linear-gradient(90deg, rgb(28, 27, 27, 0.95) 0%, rgb(26, 23, 23, 0.95) 100%);
+    z-index:99;
+    /* left:-280px; */
+    transition:0.4s;
+    /* border-top: 1px solid rgba(153, 153, 153, 0.445); */
+}
+
+.sideBar header{
+    margin-top:20px;
+    font-size:2.2rem;
+    color:#FFF;
+    text-align:center;
+    line-height:70px;
+    user-select: none;
+    font-family: Poppins-Bold;
+    
+}
+
+.sideBar-list .sideBar-link{
+    display:block;
+    height:100%;
+    width:100%;
+    line-height:80px;
+    font-size: 1.5rem;
+    color:#FFF;
+    padding-left: 40px;
+    box-sizing: border-box;
+    border-top:1px solid rgba(255, 255, 255, 0.062);
+    border-bottom: 1px solid black;
+    transition: 0.3s;
+}
+
+.sideBar-link{
+    font-family: Poppins-Regular;
+}
+
+.sideBar-link i{
+    padding-right:5px;
+}
+
+.sideBar-item{
+    width: 100%;
+}
+
+.sideBar-item:hover .sideBar-link{
+    color: var(--hover);
+    padding-left: 50px;
+    transition: 0.3s;
+}
+
+.sideBar-item:hover{
+    background-color: rgb(30, 30, 30, 0.9)
+}
+
+.sideBar-item.active  {
+    background-color: rgb(30, 30, 30, 0.9);
+}
+
+.sideBar-item.active  .sideBar-link{
+    color: var(--hover);
+    padding-left: 50px;
+    transition: 0.3s;
+}
+
+.sideBar-list .sideBar-link i{
+    margin-right:16px;
+}
+
+
+/* toggle sideBar */
+
+#btn, #cancel{
+    position:fixed;
+    cursor: pointer;
+    background: linear-gradient(90deg, rgb(28, 27, 27, 0.5) 0%, rgb(26, 23, 23, 0.5) 100%);
+    border-radius: 3px;
+    transition:0.2s;
+}
+
+#btn{
+    z-index: 100;
+    left: -30px;
+    top:90px;
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 6px 12px;
+    transition: 0.2s;
+    opacity: 0;
+}
+
+#btn:hover, #cancel:hover{
+    transition:0.2s;
+    color:rgba(255, 255, 255, 1);
+    background: linear-gradient(90deg, rgb(28, 27, 27, 1) 0%, rgb(26, 23, 23, 1) 100%);
+}
+
+#check{
+    display:none;
+}
+
+#cancel{
+
+    z-index: 100;
+    left:230px;
+    top:90px;
+    font-size: 3rem;
+    color:rgba(255, 255, 255, 0.8);
+    padding:4px 9px;
+    transition:0.5s;
+    opacity: 1;
+}
+
+#check:checked ~ .sideBar{
+    left:-280px;
+    opacity: 0;
+    transition:0.5s;
+}
+
+#check:checked ~ label #btn{
+    left:30px;
+    opacity: 1;
+    transition:0.4s;
+}
+
+#check:checked ~ label #cancel{
+    left:-280px;
+    opacity: 0;
+    transition:0.5s;
+}
+
+@media (max-width: 960px) {
+    .sideBar{
+        width: 100%;
+        opacity: 1;
+        transition:0.5s;
+        z-index: 123;
+    }
+
+    #check:checked ~ .sideBar{
+        left:-100%;
+        z-index: 123;
+        
+    }
+    
+    #check:checked ~ label #btn{
+        left:30px;
+        opacity: 1;
+        transition:0.4s;
+    }
+    
+    #check:checked ~ label #cancel{
+        /* right:20px; */
+        opacity: 0;
+        transition:0.4s;
+        z-index: 124;
+
+    }
+
+    #cancel{
+        left:90%;
+        transition:0.5s;
+        z-index: 124;
+
+    }
+
+    .sideBar-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 50px;
+    }
+
+    .sideBar-item{
+        text-align: center;
+    }
+}
