@@ -20,6 +20,7 @@ function SignUp(){
     const handleInputValidation = (event) =>{
         const inputValue = event.target.parentNode;
         let checked;
+        
         if(event.target.getAttribute("name")==='confirm-password'){
             checked = validate(input, event.target.getAttribute("name"));
         }

@@ -25,15 +25,58 @@
 .contentWrapper {
     width: 1024px;
     background: #fff;
+    height: 100%;
+    min-height: 100vh;
     border-radius: 10px;
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 350px 100px 350px 100px;
+    /* justify-content: space-between; */
     margin-left:150px;
     transition:0.3s;
+    flex-direction: column;
     
+}
+
+.projectHeader{
+    font-size: 2rem;
+    font-weight: bold;
+    padding-right:5px;
+}
+
+.projectTitle{
+    font-size: 1.7rem;
+    font-weight: 500;
+    padding-right:5px;
+}
+
+.wrapBtn{
+    cursor: pointer;
+    padding:5px;
+    font-size: 2rem;
+}
+
+.listTask{
+
+}
+
+.taskContainer{
+    margin-left: 50px;
+}
+
+.listProject > li{
+    opacity: 0;
+    font-size:1.5rem;
+    padding:2px 5px 2px 5px;
+    transition:0.5s;
+    line-height: 0rem;
+}
+
+.listProject.active > li{
+    opacity: 1;
+    font-size:1.5rem;
+    transition:0.5s;
+    line-height: 3rem;
 }
 
 
