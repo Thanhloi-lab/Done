@@ -23,9 +23,9 @@ function App() {
                 <Route path="/sign-in" exact element={< SignIn />}/>
                 <Route path="/sign-up" exact element={< SignUp />}/>
                 <Route path="/forgot-password" exact element={< ForgotPassword />}/>
-                <Route path="/job" element={<HomeJob/>}/>
-                <Route path="/job/recent" element={<RecentJobs/>}/>
-                <Route path="/job/list" element={<Job/>}/>
+                <Route path="/job" exact element={<HomeJob/>}/>
+                <Route path="/job/recent" exact element={<RecentJobs/>}/>
+                <Route path="/job/list" exact element={<Job/>}/>
             </Routes>
             <Footer/>
         </>
