@@ -20,6 +20,15 @@
     background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
     background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
     background: linear-gradient(-135deg, #c850c0, #4158d0);
+
+    
+}
+
+.contentHeader > h1{
+    margin: 30px auto;
+    font-size: 5rem;
+    font-family: Poppins-Bold;
+    color: #333333;
 }
 
 .contentWrapper {
@@ -38,16 +47,34 @@
     
 }
 
+.projectContainer{
+    /* padding:5px; */
+}
+
+
 .projectHeader{
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
     padding-right:5px;
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+.unCompleted{
+    background:rgba(252, 58, 58, 0.747);
+    padding: 10px 20px;
+}
+
+.completed{
+    background: rgba(72, 252, 72, 0.719);
+    padding: 10px 20px;
 }
 
 .projectTitle{
-    font-size: 1.7rem;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 600;
     padding-right:5px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .wrapBtn{
@@ -56,27 +83,99 @@
     font-size: 2rem;
 }
 
-.listTask{
-
+.wrapBtn > i{
+    line-height: 0;
+    transition:0.5;
 }
 
 .taskContainer{
-    margin-left: 50px;
+    margin: 0 70px 50px 70px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 40px 0 rgb(0 0 0 / 15%);
+    -moz-box-shadow: 0 0 40px 0 rgba(0,0,0,.15);
+    -webkit-box-shadow: 0 0 40px 0 rgb(0 0 0 / 15%);
+    -o-box-shadow: 0 0 40px 0 rgba(0,0,0,.15);
+    -ms-box-shadow: 0 0 40px 0 rgba(0,0,0,.15);
 }
 
+
 .listProject > li{
-    opacity: 0;
+    margin:0 20px;
+    margin-right:0px;
     font-size:1.5rem;
-    padding:2px 5px 2px 5px;
-    transition:0.5s;
+    padding:0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+
+    opacity: 0;
+    transition:all ease 0.3s;
     line-height: 0rem;
+}
+
+.projectItem{
+    display:flex;
+    align-items: center;
+    position: relative; 
+}
+
+
+.comeIcon, .comeIconUncomplete{
+    position: absolute;
+    right: 30px;
+    background: #7cfd7c;
+    color: #000000;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.comeIcon:hover{
+    background:#17da17;
+    transition:0.2s;
+}
+
+.comeIconUncomplete{
+    background: #ff7171;
+}
+
+.comeIconUncomplete:hover{
+    background:rgb(196, 13, 13);
+    transition:0.2s;
 }
 
 .listProject.active > li{
     opacity: 1;
-    font-size:1.5rem;
-    transition:0.5s;
-    line-height: 3rem;
+    transition:all ease 0.3s;
+    line-height: 4rem;
+}
+
+.listProject.active > li{
+    opacity: 1;
+    transition:all ease 0.3s;
+    line-height: 4rem;
+}
+
+.taskName{
+    font-family: 'Roboto', sans-serif;
+    color:#000;
+    background-color:rgba(204, 204, 204, 0.9);
+    padding:0px 15px;
+    border-radius:15px;
+    font-weight: 600;
+    word-wrap:break-word;
+    min-width: 90%;
+    margin-right:5px;
+    
+}
+
+.taskName:hover{
+    background: rgba(204, 204, 204, 0.7);
+    box-shadow: 0 5px 8px rgba(170, 170, 170, 0.2);
+   
 }
 
 
@@ -84,6 +183,6 @@
 @media (max-width: 1048px) {
     .contentWrapper{
         margin-left:0px;
-        transition:0.3s;
+        transition:0.5s;
     }
 }

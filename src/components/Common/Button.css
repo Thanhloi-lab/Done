@@ -13,7 +13,7 @@
     border: 1px solid var(--primary);
 }
 
-.btn--outline:hover{
+.btn--medium:hover{
     color:var(--hover);
     border: 1px solid var(--hover);
 }
