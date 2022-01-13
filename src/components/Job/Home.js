@@ -72,18 +72,24 @@ function Home(){
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
+                                    <li className={styles.projectItem}>
+                                        <p className={styles.taskName}>Xử lý UI1</p>
+                                        <div className={styles.comeIcon}>
+                                            <i className="fas fa-chevron-right"></i>
+                                        </div>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
                                 <div className={styles.projectContainer}>
-                                    <span className={styles.projectTitle}>Project: DONE</span>
+                                    <span className={styles.projectTitle}>Project: DONE1</span>
                                     <span className={styles.wrapBtn} onClick={()=>{
-                                        //  handleWrap('DONE')
+                                         handleWrap('DONE1')
                                     }}>
                                         {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
                                     </span>
                                 </div>
-                                <ul className={styles.listProject+ ' '+ styles.active}>
+                                <ul className={styles.listProject} id="DONE1">
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName }>Xử lý UI</p>
                                         <div className={styles.comeIcon}>
@@ -97,25 +103,25 @@ function Home(){
 
                     <div className={styles.taskContainer}>
                         <div className={styles.unCompleted}>
-                            <span className={styles.projectHeader}>Completed tasks</span>
+                            <span className={styles.projectHeader}>Uncompleted tasks</span>
                             <span className={styles.wrapBtn} onClick={()=>{
-                                handleWrap('completed')
+                                handleWrap('unCompleted')
                             }}>
                                 {!wrap.completed ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
                             </span>
                         </div>
                         
-                        <ul className={styles.listProject + ' '+ styles.active} id="completed">
+                        <ul className={styles.listProject + ' '+ styles.active} id="unCompleted">
                             <li>
                                 <div className={styles.projectContainer}>
-                                    <span className={styles.projectTitle}>Project: DONE</span>
+                                    <span className={styles.projectTitle}>Project: DONE2</span>
                                     <span className={styles.wrapBtn} onClick={()=>{
-                                        //  handleWrap('DONE')
+                                         handleWrap('DONE2')
                                     }}>
                                         {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
                                     </span>
                                 </div>
-                                <ul className={styles.listProject+ ' '+ styles.active}>
+                                <ul className={styles.listProject} id="DONE2"> 
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName}>Xử lý UI</p>
                                         <div className={styles.comeIconUncomplete}>
@@ -126,17 +132,67 @@ function Home(){
                             </li>
                             <li>
                                 <div className={styles.projectContainer}>
-                                    <span className={styles.projectTitle}>Project: DONE</span>
+                                    <span className={styles.projectTitle}>Project: DONE3</span>
                                     <span className={styles.wrapBtn} onClick={()=>{
-                                        //  handleWrap('DONE')
+                                         handleWrap('DONE3')
                                     }}>
                                         {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
                                     </span>
                                 </div>
-                                <ul className={styles.listProject+ ' '+ styles.active}>
+                                <ul className={styles.listProject} id="DONE3">
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName }>Xử lý UI</p>
                                         <div className={styles.comeIconUncomplete}>
+                                            <i className="fas fa-chevron-right"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className={styles.taskContainer}>
+                        <div className={styles.bug}>
+                            <span className={styles.projectHeader}>Bug tasks</span>
+                            <span className={styles.wrapBtn} onClick={()=>{
+                                handleWrap('bugTasks')
+                            }}>
+                                {!wrap.completed ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                            </span>
+                        </div>
+                        
+                        <ul className={styles.listProject + ' '+ styles.active} id="bugTasks">
+                            <li>
+                                <div className={styles.projectContainer}>
+                                    <span className={styles.projectTitle}>Project: DONE4</span>
+                                    <span className={styles.wrapBtn} onClick={()=>{
+                                         handleWrap('DONE4')
+                                    }}>
+                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                    </span>
+                                </div>
+                                <ul className={styles.listProject} id="DONE4"> 
+                                    <li className={styles.projectItem}>
+                                        <p className={styles.taskName}>Xử lý UI</p>
+                                        <div className={styles.comeIconBug}>
+                                            <i className="fas fa-chevron-right"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div className={styles.projectContainer}>
+                                    <span className={styles.projectTitle}>Project: DONE5</span>
+                                    <span className={styles.wrapBtn} onClick={()=>{
+                                         handleWrap('DONE5')
+                                    }}>
+                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                    </span>
+                                </div>
+                                <ul className={styles.listProject} id="DONE5">
+                                    <li className={styles.projectItem}>
+                                        <p className={styles.taskName }>Xử lý UI</p>
+                                        <div className={styles.comeIconBug}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>

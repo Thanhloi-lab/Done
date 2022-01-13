@@ -15,24 +15,25 @@
     /* justify-content: center; */
     align-items: center;
     padding: 15px;
-    background: #9053c7;
-    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    background: #68c493;
+    background: -webkit-linear-gradient(-65deg, #06a6fe, #25a670);
+    background: -o-linear-gradient(-65deg, #06a6fe, #25a670);
+    background: -moz-linear-gradient(-65deg, #06a6fe, #25a670);
+    background: linear-gradient(-65deg, #06a6fe, #25a670);
 
     
 }
 
 .contentHeader > h1{
     margin: 30px auto;
+    margin-bottom:100px;
     font-size: 5rem;
     font-family: Poppins-Bold;
     color: #333333;
 }
 
 .contentWrapper {
-    width: 1024px;
+    width: 70%;
     background: #fff;
     height: 100%;
     min-height: 100vh;
@@ -44,7 +45,7 @@
     margin-left:150px;
     transition:0.3s;
     flex-direction: column;
-    
+    align-items: center;
 }
 
 .projectContainer{
@@ -60,13 +61,30 @@
     
 }
 
+.bug{
+    background: rgb(250, 68, 93);;
+    background: -webkit-linear-gradient(-65deg, rgb(250, 68, 93), rgb(248, 47, 74));
+    background: -o-linear-gradient(-65deg, rgb(250, 68, 93), rgb(248, 47, 74));
+    background: -moz-linear-gradient(-65deg, rgb(250, 68, 93), rgb(248, 47, 74));
+    background: linear-gradient(-65deg, rgb(250, 68, 93), rgb(248, 47, 74));
+    padding: 10px 20px;
+}
+
 .unCompleted{
-    background:rgba(252, 58, 58, 0.747);
+    background: rgb(101 212 255);
+    background: -webkit-linear-gradient(-65deg, rgb(101 212 255), #0ca6e4);
+    background: -o-linear-gradient(-65deg, rgb(101 212 255), #0ca6e4);
+    background: -moz-linear-gradient(-65deg, rgb(101 212 255), #0ca6e4);
+    background: linear-gradient(-65deg, rgb(101 212 255), #0ca6e4);
     padding: 10px 20px;
 }
 
 .completed{
-    background: rgba(72, 252, 72, 0.719);
+    background: #68c493;
+    background: -webkit-linear-gradient(-65deg, #1ed387d7, #00c070);
+    background: -o-linear-gradient(-65deg, #1ed387d7, #00c070);
+    background: -moz-linear-gradient(-65deg, #1ed387d7, #00c070);
+    background: linear-gradient(-65deg, #1ed387d7, #00c070);
     padding: 10px 20px;
 }
 
@@ -89,6 +107,7 @@
 }
 
 .taskContainer{
+    width: 80%;
     margin: 0 70px 50px 70px;
     border-radius: 20px;
     overflow: hidden;
@@ -103,6 +122,7 @@
 .listProject > li{
     margin:0 20px;
     margin-right:0px;
+    margin-bottom:0px;
     font-size:1.5rem;
     padding:0;
     font-family: 'Roboto', sans-serif;
@@ -111,6 +131,7 @@
     opacity: 0;
     transition:all ease 0.3s;
     line-height: 0rem;
+
 }
 
 .projectItem{
@@ -120,10 +141,10 @@
 }
 
 
-.comeIcon, .comeIconUncomplete{
+.comeIcon, .comeIconUncomplete, .comeIconBug{
     position: absolute;
     right: 30px;
-    background: #7cfd7c;
+    background: #68c493;
     color: #000000;
     font-weight: bold;
     width: 40px;
@@ -134,16 +155,25 @@
 }
 
 .comeIcon:hover{
-    background:#17da17;
+    background:#039446;
+    transition:0.2s;
+}
+
+.comeIconBug{
+    background: #ff7171;
+}
+
+.comeIconBug:hover{
+    background:rgb(196, 13, 13);
     transition:0.2s;
 }
 
 .comeIconUncomplete{
-    background: #ff7171;
+    background: rgb(101 212 255);
 }
 
 .comeIconUncomplete:hover{
-    background:rgb(196, 13, 13);
+    background:#0ca6e4;
     transition:0.2s;
 }
 
@@ -151,6 +181,7 @@
     opacity: 1;
     transition:all ease 0.3s;
     line-height: 4rem;
+    margin-bottom:5px;
 }
 
 .listProject.active > li{
@@ -166,10 +197,11 @@
     padding:0px 15px;
     border-radius:15px;
     font-weight: 600;
-    word-wrap:break-word;
-    min-width: 90%;
+    width: 90%;
     margin-right:5px;
-    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .taskName:hover{
@@ -184,5 +216,16 @@
     .contentWrapper{
         margin-left:0px;
         transition:0.5s;
+        width:100%;
     }
+
+    .taskContainer{
+        width:100%;
+        margin:15px 0;
+    }
+
+    .contentHeader{
+        margin:10px 20px;
+    }
+
 }

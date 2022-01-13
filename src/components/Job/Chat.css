@@ -1,6 +1,6 @@
 .chatWrapper{
     position:fixed;
-    width: 360px;
+    width: 500px;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -9,11 +9,12 @@
     justify-content: space-between;
     padding: 100px;
     transition:0.3s;
-    right:-280px;
+    right:-500px;
     top:100px;
     border: 1px solid rgb(160, 160, 160, 0.8);
     box-shadow: 0 10px 15px rgba(0,0,0, 0.2);
     opacity: 0;
+    z-index:124;
 }
 
 
@@ -22,6 +23,7 @@
     cursor: pointer;
     border-radius: 3px;
     transition:0.2s;
+    z-index:125;
 }
 
 #btn-message{
@@ -53,8 +55,8 @@
 
 #cancel-message{
     background: rgb(255,255,255, 0.7);
-    z-index: 100;
-    right:-280px;
+    z-index: 125;
+    right:-30px;
     top:110px;
     font-size: 3rem;
     color:rgb(0, 0, 0, 0.4);
@@ -64,7 +66,7 @@
 }
 
 #check-message:checked ~ .chatWrapper{
-    right:20px;
+    right:30px;
     opacity: 1;
     transition:0.5s;
 }
@@ -76,7 +78,7 @@
 }
 
 #check-message:checked ~ label #cancel-message{
-    right:30px;
+    right:40px;
     opacity: 1;
     transition:0.5s;
     background: rgb(255,255,255, 0.1);

@@ -36,6 +36,7 @@
     ]
   },
   "devDependencies": {
+    "@microsoft/signalr": "^6.0.1",
     "clsx": "^1.1.1",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.2.1"
