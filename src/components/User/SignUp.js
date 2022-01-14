@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
-import {validate} from '../../asset/js/main.js'
+import {validate} from '../../asset/js/validation.js'
 
 function SignUp(){
     console.log("Sign-up component rendered");

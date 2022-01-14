@@ -1,5 +1,4 @@
-import {memo, useState, useEffect} from 'react';
-import clsx from 'clsx';
+import {memo} from 'react';
 import { Link } from 'react-router-dom';
 import styles from './page.module.css'
 
@@ -7,29 +6,32 @@ function Home(){
 
     console.log("job-home component rendered");
 
-    const [wrap, setWrap] = useState(
-        {
-            completed: false,
-            uncompleted: false,
-        }
-    );
-
     const handleWrap = (id)=>{
         const wrapper = document.getElementById(id);
+        const btn = document.getElementById(id+'Btn');
         try{
             if(!wrapper.classList.contains(styles.active)){
                 wrapper.classList.add(styles.active);
-                
+                btn.classList.add(styles.rotateBtn);
             }
-            else if(wrapper.classList.contains(styles.active)) {
+            else if(wrapper.classList.contains(styles.active) && btn.classList.contains(styles.rotateBtn)) {
                 const childs = document.querySelectorAll('#' + id + " ." + styles.listProject);
                 childs.forEach((child)=>{
                     child.classList.remove(styles.active);
                 })
+                const childBtn = wrapper.childNodes;
+                childBtn.forEach((child)=>{
+                    if(child.querySelector('.fas.fa-chevron-down.' + styles.rotateBtn)){
+                        child.querySelector('.fas.fa-chevron-down.' + styles.rotateBtn).classList.remove(styles.rotateBtn);
+                    }
+                })
+
                 wrapper.classList.remove(styles.active);
+                btn.classList.remove(styles.rotateBtn);
             }
         }
         catch(e){
+            console.log(e)
             return
         }
         
@@ -51,7 +53,7 @@ function Home(){
                             <span className={styles.wrapBtn} onClick={()=>{
                                 handleWrap('completed')
                             }}>
-                                {!wrap.completed ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                <i className="fas fa-chevron-down" id="completedBtn"></i>
                             </span>
                         </div>
                         
@@ -62,7 +64,7 @@ function Home(){
                                     <span className={styles.wrapBtn} onClick={()=>{
                                          handleWrap('DONE')
                                     }}>
-                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                        <i className="fas fa-chevron-down" id="DONEBtn"></i>
                                     </span>
                                 </div>
                                 <ul className={styles.listProject} id="DONE">
@@ -86,7 +88,7 @@ function Home(){
                                     <span className={styles.wrapBtn} onClick={()=>{
                                          handleWrap('DONE1')
                                     }}>
-                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                        <i className="fas fa-chevron-down" id="DONE1Btn"></i>
                                     </span>
                                 </div>
                                 <ul className={styles.listProject} id="DONE1">
@@ -107,18 +109,18 @@ function Home(){
                             <span className={styles.wrapBtn} onClick={()=>{
                                 handleWrap('unCompleted')
                             }}>
-                                {!wrap.completed ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                <i className="fas fa-chevron-down" id="unCompletedBtn"></i>
                             </span>
                         </div>
                         
-                        <ul className={styles.listProject + ' '+ styles.active} id="unCompleted">
+                        <ul className={styles.listProject} id="unCompleted">
                             <li>
                                 <div className={styles.projectContainer}>
                                     <span className={styles.projectTitle}>Project: DONE2</span>
                                     <span className={styles.wrapBtn} onClick={()=>{
                                          handleWrap('DONE2')
                                     }}>
-                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                        <i className="fas fa-chevron-down" id="DONE2Btn"></i>
                                     </span>
                                 </div>
                                 <ul className={styles.listProject} id="DONE2"> 
@@ -136,7 +138,7 @@ function Home(){
                                     <span className={styles.wrapBtn} onClick={()=>{
                                          handleWrap('DONE3')
                                     }}>
-                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                        <i className="fas fa-chevron-down" id="DONE3Btn"></i>
                                     </span>
                                 </div>
                                 <ul className={styles.listProject} id="DONE3">
@@ -157,18 +159,18 @@ function Home(){
                             <span className={styles.wrapBtn} onClick={()=>{
                                 handleWrap('bugTasks')
                             }}>
-                                {!wrap.completed ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                <i className="fas fa-chevron-down" id="bugTasksBtn"></i>
                             </span>
                         </div>
                         
-                        <ul className={styles.listProject + ' '+ styles.active} id="bugTasks">
+                        <ul className={styles.listProject} id="bugTasks">
                             <li>
                                 <div className={styles.projectContainer}>
                                     <span className={styles.projectTitle}>Project: DONE4</span>
                                     <span className={styles.wrapBtn} onClick={()=>{
                                          handleWrap('DONE4')
                                     }}>
-                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                        <i className="fas fa-chevron-down" id="DONE4Btn"></i>
                                     </span>
                                 </div>
                                 <ul className={styles.listProject} id="DONE4"> 
@@ -186,7 +188,7 @@ function Home(){
                                     <span className={styles.wrapBtn} onClick={()=>{
                                          handleWrap('DONE5')
                                     }}>
-                                        {wrap ? <i className="fas fa-chevron-down"></i> : <i className="fas fa-chevron-up"></i>}
+                                        <i className="fas fa-chevron-down" id="DONE5Btn"></i>
                                     </span>
                                 </div>
                                 <ul className={styles.listProject} id="DONE5">
@@ -207,4 +209,4 @@ function Home(){
     )
 }
 
-export default Home;
+export default memo(Home);

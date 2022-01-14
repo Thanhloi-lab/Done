@@ -132,3 +132,7 @@ textarea:-ms-input-placeholder { color: #999999; }
     background-color: rgba(0,0,0,0.4);
     display:none;
 }
+
+.fas{
+    transition:0.5s;
+}

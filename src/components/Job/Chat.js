@@ -1,5 +1,4 @@
 import {memo, useState, useEffect, useRef} from 'react';
-import clsx from 'clsx';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import './Chat.css'
 
@@ -107,9 +106,8 @@ function Chat(){
             <div className="modal__overlay" id="modal__overlay"></div>
             <div className="chatWrapper">
                 <span style={{fontSize:'5rem'}}>
-                    {chat.map((item, index)=>{
-                        return <p>{item}</p>
-                    })}</span>
+                    Message
+                </span> 
                 <button onClick={onSubmit} style={{fontSize:'5rem'}}> Click me</button>
             </div>
 
@@ -118,4 +116,4 @@ function Chat(){
     )
 }
 
-export default Chat;
+export default memo(Chat);
