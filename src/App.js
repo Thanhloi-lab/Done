@@ -1,16 +1,21 @@
 
 import './App.css';
 import Navbar from './components/Common/Navbar'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import {Route, Routes } from 'react-router-dom'
 import Home from './Containers/Home'
 import Services from './Containers/Services'
 import SignIn from './Containers/User/SignIn'
 import SignUp from './Containers/User/SignUp'
 import ForgotPassword from './Containers/User/ForgotPassword';
-import Job from './Containers/Job/Job'
 import Footer from './components/Common/Footer'
-import RecentJobs from './Containers/Job/RecentJobs'
+import Uncompleted from './Containers/Job/UncompletedTask'
+import CompletedTask from './Containers/Job/CompletedTask'
+import BugTask from './Containers/Job/BugTask'
 import HomeJob from './Containers/Job/HomeJob'
+import ExpiredTask from './Containers/Job/ExpiredTask'
+import Groups from './Containers/Job/Groups'
+import MyGroups from './Containers/Job/MyGroups'
+import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP} from './asset/js/constant'
 
 
 function App() {
@@ -23,9 +28,14 @@ function App() {
                 <Route path="/sign-in" exact element={< SignIn />}/>
                 <Route path="/sign-up" exact element={< SignUp />}/>
                 <Route path="/forgot-password" exact element={< ForgotPassword />}/>
-                <Route path="/job" element={<HomeJob/>}/>
-                <Route path="/job/recent" element={<RecentJobs/>}/>
-                <Route path="/job/list" element={<Job/>}/>
+                <Route path={HOME_JOB} exact element={<HomeJob/>}/>
+                <Route path={COMPLETED_TAB} exact element={<CompletedTask/>}/>
+                <Route path={UNCOMPLETED_TAB} exact element={<Uncompleted/>}/>
+                <Route path={BUG_TAB} exact element={<BugTask/>}/>
+                <Route path={EXPIRED_TAB} exact element={<ExpiredTask/>}/>
+                <Route path={GROUPS} exact element={<Groups/>}/>
+                <Route path={MY_GROUP} exact element={<MyGroups/>}/>
+
             </Routes>
             <Footer/>
         </>

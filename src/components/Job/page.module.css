@@ -30,6 +30,10 @@
     font-size: 5rem;
     font-family: Poppins-Bold;
     color: #333333;
+
+    background: -webkit-linear-gradient(90deg ,#25a670, #06a6fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .contentWrapper {
@@ -53,7 +57,6 @@
     font-weight: bold;
     padding-right:5px;
     font-family: 'Roboto', sans-serif;
-    
 }
 
 .bug{
@@ -80,6 +83,15 @@
     background: -o-linear-gradient(-65deg, #1ed387d7, #00c070);
     background: -moz-linear-gradient(-65deg, #1ed387d7, #00c070);
     background: linear-gradient(-65deg, #1ed387d7, #00c070);
+    padding: 10px 20px;
+}
+
+.expired{
+    background: rgb(199, 197, 197);
+    background: -webkit-linear-gradient(-65deg, rgb(199, 197, 197), rgb(160, 160, 160));
+    background: -o-linear-gradient(-65deg, rgb(199, 197, 197), rgb(160, 160, 160));
+    background: -moz-linear-gradient(-65deg, rgb(199, 197, 197), rgb(160, 160, 160));
+    background: linear-gradient(-65deg, rgb(199, 197, 197), rgb(160, 160, 160));
     padding: 10px 20px;
 }
 
@@ -126,7 +138,7 @@
     opacity: 0;
     transition:all ease 0.3s;
     line-height: 0rem;
-
+    pointer-events: none;
 }
 
 .projectItem{
@@ -142,7 +154,7 @@
 }
 
 
-.comeIcon, .comeIconUncomplete, .comeIconBug{
+.completedArrow, .unCompletedArrow, .bugArrow, .expiredArrow{
     position: absolute;
     right: 2%;
     background: #68c493;
@@ -156,25 +168,33 @@
     
 }
 
-.comeIcon:hover{
+.expiredArrow{
+    background: rgba(193, 193, 193, 0.9);
+}
+
+.expiredArrow:hover{
+    background: rgba(158, 158, 158, 1);
+}
+
+.completedArrow:hover{
     background:#039446;
     transition:0.2s;
 }
 
-.comeIconBug{
+.bugArrow{
     background: #ff7171;
 }
 
-.comeIconBug:hover{
+.bugArrow:hover{
     background:rgb(196, 13, 13);
     transition:0.2s;
 }
 
-.comeIconUncomplete{
+.unCompletedArrow{
     background: rgb(101 212 255);
 }
 
-.comeIconUncomplete:hover{
+.unCompletedArrow:hover{
     background:#0ca6e4;
     transition:0.2s;
 }
@@ -184,6 +204,7 @@
     transition:all ease 0.3s;
     line-height: 4rem;
     margin-bottom:5px;
+    pointer-events: all;
 }
 
 .listProject.active > li{

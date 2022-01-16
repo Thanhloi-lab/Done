@@ -70,13 +70,13 @@ function Home(){
                                 <ul className={styles.listProject} id="DONE">
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName}>Xử lý UI</p>
-                                        <div className={styles.comeIcon}>
+                                        <div className={styles.completedArrow}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName}>Xử lý UI1</p>
-                                        <div className={styles.comeIcon}>
+                                        <div className={styles.completedArrow}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
@@ -94,7 +94,7 @@ function Home(){
                                 <ul className={styles.listProject} id="DONE1">
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName }>Xử lý UI</p>
-                                        <div className={styles.comeIcon}>
+                                        <div className={styles.completedArrow}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
@@ -126,7 +126,7 @@ function Home(){
                                 <ul className={styles.listProject} id="DONE2"> 
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName}>Xử lý UI</p>
-                                        <div className={styles.comeIconUncomplete}>
+                                        <div className={styles.unCompletedArrow}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
@@ -144,7 +144,7 @@ function Home(){
                                 <ul className={styles.listProject} id="DONE3">
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName }>Xử lý UI</p>
-                                        <div className={styles.comeIconUncomplete}>
+                                        <div className={styles.unCompletedArrow}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
@@ -176,7 +176,7 @@ function Home(){
                                 <ul className={styles.listProject} id="DONE4"> 
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName}>Xử lý UI</p>
-                                        <div className={styles.comeIconBug}>
+                                        <div className={styles.bugArrow}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
@@ -191,10 +191,60 @@ function Home(){
                                         <i className="fas fa-chevron-down" id="DONE5Btn"></i>
                                     </span>
                                 </div>
-                                <ul className={styles.listProject} id="DONE5">
+                                <ul className={styles.listProject} id="DONE5"> 
                                     <li className={styles.projectItem}>
-                                        <p className={styles.taskName }>Xử lý UI</p>
-                                        <div className={styles.comeIconBug}>
+                                        <p className={styles.taskName}>Xử lý UI</p>
+                                        <div className={styles.bugArrow}>
+                                            <i className="fas fa-chevron-right"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className={styles.taskContainer}>
+                        <div className={styles.expired}>
+                            <span className={styles.projectHeader}>Expired tasks</span>
+                            <span className={styles.wrapBtn} onClick={()=>{
+                                handleWrap('expiredTasks')
+                            }}>
+                                <i className="fas fa-chevron-down" id="expiredTasksBtn"></i>
+                            </span>
+                        </div>
+                        
+                        <ul className={styles.listProject} id="expiredTasks">
+                            <li>
+                                <div className={styles.projectContainer}>
+                                    <span className={styles.projectTitle}>Project: DONE6</span>
+                                    <span className={styles.wrapBtn} onClick={()=>{
+                                         handleWrap('DONE6')
+                                    }}>
+                                        <i className="fas fa-chevron-down" id="DONE6Btn"></i>
+                                    </span>
+                                </div>
+                                <ul className={styles.listProject} id="DONE6"> 
+                                    <li className={styles.projectItem}>
+                                        <p className={styles.taskName}>Xử lý UI</p>
+                                        <div className={styles.expiredArrow}>
+                                            <i className="fas fa-chevron-right"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div className={styles.projectContainer}>
+                                    <span className={styles.projectTitle}>Project: DONE7</span>
+                                    <span className={styles.wrapBtn} onClick={()=>{
+                                         handleWrap('DONE7')
+                                    }}>
+                                        <i className="fas fa-chevron-down" id="DONE7Btn"></i>
+                                    </span>
+                                </div>
+                                <ul className={styles.listProject} id="DONE7"> 
+                                    <li className={styles.projectItem}>
+                                        <p className={styles.taskName}>Xử lý UI</p>
+                                        <div className={styles.expiredArrow}>
                                             <i className="fas fa-chevron-right"></i>
                                         </div>
                                     </li>
