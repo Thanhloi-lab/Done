@@ -1,30 +1,17 @@
-import React from 'react';
+import {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
 import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB} from '../../asset/js/constant'
 import './JobSidebar.css'
+import jobsSlice from './jobsSlice'
 
 function JobSidebar(props){
-    // const [click, setClick] = useState(false);
-
-    // const handleClick = ()=>{
-    //     setClick(!click);
-    // }
-
-    // const CloseMobileMenu = ()=>{
-    //     setClick(false);
-    // }
-
-    // const toggleItem = e =>{
-    //     e.preventDefault();
-    //     const item = document.getElementById(e.target.getAttribute('href').slice(1));
-    //     if(item.classList.contains('show')){
-    //         item.classList.remove('show');
-    //     }
-    //     else{
-    //         item.classList.add('show');
-    //     }
-    // }
-
+    console.log('Sidebar rendered');
+    const dispatch = useDispatch();
+    
+    useEffect(()=>{
+        dispatch(jobsSlice.actions.changeTab(props.page))
+    }, [])
 
     return(
         <>
@@ -39,47 +26,47 @@ function JobSidebar(props){
                 <ul className="sideBar-list">
                     <li className={props.page === HOME_JOB? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={HOME_JOB} className="sideBar-link">
-                            <i className='fas fa-home'></i>
+                            <i className='fas fa-home sidebar_icon'></i>
                             HOME
                         </Link>
                     </li>
                     <li className={props.page === COMPLETED_TAB? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={COMPLETED_TAB} className="sideBar-link">
-                            <i className='fas fa-home'></i>
+                            <i class="fas fa-check sidebar_icon"></i>
                             COMPLETED
                         </Link>
                     </li>
                     <li className={props.page === UNCOMPLETED_TAB? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={UNCOMPLETED_TAB} className="sideBar-link">
-                            <i className='fas fa-home'></i>
+                            <i class="fas fa-times sidebar_icon"></i>
                             UNCOMPLETED
                         </Link>
                     </li>
                     <li className={props.page === BUG_TAB? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={BUG_TAB} className="sideBar-link">
-                            <i className='fas fa-home'></i>
+                            <i class="fas fa-bug sidebar_icon"></i>
                             BUG
                         </Link>
                     </li>
-                   
+                    <li className={props.page === EXPIRED_TAB? 'sideBar-item active' : 'sideBar-item'}>
+                        <Link to={EXPIRED_TAB} className="sideBar-link">
+                            <i class="fas fa-calendar-times sidebar_icon"></i>
+                            EXPIRED
+                        </Link>
+                    </li>
                     <li className={props.page === GROUPS? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={GROUPS} className="sideBar-link">
-                            <i className='fas fa-home'></i>
+                            <i class="fas fa-users sidebar_icon"></i>
                             GROUPS
                         </Link>
                     </li>
                     <li className={props.page === MY_GROUP? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={MY_GROUP} className="sideBar-link">
-                            <i className='fas fa-home'></i>
+                            <i class="fas fa-users-cog sidebar_icon"></i>
                             MY GROUPS
                         </Link>
                     </li>
-                    <li className={props.page === EXPIRED_TAB? 'sideBar-item active' : 'sideBar-item'}>
-                        <Link to={EXPIRED_TAB} className="sideBar-link">
-                            <i className='fas fa-home'></i>
-                            EXPIRED
-                        </Link>
-                    </li>
+                    
                 </ul>
             </div>
         </>

@@ -136,3 +136,8 @@ textarea:-ms-input-placeholder { color: #999999; }
 .fas{
     transition:0.5s;
 }
+
+.fas.sidebar_icon{
+    transition:0s;
+    font-size:1.7rem;
+}
