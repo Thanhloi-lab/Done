@@ -12,32 +12,32 @@ function Chat(){
 
     latestChat.current = chat;
 
-    useEffect(() => {
-        const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:7168/chatHub')
-            .withAutomaticReconnect()
-            .build();
+    // useEffect(() => {
+    //     const newConnection = new HubConnectionBuilder()
+    //         .withUrl('https://localhost:7168/chatHub')
+    //         .withAutomaticReconnect()
+    //         .build();
         
-        setConnection(newConnection);
-    }, []);
+    //     setConnection(newConnection);
+    // }, []);
 
     
 
-    useEffect(() => {
-        if (connection) {
-            connection.start()
-                .then(result => {
-                    console.log('Connected!');
+    // useEffect(() => {
+    //     if (connection) {
+    //         connection.start()
+    //             .then(result => {
+    //                 console.log('Connected!');
     
-                    connection.on('ReceiveMessage', message => {
-                        const updatedChat = [...latestChat.current];
-                        updatedChat.push(message);
-                        setChat(updatedChat);
-                    });
-                })
-                .catch(e => console.log('Connection failed: ', e));
-        }
-    }, [connection]);
+    //                 connection.on('ReceiveMessage', message => {
+    //                     const updatedChat = [...latestChat.current];
+    //                     updatedChat.push(message);
+    //                     setChat(updatedChat);
+    //                 });
+    //             })
+    //             .catch(e => console.log('Connection failed: ', e));
+    //     }
+    // }, [connection]);
 
     const sendMessage = async (user, message) => {
         // const chatMessage = {

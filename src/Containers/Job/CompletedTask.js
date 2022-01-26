@@ -1,14 +1,14 @@
 import React from 'react'
-import JobSidebar from '../../components/Job/JobSidebar'
+import JobSidebar from '../../components/Job/SideBar/JobSidebar'
 import {COMPLETED_TAB} from '../../asset/js/constant'
-import Home from '../../components/Job/Home'
-import Chat from '../../components/Job/Chat'
+import TaskPage from '../../components/Job/JobStatus/TaskPage'
+import Chat from '../../components/Job/Chat/Chat'
 
 function CompletedTask(){
     return (
         <>
             <JobSidebar page={COMPLETED_TAB}/>
-            <Home/>
+            <TaskPage status='COMPLETED' name='Completed'/>
             <Chat/>
         </>
     )

@@ -1,15 +1,16 @@
 import React from 'react'
-import JobSidebar from '../../components/Job/JobSidebar'
+import JobSidebar from '../../components/Job/SideBar/JobSidebar'
 import {BUG_TAB} from '../../asset/js/constant'
-import Home from '../../components/Job/Home'
-import Chat from '../../components/Job/Chat'
+import Chat from '../../components/Job/Chat/Chat'
+import TaskPage from '../../components/Job/JobStatus/TaskPage'
+
 
 
 function BugTask(){
     return (
         <>
             <JobSidebar page={BUG_TAB}/>
-            <Home/>
+            <TaskPage taskName='DONE' status='BUG' name='Bug'/>
             <Chat/>
         </>
     )
