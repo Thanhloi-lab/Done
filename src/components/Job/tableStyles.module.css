@@ -1,0 +1,30 @@
+.table{
+    font-size: 2rem;
+    width:80%;
+    margin:0 auto;
+    text-align:left;
+    border-collapse:collapse;
+    min-width: 400px;
+    overflow:hidden;
+    display:block;
+    table-layout:fixed;
+}
+
+.table tbody td{
+    font-family: Poppins-Regular;
+    padding:12px 15px;
+}
+
+.table tbody th{
+    color:black;
+    width:150px;
+}
+
+.table tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+
+.taskStatus{
+    text-align:center;
+    margin-top:30px;
+}

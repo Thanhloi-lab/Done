@@ -5,6 +5,13 @@ const COMPLETED_TAB = '/job/completed';
 const UNCOMPLETED_TAB = '/job/uncompleted';
 const GROUPS = '/job/groups';
 const MY_GROUP = '/job/myGroups'
+const STATUS = {
+    COMPLETED: 'completed',
+    UNCOMPLETED: 'unCompleted',
+    EXPIRED: 'expired',
+    BUG: 'bug'
+};
+
 
 export {HOME_JOB}; 
 export {BUG_TAB};
@@ -13,3 +20,4 @@ export {UNCOMPLETED_TAB};
 export {GROUPS}
 export {MY_GROUP}
 export {EXPIRED_TAB}
+export {STATUS}

@@ -45,7 +45,19 @@ function Home(){
                     <div className={styles.contentHeader}>
                         <h1>MY JOB HOME PAGE</h1>
                     </div>
-
+                    <div className={styles.taskContainer + ' ' + styles.toolBar}>
+                        <div className={styles.reloadBtn}>
+                            <span className={styles.reloadText}>Reload</span>
+                            <i className="fas fa-redo"></i>
+                        </div>
+                        <div className={styles.search}>
+                            <input className={styles.searchInput}/>
+                            <div className={styles.searchBtn}>
+                                <span className={styles.searchText}>Search</span>
+                                <i className="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className={styles.taskContainer}>
                         <div className={styles.completed}>
@@ -70,9 +82,9 @@ function Home(){
                                 <ul className={styles.listProject} id="DONE">
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName}>Xử lý UI</p>
-                                        <div className={styles.completedArrow}>
+                                        <Link to='/job/123' className={styles.completedArrow}>
                                             <i className="fas fa-chevron-right"></i>
-                                        </div>
+                                        </Link>
                                     </li>
                                     <li className={styles.projectItem}>
                                         <p className={styles.taskName}>Xử lý UI1</p>

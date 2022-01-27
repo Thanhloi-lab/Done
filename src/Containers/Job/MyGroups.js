@@ -1,5 +1,5 @@
 import React from 'react'
-import JobSidebar from '../../components/Job/JobSidebar'
+import JobSidebar from '../../components/Job/SideBar/JobSidebar'
 import {MY_GROUP} from '../../asset/js/constant'
 import Home from '../../components/Job/Home'
 

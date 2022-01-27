@@ -1,14 +1,16 @@
 import React from 'react'
-import Home from '../../components/Job/Home'
-import JobSidebar from '../../components/Job/JobSidebar'
+import JobSidebar from '../../components/Job/SideBar/JobSidebar'
 import {EXPIRED_TAB} from '../../asset/js/constant'
-import Chat from '../../components/Job/Chat'
+import Chat from '../../components/Job/Chat/Chat'
+import TaskPage from '../../components/Job/JobStatus/TaskPage'
+
+
 
 function Expired(){
     return (
         <>
             <JobSidebar page={EXPIRED_TAB}/>
-            <Home/>
+            <TaskPage taskName='DONE' status='EXPIRED' name='Expired'/>
             <Chat/>
         </>
     )
