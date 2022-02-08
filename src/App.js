@@ -17,12 +17,23 @@ import Groups from './Containers/Job/Groups'
 import MyGroups from './Containers/Job/MyGroups'
 import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP} from './asset/js/constant'
 import TaskInfo from './Containers/Job/TaskInfo'
+import   './firebase/firebase-messaging-sw.js'
+import {useState} from 'react'
+
+
 
 
 function App() {
+    const [isTokenFound, setTokenFound] = useState(false);
+    //getToken(setTokenFound);
+
+// inside the jsx being returned:
+
     return (
         <>
             <Navbar />
+            {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>}
+            {!isTokenFound && <h1> Need notification permission ❗️ </h1>}
             <Routes>
                 <Route path="/" exact element={< Home />}/>
                 <Route path="/services" exact element={< Services />}/>
