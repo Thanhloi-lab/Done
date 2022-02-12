@@ -1,0 +1,47 @@
+syntax = "proto3";
+import "Protos/model.proto";
+option csharp_namespace = "Backend_Done";
+
+package model;
+
+service User{
+	rpc Login(UserInfo) returns (UserReply);
+	rpc Register(UserInsert) returns (Response);
+	rpc ConfirmMail(UserInfo) returns (UserReply);
+	rpc ChangePassword(UserInfo) returns (Response);
+	rpc UpdateInfo(UserInfo) returns (Response);
+
+	rpc Test(UserInsert) returns (Response);
+}
+
+service Group{
+	rpc CreateGroup(GroupInsertRequest) returns (Response);
+	rpc AddGroupMember(EditGroupMemberRequest) returns (Response);
+	rpc RemoveGroupMember(EditGroupMemberRequest) returns (Response);
+	rpc GetAllMembersInGroup(GroupIdentity) returns (UsersResponse);
+	rpc GetAllGroupsOfUser(UserIdentity) returns(GroupResponse);
+	rpc EditGroupName(EditGroupRequest) returns (Response);
+	rpc RemoveGroup(MemberInGroup) returns (Response);
+}
+
+service Project{
+	rpc CreateProject(ProjectInsertRequest) returns (Response);
+	rpc AddProjectMember(EditProjectMemberRequest) returns (Response);
+	rpc RemoveProjectMember(EditProjectMemberRequest) returns (Response);
+	rpc GetAllMembersInProject(ProjectIdentity) returns (UsersResponse);
+	rpc GetAllProjectsOfUser(UserIdentity) returns(ProjectsResponse);
+	rpc EditProjectName(EditProjectRequest) returns (Response);
+	rpc RemoveProject(MemberInProject) returns (Response);
+}
+
+service TaskSvc{
+	rpc CreateTask(TaskInsertRequest) returns (Response);
+	rpc AddTaskMember(EditTaskMemberRequest) returns (Response);
+	rpc RemoveTaskMember(EditTaskMemberRequest) returns (Response);
+	rpc GetAllMembersInTask(TaskIdentity) returns (UsersResponse);
+	rpc GetAllTasksOfUser(UserIdentity) returns(TasksResponse);
+	rpc UpdateTask(EditTaskRequest) returns (Response);
+	rpc RemoveTask(MemberInTask) returns (Response);
+	rpc UserTasksWithStatus(TaskWithStatus) returns(TasksResponse);
+}
+

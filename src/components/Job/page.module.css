@@ -20,13 +20,11 @@
     background: -o-linear-gradient(-65deg, #06a6fe, #25a670);
     background: -moz-linear-gradient(-65deg, #06a6fe, #25a670);
     background: linear-gradient(-65deg, #06a6fe, #25a670);
-
-    
 }
 
 .contentHeader > h1{
     margin: 30px auto;
-    margin-bottom:100px;
+    margin-bottom:30px;
     font-size: 5rem;
     font-family: Poppins-Bold;
     color: #333333;
@@ -38,6 +36,7 @@
 
 
 .contentWrapper {
+    
     width: 70%;
     background: #fff;
     height: 100%;
@@ -47,12 +46,13 @@
     display: flex;
     flex-wrap: wrap;
     /* justify-content: space-between; */
-    margin-left:150px;
+    margin:0 auto;
     transition:0.3s;
     flex-direction: column;
     /* align-items: center; */
     overflow-x:auto;
     padding:0 10px;
+    max-width:1248;
 }
 
 .projectHeader{

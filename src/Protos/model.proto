@@ -1,0 +1,242 @@
+syntax = "proto3";
+
+option csharp_namespace = "Backend_Done";
+
+package model;
+message UserInsert
+{
+	string Mail = 1;
+	string Password = 2;
+	string Name = 3;
+	string Phone = 4;
+}
+message UserInfo
+{
+	int32 IdUser = 1;
+	string Password = 2;
+	string Name = 3;
+	string Mail = 4;
+	bool Active = 5;
+	string ActivationToken = 6;
+	string Phone = 7;
+	string NewPassword = 8;
+}
+
+message UserReply
+{
+	Response Response = 1;
+	UserInfo Data = 2;
+}
+
+message UserResponse
+{
+	Response Response = 1;
+	repeated UserInfo Data = 2;
+}
+
+message UsersInfo
+{
+	int32 IdUser = 1;
+	string Name = 2;
+	string Mail = 3;
+	bool Active = 4;
+	string Phone = 5;
+}
+
+message UsersResponse
+{
+	Response Resp = 1;
+	repeated UsersInfo Data = 2;
+}
+
+message UserIdentity
+{
+	int32 IdUser=1;
+}
+
+
+//GROUP
+message GroupInfo
+{
+	int32 IdGroup = 1;
+	string NameGroup = 2;
+	int32 CreateUser = 3;
+}
+
+message GroupResponse
+{
+	Response Response = 1;
+	repeated GroupInfo Data = 2;
+}
+
+message GroupInsertRequest
+{
+	int32 IdUser = 1;
+	string NameGroup = 2;
+}
+
+message MemberInGroup
+{
+	int32 IdUser = 1;
+	int32 IdGroup = 2;
+}
+
+message EditGroupMemberRequest
+{
+	int32 IdGroup=1;
+	int32 IdUser=2;
+	int32 IdMember=3;
+}
+
+message GroupIdentity
+{
+	int32 IdGroup=1;
+}
+
+message EditGroupRequest
+{
+	int32 IdGroup = 1;
+	int32 IdUser = 2;
+	string GroupName = 3;
+}
+
+
+// Project
+message ProjectInfo
+{
+	int32 IdProject = 1;
+	string NameProject = 2;
+	int32 CreateUser = 3;
+	int32 IdGroup = 4;
+}
+
+message ProjectsResponse
+{
+	Response Response = 1;
+	repeated ProjectInfo Data = 2;
+}
+
+message ProjectInsertRequest
+{
+	int32 IdUser = 1;
+	string NameProject = 2;
+	int32 IdGroup = 3;
+}
+
+message MemberInProject
+{
+	int32 IdUser = 1;
+	int32 IdProject = 2;
+}
+
+message EditProjectMemberRequest
+{
+	int32 IdProject=1;
+	int32 IdUser=2;
+	int32 IdMember=3;
+}
+
+message ProjectIdentity
+{
+	int32 IdProject=1;
+}
+
+message EditProjectRequest
+{
+	int32 IdProject = 1;
+	int32 IdUser = 2;
+	string ProjectName = 3;
+}
+
+
+//Task
+message TaskInfo
+{
+	int32 IdTask = 1;
+	int32 IdGroup = 2;
+	int32 IdProject = 3;
+	//task
+	string NameTask = 4;
+	string TaskCreateDate = 5;
+	string UpdateDate = 6;
+	string Deadline = 7;
+	string Content = 8;
+	string StatusName = 9;
+	//project
+	int32 UserCreateProject = 10;
+	string NameProject = 11;
+	string NameUserCreateProject = 12;
+	string PhoneUserCreateProject = 13;
+	string MailUserCreateProject = 14;
+	//group
+	int32 UserCreateGroup = 15;
+	string NameGroup = 16;
+	string ProjectCreateDate = 17;
+	string NameUserCreateGroup = 18;
+	string PhoneUserCreateGroup = 19;
+	string MailUserCreateGroup = 20;
+}
+
+message TasksResponse
+{
+	Response Response = 1;
+	repeated TaskInfo Data = 2;
+}
+
+message TaskInsertRequest
+{
+	int32 IdUser = 1;
+	int32 IdProject = 2;
+	string NameTask = 3;
+	string Deadline = 4;
+	string Content = 5;
+}
+
+message MemberInTask
+{
+	int32 IdUser = 1;
+	int32 IdTask = 2;
+}
+
+message EditTaskMemberRequest
+{
+	int32 IdTask=1;
+	int32 IdUser=2;
+	int32 IdMember=3;
+}
+
+message TaskIdentity
+{
+	int32 IdTask=1;
+}
+
+message EditTaskRequest
+{
+	int32 IdTask = 1;
+	int32 IdUser = 2;
+	string TaskName = 3;
+	string Deadline = 4;
+	string content =5;
+}
+
+message TaskWithStatus
+{
+	int32 IdUser = 1;
+	int32 StatusId = 2;
+}
+
+//ETC
+message Response 
+{
+	State State = 1;
+	string message = 2;
+}
+
+enum State
+{
+	SUSSCESS = 0;
+	FAIL = 1;
+	NOTACTIVE = 2; 
+}
+
+

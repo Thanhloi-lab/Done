@@ -1,17 +1,17 @@
 import React from 'react'
 import JobSidebar from '../../components/Job/SideBar/JobSidebar'
 import {MY_GROUP} from '../../asset/js/constant'
-import MyGroup from '../../components/Job/MyGroup/MyGroup'
+import CreateGroupPage from '../../components/Job/MyGroup/CreateGroup'
 
 
 
-function MyGroups(){
+function CreateGroup(){
     return (
         <>
             <JobSidebar page={MY_GROUP}/>
-            <MyGroup/>
+            <CreateGroupPage/>
         </>
     )
 }
 
-export default MyGroups;
+export default CreateGroup;
