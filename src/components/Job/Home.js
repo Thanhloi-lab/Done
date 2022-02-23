@@ -1,10 +1,14 @@
-import {memo} from 'react';
+import {memo, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import styles from './page.module.css'
+import styles from './page.module.css';
+import tableStyles from './tableStyles.module.css';
+// import {runGetAllMembersInTask} from '../CallRPC';
 
 function Home(){
 
     console.log("job-home component rendered");
+    
+
 
     const handleWrap = (id)=>{
         const wrapper = document.getElementById(id);
@@ -41,7 +45,7 @@ function Home(){
     return (
         <div className={styles.limiter}>
             <div className={styles.container}>
-                <div className={styles.contentWrapper}>
+                <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                     <div className={styles.contentHeader}>
                         <h1>MY JOB HOME PAGE</h1>
                     </div>
