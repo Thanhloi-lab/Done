@@ -17,25 +17,53 @@ import Groups from './Containers/Job/Groups'
 import MyGroups from './Containers/Job/MyGroups'
 import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP} from './asset/js/constant'
 import TaskInfo from './Containers/Job/TaskInfo'
-import   './firebase/firebase-messaging-sw.js'
 import {useState} from 'react'
+import {onMessageListener} from './firebaseInit'
+import {ReactNotificationComponent} from './components/Chat/ReactNotificationComponent'
+import Notification from './components/Chat/Notification'
+import Task from './Containers/Task/TaskInfo';
 
 
 
 
 function App() {
-    const [isTokenFound, setTokenFound] = useState(false);
-    //getToken(setTokenFound);
+    const [show, setShow] = useState(false);
+    const [notification, setNotification]=useState({title:"",body:""});
+    onMessageListener()
+    .then((payload) => {
+        setShow(true);
+        setNotification({
+            title: payload.notification.title,
+            body: payload.notification.body,
+        });
+        console.log(payload.notification);
+    })
+    .catch((err) => console.log("failed: ", err));
+
+
+    
+    
+
+
+
+    
+
+
+    
 
 // inside the jsx being returned:
 
     return (
         <>
+            {show ? (<ReactNotificationComponent
+                title = {notification.title}
+                body = {notification.body}
+            />):(<></>)}
             <Navbar />
-            {isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>}
-            {!isTokenFound && <h1> Need notification permission ❗️ </h1>}
+            <Notification/>
             <Routes>
                 <Route path="/" exact element={< Home />}/>
+                <Route path="/task/id" exact element={< Task />}/>
                 <Route path="/services" exact element={< Services />}/>
                 <Route path="/sign-in" exact element={< SignIn />}/>
                 <Route path="/sign-up" exact element={< SignUp />}/>
