@@ -123,9 +123,9 @@
 }
 
 @media(max-width: 760px){
-    td:nth-of-type(1):before { content: "Select"; }
-	td:nth-of-type(2):before { content: "Name"; }
-	td:nth-of-type(3):before { content: "Email"; }
+    input td:nth-of-type(1):before { content: "Select"; }
+	input td:nth-of-type(2):before { content: "Name"; }
+	input td:nth-of-type(3):before { content: "Email"; }
 
     .avatarContainer{
         width:100%;

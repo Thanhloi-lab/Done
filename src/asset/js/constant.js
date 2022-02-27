@@ -12,6 +12,22 @@ const STATUS = {
     BUG: 'bug'
 };
 
+const STATUS_ID = {
+    0: 'DELETED',
+    1: 'UNCOMPLETED',
+    2: 'COMPLETED',
+    3: 'BUG',
+    4: 'EXPIRED'
+}
+
+const STATUS_NAME = {
+    'DELETED': 0,
+    'UNCOMPLETED' : 1,
+    'COMPLETED' : 2,
+    'BUG': 3,
+    'EXPIRED' : 4
+}
+
 
 export {HOME_JOB}; 
 export {BUG_TAB};
@@ -20,4 +36,4 @@ export {UNCOMPLETED_TAB};
 export {GROUPS}
 export {MY_GROUP}
 export {EXPIRED_TAB}
-export {STATUS}
+export {STATUS_ID , STATUS_NAME, STATUS}

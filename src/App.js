@@ -40,10 +40,10 @@ function App() {
                 <Route path={EXPIRED_TAB} exact element={<ExpiredTask/>}/>
                 <Route path={GROUPS} exact element={<Groups/>}/>
                 <Route path={MY_GROUP} exact element={<MyGroups/>}/>
-                <Route path={HOME_JOB} exact element={<HomeJob/>}/>
+                <Route path={HOME_JOB +"/*"} exact element={<HomeJob/>}/>
 
                 {/* task detail */}
-                <Route path="/job/:id" exact element={<TaskInfo taskName='DONE' status='COMPLETED' name='Completed'/>}/>
+                <Route path="/job/:id" exact element={<TaskInfo/>}/>
                 <Route path='/*' element={<ErrorPage/>}/>
             </Routes>
             <Footer/>
