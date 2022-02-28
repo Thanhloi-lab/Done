@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
-import {validate} from '../../asset/js/main.js'
+import {validate} from '../../asset/js/validation.js'
 
 function SignUp(){
     console.log("Sign-up component rendered");
@@ -20,6 +20,7 @@ function SignUp(){
     const handleInputValidation = (event) =>{
         const inputValue = event.target.parentNode;
         let checked;
+        
         if(event.target.getAttribute("name")==='confirm-password'){
             checked = validate(input, event.target.getAttribute("name"));
         }

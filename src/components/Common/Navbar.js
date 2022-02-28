@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {Button} from './Button.js'
 import './Navbar.css'
+import {useSelector} from 'react-redux'
 
 function Navbar(){
     const [click, setClick] = useState(false);
@@ -51,7 +52,7 @@ function Navbar(){
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/job" className="nav-links" onClick={CloseMobileMenu}>
+                        <Link to={useSelector((state) => state.jobs.path)} className="nav-links" onClick={CloseMobileMenu}>
                             Jobs
                         </Link>
                     </li>

@@ -1,0 +1,74 @@
+.addBtn{
+    font-size: 2rem;
+    color: black;
+    padding: 10px;
+    background: linear-gradient(-65deg, #06a7feb6, #25a6708e);
+    border-radius: 20px;
+    opacity: 0.9;
+}
+
+.addBtn:hover{
+    opacity: 1;
+}
+
+.btnContainer{
+    width: 200px;
+    
+}
+
+.FeatureContainer{
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 30px;
+}
+
+.searchContainer{
+    margin-bottom: 0px;
+}
+
+.FlexContainer{
+    flex:1;
+}
+
+.deleteBtn{
+    padding:8px;
+    color:#eb5a5a;
+    transition: 0.2s;
+}
+
+.deleteBtn:hover{
+    background: #fff;
+    border-radius: 15px;
+    transition: 0.2s;
+}
+
+.deleteBtn:hover .deleteText{
+    color:#f03333;
+}
+
+.editBtn{
+    padding:8px;
+    color: #7171ed;
+}
+
+.editBtn:hover .editText{
+    color: #2828d1;
+    
+}
+
+.editBtn:hover{
+    background: #fff;
+    border-radius: 15px;
+    transition: 0.2s;
+}
+
+@media(max-width: 760px){
+    
+
+    td:nth-of-type(1):before { content: "Order"; }
+	td:nth-of-type(2):before { content: "Name"; }
+	td:nth-of-type(3):before { content: "Create User"; }
+	td:nth-of-type(4):before { content: "Date create"; }
+	td:nth-of-type(5):before { content: "Project"; }
+}

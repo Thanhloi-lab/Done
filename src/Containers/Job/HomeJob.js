@@ -1,15 +1,20 @@
 import React from 'react'
 import Home from '../../components/Job/Home'
-import JobSidebar from '../../components/Job/JobSidebar'
+import JobSidebar from '../../components/Job/SideBar/JobSidebar'
 import {HOME_JOB} from '../../asset/js/constant'
-import Chat from '../../components/Job/Chat'
+import {Route, Routes } from 'react-router-dom'
+import Chat from '../../components/Job/Chat/Chat'
+
 
 function HomeJob(){
     return (
         <>
             <JobSidebar page={HOME_JOB}/>
-            <Chat/>
-            <Home/>
+            <Routes>
+                <Route path="/" exact element={<Home/>}/>
+            </Routes>
+            
+            
         </>
         
     )

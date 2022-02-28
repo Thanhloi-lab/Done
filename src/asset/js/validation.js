@@ -2,7 +2,7 @@ export function validate(input, type){
 
     switch(type){
         case 'email':
-            if(input.trim().match(/^([a-zA-Z0-9_]+)@((\[[0-9]{1,3}[0-9]{1,3}[0-9]{1,3})|(([a-zA-Z0-9]+)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+            if(input.trim().match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) == null) {
                 return false;
             }
             break;

@@ -1,0 +1,153 @@
+.table{
+    font-size: 2rem;
+    width:80%;
+    margin:0 auto;
+    text-align:left;
+    border-collapse:collapse;
+    min-width: 400px;
+    overflow:hidden;
+    display:block;
+    table-layout:fixed;
+}
+
+.table tbody td{
+    font-family: Poppins-Regular;
+    padding:12px 15px;
+}
+
+.table tbody th{
+    color:black;
+    min-width:150px;
+    width:40%;
+}
+
+.table tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+
+.taskStatus{
+    text-align:center;
+    margin-top:50px;
+}
+
+.content{
+    width:90%;
+    margin:0 auto;
+}
+
+.table100{
+    font-size: 1.8rem;
+    margin:0 auto;
+    text-align:center;
+    border-collapse:collapse;
+    min-width: 400px;
+    overflow:hidden;
+    font-family: Poppins-Regular;
+    width:100%;
+}
+
+.table100 tbody td
+{
+    font-family: Poppins-Regular;
+    padding:12px 15px;
+}
+
+.Table100Head{
+    background: linear-gradient(-65deg, #06a7feb6, #25a6708e);
+    color: black;
+}
+
+.Table100Head th{
+    font-family: Poppins-Regular;
+    padding:12px 15px;
+}
+
+.Table100Body td{
+    max-width:200px;
+    overflow-wrap: break-word;
+}
+
+.Table100Body tr:nth-child(2n){
+    background-color: rgba(204, 204, 204, 0.5);
+    width: 100%;
+    
+}
+
+.Table100Body tr{
+    transition:0.3s;
+}
+
+.Table100Body tr:hover{
+    background-color: rgba(204, 204, 204);
+    transition:0.3s;
+}
+
+.LinkToProject{
+    font-size: 1.8rem;
+    font-family: Poppins-Regular;
+    color: rgba(255, 0, 0, 0.6);
+    font-weight: 600;
+}
+
+.LinkToProject:hover{
+    color: rgba(255, 0, 0, 1);
+}
+
+
+@media (max-width: 1048px) {
+    .content{
+        margin-left:0px;
+        transition:0.5s;
+        width:100%;
+    }
+}
+
+@media(max-width: 760px){
+    .table100,
+    .table100 thead,
+    .table100 tbody,
+    .table100 th,
+    .table100 td,
+    .table100 tr{
+        display: block; 
+    }
+
+    .content{
+        margin-left:0px;
+        transition:0.5s;
+        width:100%;
+        padding-bottom: 30px;
+    }
+
+    .Table100Head{
+        position: absolute;
+		top: -9999px;
+		left: -9999px;
+    }
+
+    .table100 tbody td{
+        border-bottom: 1px solid rgba(204, 204, 204, 0.452);
+		position: relative;
+        padding-left: 45%;
+        max-width:100%;
+    }
+
+    .Table100Body td:before{
+        /* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 0px;
+		left: 0px;
+		width: 40%; 
+        font-weight: 600;
+		padding: 12px 5px;
+		white-space: nowrap;
+    }
+
+    /* td:nth-of-type(1):before { content: "Order"; }
+	td:nth-of-type(2):before { content: "Name"; }
+	td:nth-of-type(3):before { content: "Create User"; }
+	td:nth-of-type(4):before { content: "Date create"; }
+	td:nth-of-type(5):before { content: "Project"; } */
+}
+

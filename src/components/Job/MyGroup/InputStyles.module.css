@@ -1,0 +1,140 @@
+.form{
+    display: flex;
+}
+
+.label{
+    font-size:2rem;
+    padding:10px;
+}
+
+.input{
+    padding:8px;
+    font-size:2.2rem;
+    width:100%;
+    font-weight:500;
+    font-family: Poppins;
+}
+
+.inputContainer:focus-within{
+    border: 2px solid #929292;
+}
+
+.inputContainer{
+    border: 2px solid #d7d9d7;
+    height: 100%;
+    margin-left: 10px;
+    border-radius: 20px;
+    padding-left: 10px;
+    overflow: hidden;
+    flex:1;
+    outline:0px;
+    margin-bottom: 30px;
+    
+}
+
+.addMemberContainer{
+    margin-top:30px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.btnAddMember{
+    font-size: 2rem;
+    color: black;
+    padding: 12px;
+    background: linear-gradient(-65deg, #06a7feb6, #25a6708e);
+    border-radius: 20px;
+    opacity: 0.9;
+    outline: none;
+    border:none;
+    cursor: pointer;
+}
+
+.btnAddMember:hover{
+    opacity: 1;
+}
+
+.checkBox{
+    -ms-transform: scale(1.7); /* IE */
+    -moz-transform: scale(1.7); /* FF */
+    -webkit-transform: scale(1.7); /* Safari and Chrome */
+    -o-transform: scale(1.7); /* Opera */
+    transform: scale(1.7);
+    padding: 10px;
+}
+
+.listMember{
+    position: relative;
+    top:300px;
+    opacity: 0;
+    transition:0.5s;
+}
+
+.listMember.active{
+    top:0px;
+    opacity: 1;
+    transition:0.5s;
+}
+
+.memberContainer{
+    display:flex;
+    align-items:center;
+}
+
+.avatar{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0c7;
+    margin-left:20px;
+    margin-right:14px;
+    padding:5px;
+    transition:0.2s;
+}
+
+.avatarContainer{
+    display: flex;
+    
+}
+
+.avatarWrapper{
+    /* position:absolute; */
+}
+
+.avatar:hover{
+    border: 2px solid #cccccc;
+    /* transform: scale(1.2); */
+    transition:0.2s;
+    padding:0px;
+}
+
+
+.removeMemberBtn{
+    position: relative;
+    top: -55px;
+    left: -35px;
+    outline: none;
+    border: none;
+    font-size: 1.8rem;
+    background: none;
+    color:#f51111;
+    padding:3px;
+    cursor: pointer;
+}
+
+@media(max-width: 760px){
+    input td:nth-of-type(1):before { content: "Select"; }
+	input td:nth-of-type(2):before { content: "Name"; }
+	input td:nth-of-type(3):before { content: "Email"; }
+
+    .avatarContainer{
+        width:100%;
+        flex-wrap: wrap;
+    }
+
+    .form{
+        display:flex;
+        flex-direction: column;
+    }
+
+}

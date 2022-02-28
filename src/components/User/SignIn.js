@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
-import {validate} from '../../asset/js/main.js'
+import {validate} from '../../asset/js/validation.js'
 
 function SignIn(){
     console.log("Sign-in component rendered");
@@ -27,6 +27,7 @@ function SignIn(){
             inputValue.classList.remove(styles.alertValidate);
         }
     }
+
 
     const handleSubmit = (event)=>{
         event.preventDefault();
