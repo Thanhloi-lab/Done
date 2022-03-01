@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB, STATUS} from '../../../asset/js/constant'
+import {useDispatch, useSelector} from 'react-redux';
+import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB} from '../../../asset/js/constant'
 import './JobSidebar.css'
 import jobsSlice from '../jobsSlice'
 
@@ -17,9 +17,13 @@ function JobSidebar(props){
         dispatch(jobsSlice.actions.changeTab(state))
     }, [])
 
+    const handleClickToggle = () =>{
+        dispatch(jobsSlice.actions.toggleSideBar())
+    }
+
     return(
         <>
-            <input type="checkbox" id="check"/>
+            <input type="checkbox" id="check" checked={useSelector((state) => state.jobs.sideBarStatus)} onChange={handleClickToggle}/>
             <label htmlFor="check" className="check-label">
                 <i className="fas fa-bars" id='btn'></i>
                 <i className="fas fa-times" id='cancel'></i>

@@ -6,7 +6,14 @@ const jobsSlice = createSlice({
     name:'jobs',
     initialState:{
         path:HOME_JOB,
-        allTasks:{}
+        allTasks:{},
+        sideBarStatus:true,
+        homeActions:{
+            completedJobs:{show:false, projectId:[]},
+            unCompletedJobs:{show:false, projectId:[]},
+            expiredJobs:{show:false, projectId:[]},
+            bugJobs:{show:false, projectId:[]},
+        }
     },
     reducers:{
         changeTab: (state, action) =>{
@@ -14,6 +21,26 @@ const jobsSlice = createSlice({
         },
         getAllTasks:(state, action)=>{
             state.allTasks = action.payload.allTasks
+        },
+        toggleSideBar:(state)=>{
+            state.sideBarStatus = !state.sideBarStatus
+        },
+        setHomeActions:(state, action)=>{
+            function removeElement(array, elem) {
+                var index = array.indexOf(elem);
+                if (index > -1) {
+                    array.splice(index, 1);
+                }
+            }
+            if(!state.homeActions[action.payload.projectStatus].projectId.includes(action.payload.idProject)){
+                state.homeActions[action.payload.projectStatus].projectId.push(action.payload.idProject);
+            }
+            else{
+                removeElement(state.homeActions[action.payload.projectStatus].projectId, action.payload.idProject)
+            }
+        },
+        setHomeActionsWidest:(state, action)=>{
+            state.homeActions[action.payload.projectStatus].show = !state.homeActions[action.payload.projectStatus].show;
         }
     }
 });
