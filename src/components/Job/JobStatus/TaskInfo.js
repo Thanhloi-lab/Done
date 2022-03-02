@@ -3,10 +3,27 @@ import tableStyles from '../tableStyles.module.css'
 import { STATUS, STATUS_ID, STATUS_NAME } from '../../../asset/js/constant'
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-
+import { useState } from 'react'
 
 function TaskInfo(props) {
+    const [groupShow, setGroupShow] = useState(false);
+    const [projectShow, setProjectShow] = useState(false);
+
+    const handleOnWrap = (className) => {
+        const listItem = document.getElementsByClassName(className);
+
+        for (let item of listItem) {
+            if (item.classList.contains(tableStyles.unActive)) {
+                item.classList.remove(tableStyles.unActive);
+                item.lastChild.setAttribute('style', 'padding:12px 15px;')
+            }
+            else {
+                item.classList.add(tableStyles.unActive);
+                item.lastChild.setAttribute('style', 'padding:1px')
+            }
+        }
+    }
+
     return (
         <div className={styles.limiter}>
             <div className={styles.container}>
@@ -59,41 +76,59 @@ function TaskInfo(props) {
                                             {props.detail.updateDate}
                                         </td>
                                     </tr>
-                                    <br/>
-                                    <br/>
-                                    <tr>
-                                        <th>Group's name:</th>
-                                        <td>{props.detail.nameGroup}</td>
+                                    <tr style={{ 'border': 'none' }}>
+                                        <th></th>
+                                        <td></td>
                                     </tr>
-                                    <tr>
+                                    <tr style={{ 'border': 'none' }}>
+                                        <th></th>
+                                        <td></td>
+                                    </tr>
+                                    <tr >
+                                        <th >
+                                            <span className={tableStyles.groupName} onClick={() => handleOnWrap('group')}>Group's name  <i className="fa-solid fa-eye"></i></span>
+                                        </th>
+                                        <td><Link to="/" className={tableStyles.LinkToGroup}>{props.detail.nameGroup}</Link></td>
+                                    </tr>
+                                    <tr className={tableStyles.unActive + ' group'}>
                                         <th>Group creator:</th>
-                                        <td>{props.detail.nameUserCreateGroup}</td>
+                                        <td style={{ padding: 1 }}>{props.detail.nameUserCreateGroup}</td>
                                     </tr>
-                                    <tr>
+                                    <tr className={tableStyles.unActive + ' group'}>
                                         <th>Group creator's phone:</th>
-                                        <td>{props.detail.phoneUserCreateGroup}</td>
+                                        <td style={{ padding: 1 }}>{props.detail.phoneUserCreateGroup}</td>
                                     </tr>
-                                    <tr>
+                                    <tr className={tableStyles.unActive + ' group'}>
                                         <th>Group creator's email:</th>
-                                        <td>{props.detail.mailUserCreateProject}</td>
+                                        <td style={{ padding: 1 }}><Link to="/" className={tableStyles.LinkToUser}>{props.detail.mailUserCreateGroup}</Link></td>
                                     </tr>
-                                    <br/>
-                                    <br/>
-                                    <tr>
-                                        <th>Project's name:</th>
-                                        <td>{props.detail.nameProject}</td>
+                                    <tr style={{ 'border': 'none' }}>
+                                        <th></th>
+                                        <td></td>
+                                    </tr>
+                                    <tr style={{ 'border': 'none' }}>
+                                        <th></th>
+                                        <td></td>
                                     </tr>
                                     <tr>
+                                        <th>
+                                            <span className={tableStyles.projectName} onClick={() => handleOnWrap('project')}>Project's name  <i className="fa-solid fa-eye"></i></span>
+                                        </th>
+                                        <td>
+                                            <Link to="/" className={tableStyles.LinkToProject}>{props.detail.nameProject}</Link>
+                                        </td>
+                                    </tr>
+                                    <tr className={tableStyles.unActive+ ' project'}>
                                         <th>Project creator:</th>
-                                        <td>{props.detail.nameUserCreateProject}</td>
+                                        <td style={{ padding: 1 }}>{props.detail.nameUserCreateProject}</td>
                                     </tr>
-                                    <tr>
+                                    <tr className={tableStyles.unActive+ ' project'}>
                                         <th>Project creator's phone:</th>
-                                        <td>{props.detail.phoneUserCreateProject}</td>
+                                        <td style={{ padding: 1 }}>{props.detail.phoneUserCreateProject}</td>
                                     </tr>
-                                    <tr>
+                                    <tr className={tableStyles.unActive+ ' project'}>
                                         <th>Project creator's email:</th>
-                                        <td>{props.detail.mailUserCreateProject}</td>
+                                        <td style={{ padding: 1 }}><Link to="/" className={tableStyles.LinkToUser}>{props.detail.mailUserCreateProject}</Link></td>
                                     </tr>
                                 </tbody>
                             </table>

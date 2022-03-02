@@ -1,6 +1,6 @@
 .chatWrapper{
     position:fixed;
-    width: 500px;
+    width: 600px;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -9,7 +9,7 @@
     justify-content: space-between;
     padding: 100px;
     transition:0.3s;
-    right:-500px;
+    right:-600px;
     top:100px;
     border: 1px solid rgb(160, 160, 160, 0.8);
     box-shadow: 0 10px 15px rgba(0,0,0, 0.2);

@@ -2,8 +2,6 @@ import { memo, useState } from 'react';
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
 import inputStyles from './InputStyles.module.css'
-import { Link } from 'react-router-dom';
-import ReactDOM from 'react-dom';
 
 function CreateGroup(props) {
     const [member, setMember] = useState([]);

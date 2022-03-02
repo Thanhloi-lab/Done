@@ -7,11 +7,13 @@ import LoadAllTask from './LoadAllTasks'
 
 
 function BugTask(){
+    
+
     return (
         <>
             <LoadAllTask/>
             <JobSidebar page={BUG_TAB}/>
-            <TaskPage taskName='DONE' status='BUG' name='Bug'/>
+            <TaskPage jobStatus='bugJobs' status='bug' title='Bug task'/>
             <Chat/>
         </>
     )

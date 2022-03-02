@@ -2,6 +2,7 @@ import { memo } from 'react';
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
 import {Link} from 'react-router-dom';
+import groupStyles from './Group.module.css'
 
 function GroupPage(props) {
 
@@ -29,9 +30,9 @@ function GroupPage(props) {
                         </div>
                     </div>
 
-                    <div className={styles.taskContainer + ' ' + tableStyles.content} style={{'overflow-x':'auto', 'margin':'0 auto'}}>
-                        <table className={tableStyles.table100} >
-                            <thead className={tableStyles.Table100Head}>
+                    <div className={styles.taskContainer + ' ' + tableStyles.content} style={{'overflowX':'auto', 'margin':'0 auto'}}>
+                        <table className={groupStyles.table100} >
+                            <thead className={groupStyles.Table100Head}>
                                 <tr>
                                     <th>Order</th>
                                     <th>Name</th>
@@ -40,7 +41,7 @@ function GroupPage(props) {
                                     <th>Project</th>
                                 </tr>
                             </thead>
-                            <tbody className={tableStyles.Table100Body}>
+                            <tbody className={groupStyles.Table100Body}>
                                 <tr>
                                     <td>1</td>
                                     <td>Hello kitty</td>

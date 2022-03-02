@@ -46,8 +46,8 @@ function MyGroupPage(props) {
                     </div>
 
                     <div className={styles.taskContainer + ' ' + tableStyles.content} style={{ 'overflowX': 'auto', 'margin': '0 auto' }}>
-                        <table className={tableStyles.table100} >
-                            <thead className={tableStyles.Table100Head}>
+                        <table className={stylesBtn.table100} >
+                            <thead className={stylesBtn.Table100Head}>
                                 <tr>
                                     <th>Order</th>
                                     <th>Name</th>
@@ -56,7 +56,7 @@ function MyGroupPage(props) {
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody className={tableStyles.Table100Body}>
+                            <tbody className={stylesBtn.Table100Body}>
                                 <tr>
                                     <td>1</td>
                                     <td>Hello kitty</td>
