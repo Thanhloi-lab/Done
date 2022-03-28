@@ -6,25 +6,21 @@ const jobsSlice = createSlice({
     name:'jobs',
     initialState:{
         path:HOME_JOB,
-        allTasks:{},
+        allTasks:[],
         sideBarStatus:true,
         homeActions:{
             completedJobs:{show:false, projectId:[]},
             unCompletedJobs:{show:false, projectId:[]},
             expiredJobs:{show:false, projectId:[]},
             bugJobs:{show:false, projectId:[]},
-        },
-        completedJobsAction:{show:false, projectId:[]},
-        unCompletedJobsAction:{show:false, projectId:[]},
-        expiredJobsAction:{show:false, projectId:[]},
-        bugJobsAction:{show:false, projectId:[]},
+        }
     },
     reducers:{
         changeTab: (state, action) =>{
             state.path = action.payload.path;
         },
         getAllTasks:(state, action)=>{
-            state.allTasks = action.payload.allTasks
+            state.allTasks = action.payload
         },
         toggleSideBar:(state)=>{
             state.sideBarStatus = !state.sideBarStatus
@@ -60,8 +56,12 @@ const jobsSlice = createSlice({
                 removeElement(state[action.payload.projectStatus].projectId, action.payload.idProject)
             }
         },
-        setJobActionsWidest:(state, action)=>{
-            state[action.payload.projectStatus].show = !state[action.payload.projectStatus].show;
+        reloadJobAction:(state, action)=>{
+            state.homeActions.completedJobs.projectId=[];
+            state.homeActions.unCompletedJobs.projectId=[];
+            state.homeActions.expiredJobs.projectId=[];
+            state.homeActions.bugJobs.projectId=[];
+
         }
     }
 });

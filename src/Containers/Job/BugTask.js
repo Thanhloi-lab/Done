@@ -7,8 +7,6 @@ import LoadAllTask from './LoadAllTasks'
 
 
 function BugTask(){
-    
-
     return (
         <>
             <LoadAllTask/>

@@ -10,6 +10,7 @@ function LoadAllTask() {
         handleLoadAllTasks(2)
             .then(result => {
                 dispatch(jobsSlice.actions.getAllTasks(result));
+                dispatch(jobsSlice.actions.reloadJobAction());
             })
             .catch(err => {
                 console.log(err);
