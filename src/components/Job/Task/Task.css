@@ -1,0 +1,34 @@
+.task-container{
+    
+    display: flex;
+    position: relative;
+    left: 25vw;
+    
+
+
+}
+
+.task-detail{
+    width: 45vw;
+    height: 80vh;
+    display: block;
+    background-color: aquamarine;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    
+}
+
+.task-chat{
+    width: 35vw;
+    height: 80vh;
+    display: block;
+    background-color: antiquewhite;
+}
+
+.task-chat-message{
+    padding: 5px;
+}
+
+.me{
+    margin-right: 0px;
+}

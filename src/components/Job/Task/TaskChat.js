@@ -1,7 +1,11 @@
+import styles from '../page.module.css';
+import  './Task.css';
 function TaskChat(){
     return (
         <>
-            chat
+            <div className='task-chat'>
+                chat
+            </div>
         </>
     )
 }

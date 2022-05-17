@@ -21,8 +21,9 @@ import {useState} from 'react'
 import {onMessageListener} from './firebaseInit'
 import {ReactNotificationComponent} from './components/Chat/ReactNotificationComponent'
 import Notification from './components/Chat/Notification'
-import Task from './Containers/Task/TaskInfo';
+import TaskCommon from './Containers/Task/TaskInfo';
 import CreateGroup from './Containers/Job/CreateGroup';
+import ErrorPage from './Containers/ErrorPage';
 
 
 function App() {
@@ -62,7 +63,7 @@ function App() {
             <Notification/>
             <Routes>
                 <Route path="/" exact element={< Home />}/>
-                <Route path="/task/id" exact element={< Task />}/>
+                {/* <Route path="/task/id" exact element={< Task />}/> */}
                 <Route path="/services" exact element={< Services />}/>
                 <Route path="/sign-in" exact element={< SignIn />}/>
                 <Route path="/sign-up" exact element={< SignUp />}/>
@@ -79,6 +80,7 @@ function App() {
                 <Route path={HOME_JOB} exact element={<HomeJob/>}/>
 
                 {/* task detail */}
+                <Route path="/task/" exact element={<TaskCommon/>}/>
                 <Route path="/job/:id" exact element={<TaskInfo taskName='DONE' status='COMPLETED' name='Completed'/>}/>
                 <Route path='/*' element={<ErrorPage/>}/>
             </Routes>

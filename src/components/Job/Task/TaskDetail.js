@@ -1,14 +1,11 @@
-import styles from '../page.module.css'
+import styles from '../page.module.css';
+import stylesTask from './Task.css';
 function TaskDetail(){
     return (
         <>
-          <div className={styles.limiter}>
-            <div className={styles.container}>
-                <div className={styles.contentWrapper}>
-                    Hello
-                </div>
-            </div>
-        </div>
+          <div className='task-detail'>
+            hello
+          </div>
         </>
     )
 }

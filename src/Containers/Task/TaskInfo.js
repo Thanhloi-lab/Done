@@ -1,10 +1,9 @@
-import TaskDetail from '../../components/Job/Task/TaskDetail'
-import TaskChat from '../../components/Job/Task/TaskChat'
-function Task(){
+
+import TaskCommon from '../../components/Job/Task/TaskCommon'
+function TaskInfo(){
     return (
         <>
-            <TaskDetail/>
-            <TaskChat/>
+            <TaskCommon/>
         </>)
 }
-export default Task;
+export default TaskInfo;
