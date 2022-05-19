@@ -8,7 +8,7 @@ const Notifications = (props) => {
       async function tokenFunc() {
         data = await getToken(setTokenFound);
         if (data) {
-          console.log("Token is", data);
+          localStorage.setItem("token_notyfi",data);
         }
         return data;
       }

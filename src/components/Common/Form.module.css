@@ -1,6 +1,7 @@
 
 
 /*---------------------------------------------*/
+.circular--square { border-radius: 50%; }
 .textCenter > a {
     font-size: 14px;
     line-height: 1.7;

@@ -18,6 +18,14 @@ export function validate(input, type){
                 return false;
             }
             break;
+        case 'name' :
+            if(input.trim() === null || input.trim().match(/^ *$/) !== null)
+                return false;
+            break;
+        case 'phone' :
+            if(input.trim().match(/^0[0-9]{9}$/) == null)
+                return false;
+            break;
 
         default: break;
     }

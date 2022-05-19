@@ -23,7 +23,7 @@ function MyGroupPage(props) {
                         >
                             <div className={stylesBtn.btnContainer}>
                                 <Link className={stylesBtn.addBtn} to='/job/create-group'>
-                                    <i class="fa-solid fa-plus"></i>
+                                    <i className="fa-solid fa-plus"></i>
                                     <span className={styles.addtext} style={{ marginLeft: '10px' }}>New group</span>
                                 </Link>
                             </div>
@@ -45,9 +45,9 @@ function MyGroupPage(props) {
                         </div>
                     </div>
 
-                    <div className={styles.taskContainer + ' ' + tableStyles.content} style={{ 'overflow-x': 'auto', 'margin': '0 auto' }}>
-                        <table className={tableStyles.table100} >
-                            <thead className={tableStyles.Table100Head}>
+                    <div className={styles.taskContainer + ' ' + tableStyles.content} style={{ 'overflowX': 'auto', 'margin': '0 auto' }}>
+                        <table className={stylesBtn.table100} >
+                            <thead className={stylesBtn.Table100Head}>
                                 <tr>
                                     <th>Order</th>
                                     <th>Name</th>
@@ -56,7 +56,7 @@ function MyGroupPage(props) {
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody className={tableStyles.Table100Body}>
+                            <tbody className={stylesBtn.Table100Body}>
                                 <tr>
                                     <td>1</td>
                                     <td>Hello kitty</td>
@@ -64,12 +64,12 @@ function MyGroupPage(props) {
                                     <td><Link to="/" className={tableStyles.LinkToProject}>5 projects</Link></td>
                                     <td>
                                         <Link className={stylesBtn.deleteBtn} to='/'>
-                                            <i class="fa-solid fa-trash-can"></i>
+                                            <i className="fa-solid fa-trash-can"></i>
                                             <span className={stylesBtn.deleteText} style={{ marginLeft: '10px' }}>Delete</span>
                                         </Link>
                                         /
                                         <Link className={stylesBtn.editBtn} to='/'>
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <i className="fa-solid fa-pen-to-square"></i>
                                             <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Edit</span>
                                         </Link>
                                     </td>

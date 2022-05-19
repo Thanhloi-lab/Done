@@ -1,10 +1,10 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
 import inputStyles from './InputStyles.module.css'
-import { Link } from 'react-router-dom';
 
 function CreateGroup(props) {
+    const [member, setMember] = useState([]);
 
     const handleOnClickAddMember = (e) => {
         const listMember = document.getElementById('ListMember');
@@ -16,6 +16,37 @@ function CreateGroup(props) {
             listMember.classList.add(inputStyles.active);
             e.target.innerText = 'Create group';
         }
+    }
+
+    const onCheckBoxChange = (id) => {
+        const checkBox = document.getElementById(id);
+        if (checkBox.checked) {
+            var user = {
+                IdUser: id,
+                Name: checkBox.getAttribute('Name'),
+                Email: checkBox.getAttribute('Email')
+            }
+            setMember([...member, user]);
+            const avatar = (
+                <div className={inputStyles.avatarWrapper}>
+                    <img src="/images/penguin2.png" alt={user.Name} className={inputStyles.avatar} />
+                    <button className={inputStyles.removeMemberBtn} onClick={() => onClickRemoveMember(user.IdUser)}>
+                        <i className="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+            )
+        }
+        else {
+            const newState = member.filter((item) => item.IdUser !== id);
+            setMember(newState);
+        }
+
+    }
+    const onClickRemoveMember = (id) => {
+        const checkBox = document.getElementById(id);
+        checkBox.checked=false;
+        const newState = member.filter((item) => item.IdUser !== id);
+        setMember(newState);
     }
 
     return (
@@ -40,34 +71,17 @@ function CreateGroup(props) {
                             <p className={inputStyles.label}>
                                 Members:
                             </p>
-                            <div className={inputStyles.avatarContainer}>
-                                <div className={inputStyles.avatarWrapper}>
-                                    <img src="/images/penguin2.png" alt="Null" className={inputStyles.avatar} />
-                                    <button className={inputStyles.removeMemberBtn}>
-                                        <i className="fa-solid fa-circle-xmark"></i>
-                                    </button>
-                                </div>
-
-                                <div className={inputStyles.avatarWrapper}>
-                                    <img src="/images/penguin2.png" alt="Null" className={inputStyles.avatar} />
-                                    <button className={inputStyles.removeMemberBtn}>
-                                        <i className="fa-solid fa-circle-xmark"></i>
-                                        </button>
-                                </div>
-
-                                <div className={inputStyles.avatarWrapper}>
-                                    <img src="/images/penguin2.png" alt="Null" className={inputStyles.avatar} />
-                                    <button className={inputStyles.removeMemberBtn}>
-                                        <i className="fa-solid fa-circle-xmark"></i>
-                                    </button>
-                                </div>
-
-                                <div className={inputStyles.avatarWrapper}>
-                                    <img src="/images/penguin2.png" alt="Null" className={inputStyles.avatar} />
-                                    <button className={inputStyles.removeMemberBtn}>
-                                        <i className="fa-solid fa-circle-xmark"></i>
-                                    </button>
-                                </div>
+                            <div className={inputStyles.avatarContainer} id='selectedMemberContainer'>
+                                {member.map((item) => {
+                                    return (
+                                        <div className={inputStyles.avatarWrapper} key={item.UserId}>
+                                            <img src="/images/penguin2.png" alt={item.Name} className={inputStyles.avatar} />
+                                            <button className={inputStyles.removeMemberBtn} onClick={() => onClickRemoveMember(item.IdUser)}>
+                                                <i className="fa-solid fa-circle-xmark"></i>
+                                            </button>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                         <div className={inputStyles.addMemberContainer}>
@@ -104,17 +118,41 @@ function CreateGroup(props) {
                                 </thead>
                                 <tbody className={tableStyles.Table100Body}>
                                     <tr>
-                                        <td><input className={inputStyles.checkBox} type="checkbox" /></td>
+                                        <td>
+                                            <input className={inputStyles.checkBox}
+                                                type="checkbox"
+                                                email='nigga@gmail.com'
+                                                name='Hello kitty'
+                                                id='id1'
+                                                onClick={() => onCheckBoxChange('id1')}
+                                            />
+                                        </td>
                                         <td>Hello kitty</td>
                                         <td>nigga@gmail.com</td>
                                     </tr>
                                     <tr>
-                                        <td><input className={inputStyles.checkBox} type="checkbox" /></td>
+                                        <td>
+                                            <input className={inputStyles.checkBox}
+                                                type="checkbox"
+                                                email='nigga1@gmail.com'
+                                                name='Hello kitty1'
+                                                id='id2'
+                                                onClick={() => onCheckBoxChange('id2')}
+                                            />
+                                        </td>
                                         <td>Hello kitty1</td>
                                         <td>nigga1@gmail.com</td>
                                     </tr>
                                     <tr>
-                                        <td><input className={inputStyles.checkBox} type="checkbox" /></td>
+                                        <td>
+                                            <input className={inputStyles.checkBox}
+                                                type="checkbox"
+                                                email='nigga2@gmail.com'
+                                                name='Hello kitty2'
+                                                id='id3'
+                                                onClick={() => onCheckBoxChange('id3')}
+                                            />
+                                        </td>
                                         <td>Hello kitty2</td>
                                         <td>nigg2@gmail.com</td>
                                     </tr>

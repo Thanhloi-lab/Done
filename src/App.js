@@ -18,7 +18,7 @@ import MyGroups from './Containers/Job/MyGroups'
 import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP} from './asset/js/constant'
 import TaskInfo from './Containers/Job/TaskInfo'
 import {useState} from 'react'
-import {onMessageListener} from './firebaseInit'
+import {onMessageListener, onSubcribleToTopic} from './firebaseInit'
 import {ReactNotificationComponent} from './components/Chat/ReactNotificationComponent'
 import Notification from './components/Chat/Notification'
 import TaskCommon from './Containers/Task/TaskInfo';
@@ -39,6 +39,15 @@ function App() {
         console.log(payload.notification);
     })
     .catch((err) => console.log("failed: ", err));
+
+    const user = JSON.parse( localStorage.getItem('user'));
+    //console.log(user);
+    // onSubcribleToTopic(localStorage.getItem("token_notyfi"),'user-' + user.idUser).then(
+    //     (res) => 
+    //     {
+    //         console.log(res);
+    //     }
+    // );
 
 
     
@@ -77,7 +86,7 @@ function App() {
                 <Route path={EXPIRED_TAB} exact element={<ExpiredTask/>}/>
                 <Route path={GROUPS} exact element={<Groups/>}/>
                 <Route path={MY_GROUP} exact element={<MyGroups/>}/>
-                <Route path={HOME_JOB} exact element={<HomeJob/>}/>
+                <Route path={HOME_JOB +"/*"} exact element={<HomeJob/>}/>
 
                 {/* task detail */}
                 <Route path="/task/" exact element={<TaskCommon/>}/>

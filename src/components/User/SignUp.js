@@ -1,21 +1,26 @@
 import {memo, useState} from 'react';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
 import {validate} from '../../asset/js/validation.js'
+import {register} from '../../apis/UserApi.js'
+import { Toast } from 'bootstrap';
 
 function SignUp(){
-    console.log("Sign-up component rendered");
+  
     
     const initValue = {
         loginName:'',
         password:'',
-        confirmPassword:''
+        confirmPassword:'',
+        name: '',
+        phone: '',
+        avatar: null
     };
     const [input, setInput] = useState(initValue);
-
+    const [avatar, setAvatar] = useState('images/img-login.png');
 
     const handleInputValidation = (event) =>{
         const inputValue = event.target.parentNode;
@@ -36,8 +41,28 @@ function SignUp(){
         }
     }
 
-    const handleSubmit = (event)=>{
-        event.preventDefault();
+    const handleSubmit = async (event)=>{
+        var res = await register(input);
+        if(res.status === 200)
+        {
+            window.location.pathname = "/sign-in";
+        }else
+        {
+            Toast("Lỗi");
+        }
+    }
+    const onImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            var url = URL.createObjectURL(event.target.files[0]);
+            var fileName  = event.target.value;
+            var match = /\.(\w+)$/.exec(fileName);
+            var type = match ? `image/${match[1]}` : `image`;
+            setAvatar(url);
+            setInput({
+                ...input,
+                avatar: { uri: fileName , name: fileName, type }
+            })
+          }
     }
 
     return (
@@ -46,10 +71,15 @@ function SignUp(){
                 <div className={styles.containerLogin100}>
                     <div className={styles.wrapLogin100}>
                         <div className={styles.login100Pic} animation= "js-tilt" data-tilt>
-                            <img src="images/img-login.png" alt="IMG"/>
+                            <img src={avatar} alt="IMG" className='circular--square'/>    
+                            <label for="image" className={styles.login100FormBtn}>
+                                Chọn ảnh
+                            </label>     
+                            <input type="file" onChange={onImageChange} id="image" hidden />                 
                         </div>
+                       
 
-                        <form className={clsx(styles.login100Form, styles.validateForm)}>
+                        <div className={clsx(styles.login100Form, styles.validateForm)}>
                             <span className={styles.login100FormTitle}>
                                 Register
                             </span>
@@ -67,6 +97,39 @@ function SignUp(){
                                 <span className={styles.focusInput100}></span>
                                 <span className={styles.symbolInput100}>
                                     <i className="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Must enter your name">
+
+                                <input className={styles.input100} type="text" name="name" 
+                                    placeholder="Name" onBlur={handleInputValidation} 
+                                    onChange={e=>{setInput({
+                                        ...input,
+                                        name: e.target.value
+                                    })}}
+                                />
+
+                                <span className={styles.focusInput100}></span>
+                                <span className={styles.symbolInput100}>
+                                    <i class="fa-solid fa-person" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Phone must 10 number and start whit 0">
+
+                                <input className={styles.input100} type="text" name="phone" 
+                                    placeholder="Phone" onBlur={handleInputValidation} 
+                                    onChange={e=>{setInput({
+                                        ...input,
+                                        phone: e.target.value
+                                    })}}
+                                />
+
+                                <span className={styles.focusInput100}></span>
+                                <span className={styles.symbolInput100}>
+                                    
+                                    <i class="fa-solid fa-phone" aria-hidden="true"></i>
                                 </span>
                             </div>
 
@@ -122,7 +185,7 @@ function SignUp(){
                                     <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                                 </Link>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

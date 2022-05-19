@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from 'firebase/app';
-import { getAnalytics } from "firebase/analytics";
 import { getMessaging, getToken } from "firebase/messaging";
 import {onBackgroundMessage} from "firebase/messaging/sw";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -17,34 +16,44 @@ const firebaseConfig = {
   appId: "1:311697157826:web:7218a1cf545a19e783d55b",
   measurementId: "G-MQQPH1C431"
 };
-
+const publicKey = 'BJUYwdGkLKAa0zlfvK36q83uCKdPu6nSCUFf-CrEdOdAx6XR1vQTNLaqvBFeqokV6rl5joYOWEbx3bCTO68pbP4';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 
 const messaging = getMessaging(firebaseConfig);
-export const getTokenFCM = getToken(messaging, { vapidKey: 'BJUYwdGkLKAa0zlfvK36q83uCKdPu6nSCUFf-CrEdOdAx6XR1vQTNLaqvBFeqokV6rl5joYOWEbx3bCTO68pbP4' }).then((currentToken) => {
-  if (currentToken) {
-    // Send the token to your server and update the UI if necessary
-    // ...
-  } else {
-    // Show permission request UI
-    console.log('No registration token available. Request permission to generate one.');
-    // ...
+export const getTokenMessage = async (setTokenFound) => {
+  let currentToken = '';
+  try {
+    currentToken = await messaging.getToken({vapidKey: publicKey});
+    if (currentToken) {
+      setTokenFound(true);
+    } else {
+      setTokenFound(false);
+    }
+  } catch (error) {
+    console.log('An error occurred while retrieving token.', error);
   }
-}).catch((err) => {
-  console.log('An error occurred while retrieving token. ', err);
-  // ...
+  return currentToken;
+};
+
+export const onMessageListener = () =>
+new Promise((resolve) => {
+  messaging.onMessage((payload) => {
+    resolve(payload);
+  });
 });
 
-onBackgroundMessage(messaging, (payload) => {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
-  const notificationTitle = 'Background Message Title';
-  const notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png'
-  };
-
+export const onSubcribleToTopic = (token, topic) =>
+new Promise((resolve) => {
+  messaging.onSubcribleToTopic(token, topic)
+  .then((response) => {
+    // See the MessagingTopicManagementResponse reference documentation
+    // for the contents of response.
+    console.log('Successfully subscribed to topic:', response);
+  })
+  .catch((error) => {
+    console.log('Error subscribing to topic:', error);
+  });
 });

@@ -33,6 +33,7 @@ export const getToken = async (setTokenFound) => {
     } catch (error) {
       console.log('An error occurred while retrieving token.', error);
     }
+    console.log(currentToken);
     return currentToken;
   };
 

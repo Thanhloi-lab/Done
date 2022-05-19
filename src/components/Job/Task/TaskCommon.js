@@ -1,5 +1,5 @@
 import './Task.css';
-import TaskChat from './TaskChat';
+// import TaskChat from './TaskChat';
 import TaskDetail from './TaskDetail';
 import styles from '../page.module.css';
 function TaskCommon(){
@@ -8,7 +8,7 @@ function TaskCommon(){
             <div className={styles.limiter}>
                 <div className= "task-container">
                     <TaskDetail/>
-                    <TaskChat/>
+                    {/* <TaskChat/> */}
                                   
                 </div>
             </div>
