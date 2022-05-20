@@ -40,15 +40,15 @@ function SignIn(){
     const handleSubmit = async(s,e) =>{
         //e.preventDefault();
         const res = await login(input);
-        const data = await res.text();
+        var data = null;
         
         if(res.status === 200)
         {
-            localStorage.setItem('user',JSON.stringify(data));           
+            //ocalStorage.setItem('user',JSON.stringify(data));           
             window.location.pathname='';
         }else
         {
-            
+           
         }
 
         // const response = login(initValue);

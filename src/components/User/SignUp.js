@@ -54,13 +54,13 @@ function SignUp(){
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             var url = URL.createObjectURL(event.target.files[0]);
-            var fileName  = event.target.value;
+            var fileName  = event.target.files[0];
             var match = /\.(\w+)$/.exec(fileName);
             var type = match ? `image/${match[1]}` : `image`;
             setAvatar(url);
             setInput({
                 ...input,
-                avatar: { uri: fileName , name: fileName, type }
+                avatar:  event.target.files[0] 
             })
           }
     }
