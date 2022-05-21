@@ -16,6 +16,7 @@ function SignIn(){
         password:''
     };
     const [input, setInput] = useState(initValue);
+    const [message, setMessage] = useState(null);
 
     useEffect(() => {
         document.getElementById("btnLogin").addEventListener("click", function(event){
@@ -40,21 +41,20 @@ function SignIn(){
     const handleSubmit = async(s,e) =>{
         //e.preventDefault();
         const res = await login(input);
-        var data = null;
+        var data = await res.text();
         
         if(res.status === 200)
         {
-            //ocalStorage.setItem('user',JSON.stringify(data));           
+            localStorage.setItem('user',data);           
             window.location.pathname='';
         }else
         {
-           
+            if(data === 'Vui lòng kích hoạt tài khoản')
+                window.location = '/verify-email/' + input.email;
+            setMessage(data);
         }
 
-        // const response = login(initValue);
-        // response.then((data) => {
-        //     console.log(data);
-        // })
+       
        
       
         
@@ -110,6 +110,12 @@ function SignIn(){
                                     Login
                                 </button>
                             </div>
+
+                            {message ? <div className={styles.textCenter + " p-t-12"}>
+                                <span className={styles.txt1} style={{color:"red"}}>
+                                    {message} 
+                                </span>
+                            </div> : null}
 
                             <div className={styles.textCenter + " p-t-12"}>
                                 <span className={styles.txt1}>

@@ -24,6 +24,10 @@ import Notification from './components/Chat/Notification'
 import TaskCommon from './Containers/Task/TaskInfo';
 import CreateGroup from './Containers/Job/CreateGroup';
 import ErrorPage from './Containers/ErrorPage';
+import VerifyEmail from './Containers/User/VerifyUser'; 
+import ChangePassword from './Containers/User/ChangePassword'
+import UpdateUserInfo from './Containers/User/UpdateUserInfo'
+
 
 
 function App() {
@@ -75,8 +79,11 @@ function App() {
                 {/* <Route path="/task/id" exact element={< Task />}/> */}
                 <Route path="/services" exact element={< Services />}/>
                 <Route path="/sign-in" exact element={< SignIn />}/>
+                <Route path="/verify-email/:email"  exact element={< VerifyEmail />}/>
+                <Route path="/change-password" exact element={< ChangePassword />}/>
                 <Route path="/sign-up" exact element={< SignUp />}/>
                 <Route path="/forgot-password" exact element={< ForgotPassword />}/>
+                <Route path="/update-user-info" exact element={< UpdateUserInfo />}/>
                 <Route path="/job/create-group" exact element={< CreateGroup />}/>
 
                 {/* Task tab */}

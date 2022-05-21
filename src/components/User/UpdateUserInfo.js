@@ -1,28 +1,41 @@
-import {memo, useState} from 'react';
+import {memo, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import { Link, Navigate } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
 import {validate} from '../../asset/js/validation.js'
-import {register} from '../../apis/UserApi.js'
+import {editInfo, getUserInfoById } from '../../apis/UserApi.js'
 import { Toast } from 'bootstrap';
 
-function SignUp(){
+function UpdateUserInfoComponent(){
   
-    
+    const idUser = JSON.parse(localStorage.getItem("user")).idUser;
+   
     const initValue = {
-        email:'',
-        password:'',
-        confirmPassword:'',
+        id:'',
         name: '',
         phone: '',
-        avatar: null
     };
     const [input, setInput] = useState(initValue);
     const [avatar, setAvatar] = useState('images/img-login.png');
     const [message, setMessage] = useState(null);
     const [isSuccess, setIsSuccess] = useState(false);
+
+
+     
+    useEffect(()=> {
+        getUserInfoById(idUser).then((res) => 
+        {
+            setInput({
+                id:idUser,
+                name: res.name,
+                phone: res.phone
+            })
+        })
+    
+    },[input.id]);
+
 
     const handleInputValidation = (event) =>{
         const inputValue = event.target.parentNode;
@@ -44,7 +57,7 @@ function SignUp(){
     }
 
     const handleSubmit = async (event)=>{
-        var res = await register(input);
+        var res = await editInfo(input);
         var data = await res.text();
         if(res.status === 200)
         {
@@ -83,24 +96,10 @@ function SignUp(){
 
                         <div className={clsx(styles.login100Form, styles.validateForm)}>
                             <span className={styles.login100FormTitle}>
-                                Register
+                                Cập nhật thông tin cá nhân
                             </span>
 
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Valid email is required: ex@abc.xyz">
-
-                                <input className={styles.input100} type="text" name="email" 
-                                    placeholder="Email" onBlur={handleInputValidation} 
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        email: e.target.value
-                                    })}}
-                                />
-
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-envelope" aria-hidden="true"></i>
-                                </span>
-                            </div>
+                            
 
                             <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Must enter your name">
 
@@ -109,7 +108,7 @@ function SignUp(){
                                     onChange={e=>{setInput({
                                         ...input,
                                         name: e.target.value
-                                    })}}
+                                    })}} value = {input.name}
                                 />
 
                                 <span className={styles.focusInput100}></span>
@@ -125,7 +124,7 @@ function SignUp(){
                                     onChange={e=>{setInput({
                                         ...input,
                                         phone: e.target.value
-                                    })}}
+                                    })}} value={input.phone}
                                 />
 
                                 <span className={styles.focusInput100}></span>
@@ -135,40 +134,11 @@ function SignUp(){
                                 </span>
                             </div>
 
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Password must be 8 chars include number and uppercase">
-                                <input className={styles.input100} type="password" name="password" 
-                                    placeholder="Password" onBlur={handleInputValidation}
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        password: e.target.value
-                                    })}}
-                                />
-                                
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-lock" aria-hidden="true"></i>
-                                </span>
-                            </div>
-
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} 
-                                data-validate = "Confirm-password is not match">
-                                <input className={styles.input100} type="password" name="confirm-password" 
-                                    placeholder="Confirm-password" onBlur={handleInputValidation}
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        confirmPassword: e.target.value
-                                    })}}
-                                />
-                                
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-lock" aria-hidden="true"></i>
-                                </span>
-                            </div>
+                           
                             
                             <div className={styles.containerLogin100FormBtn}>
                                 <button className={styles.login100FormBtn} onClick={handleSubmit}>
-                                    Register
+                                    Cập nhật
                                 </button>
                             </div>
 
@@ -178,12 +148,7 @@ function SignUp(){
                                 </span>
                             </div> : null}
 
-                            <div className={styles.textCenter + " p-t-136"}>
-                                <Link to='/sign-in' className={styles.txt2}>
-                                    You have an account
-                                    <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                                </Link>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -192,4 +157,4 @@ function SignUp(){
     )
 }
 
-export default memo(SignUp);
+export default memo(UpdateUserInfoComponent);

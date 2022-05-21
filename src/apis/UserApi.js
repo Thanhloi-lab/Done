@@ -1,7 +1,8 @@
 
 
 
-const API_URL = "http://localhost:50003";
+export const API_URL = "http://localhost:50003";
+
 
 export const register = async (data) => {
     const formData = new FormData();
