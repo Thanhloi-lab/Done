@@ -1,40 +1,46 @@
-import {memo, useEffect, useState} from 'react';
+import {memo, useEffect, useState, useRef} from 'react';
 import clsx from 'clsx';
 import { Link, Navigate } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
 import {validate} from '../../asset/js/validation.js'
-import {editInfo, getUserInfoById } from '../../apis/UserApi.js'
+import {editInfo, getUserInfoById,API_URL,editAvatar } from '../../apis/UserApi.js'
 import { Toast } from 'bootstrap';
 
 function UpdateUserInfoComponent(){
   
     const idUser = JSON.parse(localStorage.getItem("user")).idUser;
-   
-    const initValue = {
-        id:'',
+    
+    var initValue = {
+        id: idUser,
         name: '',
-        phone: '',
+        phone: ''
     };
+
     const [input, setInput] = useState(initValue);
     const [avatar, setAvatar] = useState('images/img-login.png');
+    const [image, setImage] = useState(null);
     const [message, setMessage] = useState(null);
-    const [isSuccess, setIsSuccess] = useState(false);
 
 
-     
-    useEffect(()=> {
-        getUserInfoById(idUser).then((res) => 
-        {
-            setInput({
-                id:idUser,
-                name: res.name,
-                phone: res.phone
-            })
-        })
+    //console.log("use state");
+
+    useEffect(() => {
+        getUserInfoById(idUser).then(
+            (res) => res.json().then((data) => 
+            {
+                console.log("userEffect")
+                setInput( {
+                    
+                    id: idUser,
+                    name: data.name,
+                    phone: data.phone
+                });
+                setAvatar(API_URL +'/' + data.avatar);
+            }))
+    },[])
     
-    },[input.id]);
 
 
     const handleInputValidation = (event) =>{
@@ -58,15 +64,29 @@ function UpdateUserInfoComponent(){
 
     const handleSubmit = async (event)=>{
         var res = await editInfo(input);
+       
         var data = await res.text();
         if(res.status === 200)
-        {
-           window.location = '/verify-email/' + input.email;
+        {           
+           //new Toast('Cập nhật thành công');
         }else
         {
             setMessage(data);
         }
     }
+
+    const handleSubmitAvatar = async (event) =>{
+        var res = await editAvatar({id:idUser,avatar:image});
+        var data = await res.text();
+        if(res.status === 200)
+        {           
+           //new Toast('Cập nhật thành công');
+        }else
+        {
+            setMessage(data);
+        }
+    }
+
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             var url = URL.createObjectURL(event.target.files[0]);
@@ -74,10 +94,7 @@ function UpdateUserInfoComponent(){
             var match = /\.(\w+)$/.exec(fileName);
             var type = match ? `image/${match[1]}` : `image`;
             setAvatar(url);
-            setInput({
-                ...input,
-                avatar:  event.target.files[0] 
-            })
+            setImage(event.target.files[0]);
           }
     }
 
@@ -90,7 +107,14 @@ function UpdateUserInfoComponent(){
                             <label htmlFor='image' style={{display:"block"}}>
                                 <img src={avatar} alt="IMG" className={styles.circularSquare} name='avatar'/>  
                             </label>     
-                            <input type="file" onChange={onImageChange} id="image" accept='image/*' hidden  />                 
+                            <input type="file" onChange={onImageChange} id="image" accept='image/*' hidden  /> 
+                            {image ? 
+                            <div className={styles.containerLogin100FormBtn}>
+                                <button className={styles.login100FormBtn} onClick={handleSubmitAvatar}>
+                                    Cập nhật
+                                </button>
+                            </div> : null
+                        }              
                         </div>
                        
 
