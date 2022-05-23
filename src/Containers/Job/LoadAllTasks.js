@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { handleLoadAllTasks } from '../../asset/js/callAPI'
+import { handleLoadAllTasks } from '../../asset/js/API/callAPI'
 import jobsSlice from '../../components/Job/jobsSlice'
 
 function LoadAllTask() {

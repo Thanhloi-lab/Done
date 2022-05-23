@@ -15,11 +15,13 @@ import HomeJob from './Containers/Job/HomeJob';
 import ExpiredTask from './Containers/Job/ExpiredTask';
 import Groups from './Containers/Job/Groups';
 import MyGroups from './Containers/Job/MyGroups';
-import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP} from './asset/js/constant';
+import Project from './Containers/Job/Project';
+import MyProjects from './Containers/Job/MyProjects';
+import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP, PROJECTS, MY_PROJECTS} from './asset/js/constant';
 import TaskInfo from './Containers/Job/TaskInfo';
 import ErrorPage from './Containers/ErrorPage';
 import CreateGroup from './Containers/Job/CreateGroup';
-
+import CreateProject from './Containers/Job/CreateProject';
 
 function App() {
     return (
@@ -32,6 +34,7 @@ function App() {
                 <Route path="/sign-up" exact element={< SignUp />}/>
                 <Route path="/forgot-password" exact element={< ForgotPassword />}/>
                 <Route path="/job/create-group" exact element={< CreateGroup />}/>
+                <Route path="/job/create-project" exact element={< CreateProject />}/>
 
                 {/* Task tab */}
                 <Route path={COMPLETED_TAB} exact element={<CompletedTask/>}/>
@@ -40,6 +43,8 @@ function App() {
                 <Route path={EXPIRED_TAB} exact element={<ExpiredTask/>}/>
                 <Route path={GROUPS} exact element={<Groups/>}/>
                 <Route path={MY_GROUP} exact element={<MyGroups/>}/>
+                <Route path={PROJECTS} exact element={<Project/>}/>
+                <Route path={MY_PROJECTS} exact element={<MyProjects/>}/>
                 <Route path={HOME_JOB +"/*"} exact element={<HomeJob/>}/>
 
                 {/* task detail */}

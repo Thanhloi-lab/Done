@@ -19,7 +19,9 @@ function TaskInfo(props) {
             }
             else {
                 item.classList.add(tableStyles.unActive);
+                item.setAttribute('style', 'border-bottom:0px;',)
                 item.lastChild.setAttribute('style', 'padding:1px')
+
             }
         }
     }

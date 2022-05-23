@@ -1,4 +1,6 @@
-import { STATUS_NAME} from './constant'
+import { STATUS_NAME} from '../constant'
+
+const api = "http://localhost:50003/api";
 
 function groupByProjectStatus(list) {
     const map = new Map();
@@ -16,7 +18,7 @@ function groupByProjectStatus(list) {
 }
 
 async function handleLoadAllTasks(id) {
-    let response = await fetch(`https://localhost:50001/api/Tasks/allTaskOf?Id=${id}`);
+    let response = await fetch(`${api}/Tasks/allTaskOf?Id=${id}`);
     let data = await response.json();
     return data;
 }
@@ -42,8 +44,9 @@ const getAllTaskGroupBy = (data) =>{
 const getArrayTaskFromObject = (obj, id) => {
     const jobs = Object.values(obj);
     let detail;
-    jobs.forEach(map => {
-        map.forEach(projects => {
+    
+    jobs.forEach(project => {
+        project.forEach(projects => {
             projects.value.forEach(project => {
                 if (project.idTask + "" === id) {
                     detail = project;
@@ -52,10 +55,10 @@ const getArrayTaskFromObject = (obj, id) => {
                     return;
             })
             if(detail)
-                    return;
+                return;
         })
         if(detail)
-                    return;
+            return;
     })
     return detail;
 }
