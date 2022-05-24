@@ -1,10 +1,15 @@
-export const EXPIRED_TAB = '/job/expired'
+export const EXPIRED_TAB = '/job/expired';
 export const HOME_JOB = '/job';
 export const BUG_TAB = '/job/bug';
 export const COMPLETED_TAB = '/job/completed';
 export const UNCOMPLETED_TAB = '/job/uncompleted';
 export const GROUPS = '/job/groups';
-export const MY_GROUP = '/job/myGroups'
+export const MY_GROUP = '/job/myGroups';
+export const MY_PROJECTS = '/job/myProjects';
+export const PROJECTS = '/job/Projects';
+export const API_URL = 'http://192.168.0.103:50003'
+
+
 export const STATUS = {
     COMPLETED: 'completed',
     UNCOMPLETED: 'unCompleted',

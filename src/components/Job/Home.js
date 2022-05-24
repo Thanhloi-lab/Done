@@ -1,9 +1,9 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect } from 'react';
 import styles from './page.module.css';
 import tableStyles from './tableStyles.module.css';
 import jobsSlice from './jobsSlice'
 import { useDispatch, useSelector } from 'react-redux';
-import { handleLoadAllTasks } from '../../asset/js/callAPI'
+import { handleLoadAllTasks } from '../../asset/js/API/callAPI'
 import JobBar from './JobBar.js'
 import filtersSlice from '../Filters/FilterSlice'
 import { taskRemainingSelector, allFilterText } from '../../redux/selectors'
@@ -15,29 +15,41 @@ function Home() {
     const jobs = useSelector(taskRemainingSelector);
     const homeActions = useSelector((state) => state.jobs.homeActions);
 
-    const handleReload = (event) => {
-        handleLoadAllTasks(2)
-            .then(result => {
-                // console.log(result);
-                dispatch(jobsSlice.actions.getAllTasks(result));
-                if (event === 'reload')
-                    dispatch(jobsSlice.actions.reloadJobAction());
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
     const handleTextChange = (e) => {
         dispatch(filtersSlice.actions.filtersTextChange(e.target.value));
         dispatch(filtersSlice.actions.statusFiltersChange('All'));
     }
 
+    const handleReload = (event) => {
+        handleLoadAllTasks(2)
+        .then(result => {
+            // console.log(result);
+            dispatch(jobsSlice.actions.getAllTasks(result));
+            if (event === 'reload')
+                dispatch(jobsSlice.actions.reloadJobAction());
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
     useEffect(() => {
-        handleReload();
+        handleReload('load');
     }, [])
 
-
+    // const handleReload = (event) => {
+    //     handleLoadAllTasks(2)
+    //         .then(result => {
+    //             // console.log(result);
+    //             dispatch(jobsSlice.actions.getAllTasks(result));
+    //             if (event === 'reload')
+    //                 dispatch(jobsSlice.actions.reloadJobAction());
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         })
+    // }
+    
     return (
         <div className={styles.limiter}>
             <div className={styles.container}>

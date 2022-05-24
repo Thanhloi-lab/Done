@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import {getAllTaskGroupBy} from '../asset/js/callAPI'
+import {getAllTaskGroupBy} from '../asset/js/API/callAPI'
 import { STATUS_NAME} from '../asset/js/constant'
 
 export const allTasksSelector = (state) => state.jobs.allTasks;

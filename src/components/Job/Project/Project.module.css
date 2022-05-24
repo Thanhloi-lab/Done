@@ -74,7 +74,6 @@
 		position: relative;
         padding-left: 45%;
         max-width:100%;
-        text-align: left;
     }
 
     .Table100Body td:before{
@@ -88,9 +87,9 @@
 		padding: 12px 5px;
 		white-space: nowrap;
     }
-    .table100 tbody td:nth-of-type(1):before { content: "Order"; text-align:left; padding-left:15px;}
-	.table100 tbody td:nth-of-type(2):before { content: "Name"; text-align:left; padding-left:15px;}
-	.table100 tbody td:nth-of-type(3):before { content: "Create User"; text-align:left; padding-left:15px;}
-	.table100 tbody td:nth-of-type(4):before { content: "Date create"; text-align:left; padding-left:15px;}
-	.table100 tbody td:nth-of-type(5):before { content: "Project"; text-align:left; padding-left:15px;}
+    .table100 tbody td:nth-of-type(1):before { content: "Order"; }
+	.table100 tbody td:nth-of-type(2):before { content: "Name"; }
+	.table100 tbody td:nth-of-type(3):before { content: "Create User"; }
+	.table100 tbody td:nth-of-type(4):before { content: "Date create"; }
+	.table100 tbody td:nth-of-type(5):before { content: "Task"; }
 }

@@ -82,14 +82,15 @@
 }
 
 .avatar{
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 1px solid #e0e0e0c7;
     margin-left:20px;
     margin-right:14px;
     padding:5px;
     transition:0.2s;
+    position: relative;
 }
 
 .avatarContainer{
@@ -98,7 +99,7 @@
 }
 
 .avatarWrapper{
-    /* position:absolute; */
+    position:relative;
 }
 
 .avatar:hover{
@@ -109,10 +110,24 @@
 }
 
 
+.popup{
+    position: absolute;
+    font-size:1.5rem;
+    font-weight: 300;
+    top:-25px;
+    left:60%;
+    visibility: hidden;
+    font-family: 'Poppins-Regular';
+    background: #e2e2e2;
+    padding: 2px 10px;
+    border-radius: 15px;
+    z-index: 50;
+}
+
 .removeMemberBtn{
-    position: relative;
-    top: -55px;
-    left: -35px;
+    position: absolute;
+    top: -10px;
+    left: 55px;
     outline: none;
     border: none;
     font-size: 1.8rem;
@@ -123,9 +138,9 @@
 }
 
 @media(max-width: 760px){
-    input td:nth-of-type(1):before { content: "Select"; }
-	input td:nth-of-type(2):before { content: "Name"; }
-	input td:nth-of-type(3):before { content: "Email"; }
+     td:nth-of-type(1):before { content: "Select"; }
+	 td:nth-of-type(2):before { content: "Name"; }
+	 td:nth-of-type(3):before { content: "Email"; }
 
     .avatarContainer{
         width:100%;

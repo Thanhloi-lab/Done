@@ -25,8 +25,11 @@ import TaskCommon from './Containers/Task/TaskInfo';
 import CreateGroup from './Containers/Job/CreateGroup';
 import ErrorPage from './Containers/ErrorPage';
 import VerifyEmail from './Containers/User/VerifyUser'; 
-import ChangePassword from './Containers/User/ChangePassword'
-import UpdateUserInfo from './Containers/User/UpdateUserInfo'
+import ChangePassword from './Containers/User/ChangePassword';
+import UpdateUserInfo from './Containers/User/UpdateUserInfo';
+import Project from './Containers/Job/Project';
+import MyProjects from './Containers/Job/MyProjects';
+import CreateProject from './Containers/Job/CreateProject';
 
 
 
@@ -85,6 +88,7 @@ function App() {
                 <Route path="/forgot-password" exact element={< ForgotPassword />}/>
                 <Route path="/update-user-info" exact element={< UpdateUserInfo />}/>
                 <Route path="/job/create-group" exact element={< CreateGroup />}/>
+                <Route path="/job/create-project" exact element={< CreateProject />}/>
 
                 {/* Task tab */}
                 <Route path={COMPLETED_TAB} exact element={<CompletedTask/>}/>
@@ -93,6 +97,8 @@ function App() {
                 <Route path={EXPIRED_TAB} exact element={<ExpiredTask/>}/>
                 <Route path={GROUPS} exact element={<Groups/>}/>
                 <Route path={MY_GROUP} exact element={<MyGroups/>}/>
+                {/* <Route path={PROJECTS} exact element={<Project/>}/>
+                <Route path={MY_PROJECTS} exact element={<MyProjects/>}/> */}
                 <Route path={HOME_JOB +"/*"} exact element={<HomeJob/>}/>
 
                 {/* task detail */}

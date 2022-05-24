@@ -137,7 +137,11 @@
     transition:all ease 0.3s;
     line-height: 0rem;
     pointer-events: none;
+    border:none;
+    border-collapse:none;
 }
+
+
 
 .groupName,.projectName{
     padding:5px;
@@ -180,6 +184,10 @@
     .table100 td,
     .table100 tr{
         display: block; 
+    }
+
+    .LinkToProject,.LinkToGroup,.LinkToUser{
+        padding:0;
     }
 
     .content{
