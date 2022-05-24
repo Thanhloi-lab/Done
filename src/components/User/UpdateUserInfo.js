@@ -6,11 +6,14 @@ import styles from '../Common/Form.module.css'
 import '../Common/util.css'
 import {validate} from '../../asset/js/validation.js'
 import {editInfo, getUserInfoById,API_URL,editAvatar } from '../../apis/UserApi.js'
-import { Toast } from 'bootstrap';
+import { useSnackbar } from 'notistack';
 
 function UpdateUserInfoComponent(){
   
     const idUser = JSON.parse(localStorage.getItem("user")).idUser;
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+   
     
     var initValue = {
         id: idUser,
@@ -24,7 +27,11 @@ function UpdateUserInfoComponent(){
     const [message, setMessage] = useState(null);
 
 
-    //console.log("use state");
+    const handerNotify = (message, variant) => {
+        enqueueSnackbar(message ,{
+            variant: variant
+        });      
+    }
 
     useEffect(() => {
         getUserInfoById(idUser).then(
@@ -68,10 +75,10 @@ function UpdateUserInfoComponent(){
         var data = await res.text();
         if(res.status === 200)
         {           
-           //new Toast('Cập nhật thành công');
+            handerNotify(data,'success');
         }else
         {
-            setMessage(data);
+            handerNotify(data,'error');
         }
     }
 
