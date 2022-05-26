@@ -32,7 +32,7 @@
 }
 
 .deleteBtn{
-    padding:8px;
+    padding:8px 20px 8px 20px;
     color:#eb5a5a;
     transition: 0.2s;
     border: none;
@@ -52,7 +52,7 @@
 }
 
 .editBtn{
-    padding:8px;
+    padding:8px 20px 8px 20px;
     color: #7171ed;
     cursor: pointer;
     display: inline-block;

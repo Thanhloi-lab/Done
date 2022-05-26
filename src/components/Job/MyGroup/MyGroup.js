@@ -3,7 +3,7 @@ import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
 import stylesBtn from './MyGroup.module.css'
 import { Link, useNavigate } from 'react-router-dom';
-import { allUserGroup } from '../../../asset/js/API/GroupApi';
+import { allUserGroup, deleteGroup, editGroup } from '../../../asset/js/API/GroupApi';
 
 //mui
 import Button from '@mui/material/Button';
@@ -13,6 +13,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 function MyGroupPage(props) {
     console.log("MyGroupPage component rendered");
@@ -20,42 +23,152 @@ function MyGroupPage(props) {
     const [groups, setGroups] = useState([]);
     const [openDelete, setOpenDelete] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [groupEdit, setGroupEdit] = useState({nameGroup:'', idGroup:0});
+    const titleEdit = "Change group's name";
+    const editContent = "Enter new group's name here to edit group's name";
+    const titleDelete = "Delete group " ;
+    const deleteContent = "Deleting group will also delete project and task inside. Are you sure you want to delete?";
 
     useEffect(() => {
-        const getAllGroup = () => {
-            var resultPromise = allUserGroup(2);
-            resultPromise.then((result) => {
-                console.log(result);
-                setGroups(result);
-            })
-                .catch((err) => console.log(err))
-        }
         getAllGroup();
     }, [])
 
+    const getAllGroup = () => {
+        var resultPromise = allUserGroup(2);
+        resultPromise.then((result) => {
+            console.log(result);
+            setGroups(result);
+        })
+            .catch((err) => console.log(err))
+    }
 
     const handleLinkGroupDetail = (groupId) => {
 
         navigate(`/groupDetail/${groupId}`);
     }
 
-    const handleDeleteGroup = (groupId) => {
-
+    const handleDeleteGroup = () => {
+        var data = {
+            IdUser: 2,
+            IdSth: groupEdit.idGroup
+        }
+        var result = deleteGroup(data);
+        result.then(response => {
+            if (response.isSuccessed) {
+                setGroupEdit({nameGroup:'', idGroup:0});
+                getAllGroup();
+                handleClose();
+                alert(response.resultObject);
+            }
+            else {
+                alert(response.message);
+            }
+        })
+            .catch(err => {
+                alert("Xóa thất bại");
+            })
     }
 
     const handleEditGroup = (groupId) => {
-
+        var data = {
+            GroupName: groupEdit.nameGroup,
+            IdUser: 2,
+            IdGroup: groupEdit.idGroup
+        }
+        var result = editGroup(data);
+        result.then(response => {
+            if (response.isSuccessed) {
+                setGroupEdit({nameGroup:'', idGroup:0});
+                getAllGroup();
+                handleClose();
+                alert(response.resultObject);
+            }
+            else {
+                alert(response.message);
+            }
+        })
+            .catch(err => {
+                alert("Sửa thất bại")
+            })
     }
 
-    const handleClickOpen = (event) => {
+    const handleClickEdit = (event, id, name) => {
         event.stopPropagation()
+        console.log(id);
+        setGroupEdit({...groupEdit, idGroup: id, nameGroup:name});
+        setOpenDelete(false);
         setOpenEdit(true);
+        setOpenDialog(true);
     };
 
-    const handleClose = (event) => {
-       
+    const handleClickDelete = (event, id, name) => {
+        event.stopPropagation()
+        setGroupEdit({...groupEdit, idGroup: id, nameGroup:name});
+        setOpenDelete(true);
         setOpenEdit(false);
+        setOpenDialog(true);
     };
+
+
+    const handleClose = (event) => {
+        setOpenDialog(false);
+        setOpenEdit(false);
+        setOpenDelete(false);
+    };
+
+    const handleGroupNameChange = (e) => {
+        setGroupEdit({...groupEdit, nameGroup:e.target.value});
+    }
+
+    const handleActionModal = ()=>{
+        if(openDelete){
+            handleDeleteGroup();
+        }
+        else if(openEdit){
+            handleEditGroup();
+        }
+    }
+
+    const DialogEdit = () => {
+        return (
+            <Dialog open={openDialog} onClose={handleClose}
+                maxWidth='sm'
+                fullWidth
+            // PaperProps={{sx: { fontSize: '2rem !important' }}}
+            >
+                <DialogTitle><span style={{ fontSize: '2.5rem' }}>{openEdit && titleEdit}{openDelete && titleDelete + groupEdit.nameGroup}</span></DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <span style={{ fontSize: '2rem' }}>{openEdit && editContent}{openDelete && deleteContent}</span>
+                    </DialogContentText>
+                    {openEdit &&
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="newGroupName"
+                            label="Group's name"
+                            type="text"
+                            value={groupEdit.nameGroup}
+                            onChange={handleGroupNameChange}
+                            fullWidth
+                            variant="standard"
+                            InputProps={{ style: { fontSize: '1.8rem', fontWeight: '700' } }}
+                            InputLabelProps={{ style: { fontSize: '2rem' } }}
+                        />
+                    }
+
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} variant="contained" color='primary' size="medium" startIcon={<HighlightOffIcon />}>Cancel</Button>
+                    <Button onClick={handleActionModal} variant="outlined" size="medium"
+                        startIcon={openEdit ? <EditIcon /> : <DeleteIcon />} fontSize='2rem'
+                        color={openEdit ? 'secondary' : 'error'}>{openEdit ? "Edit" : "Delete"}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
 
     return (
         <div className={styles.limiter}>
@@ -117,12 +230,13 @@ function MyGroupPage(props) {
                                             <td>{x.mail}</td>
                                             <td>{x.phone}</td>
                                             <td>
-                                                <div className={stylesBtn.deleteBtn} onClick={(s, e) => handleDeleteGroup(x.idGroup)}>
+                                                <div className={stylesBtn.deleteBtn} onClick={(event) => handleClickDelete(event, x.idGroup, x.nameGroup)} >
                                                     <i className="fa-solid fa-trash-can"></i>
                                                     <span className={stylesBtn.deleteText} style={{ marginLeft: '10px' }}>Delete</span>
                                                 </div>
+                                                {/* onClick={(s, e) => handleDeleteGroup(x.idGroup)} */}
                                                 /
-                                                <div className={stylesBtn.editBtn} onClick={(event) => handleClickOpen(event)}>
+                                                <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idGroup, x.nameGroup)}>
                                                     <i className="fa-solid fa-pen-to-square"></i>
                                                     <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Edit</span>
                                                 </div>
@@ -138,27 +252,7 @@ function MyGroupPage(props) {
                 </div>
             </div>
 
-            <Dialog open={openEdit} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Enter new group's name here to edit group's name
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="newGroupName"
-                        label="Group's name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Edit</Button>
-                </DialogActions>
-            </Dialog>
+            {DialogEdit()}
         </div>
     )
 }
