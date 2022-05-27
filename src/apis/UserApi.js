@@ -43,6 +43,16 @@ export const login = async (data) => {
         body: formData
     })
 };
+export const registerDeivice = async (data) => {
+    const formData = new FormData();
+    formData.append("UserId", data.userId)
+    formData.append("Token", data.token)
+
+    return fetch(`${API_URL}/api/Users/registerDevice`, {
+        method: 'POST',
+        body: formData
+    })
+};
 
 export const getUserInfoById = async (id) => {
     return fetch(`${API_URL}/api/Users/getById?id=${id}`)
