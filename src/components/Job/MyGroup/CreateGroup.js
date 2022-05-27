@@ -25,7 +25,8 @@ function CreateGroup(props) {
         if (searchText !== "") {
             getUserByText(searchText)
                 .then((result) => {
-                    setUsers(result);
+                    //myid BUG
+                    setUsers(result.filter(x=>x.idUser!==2));
                 })
                 .catch((err) => console.log(err));
         }
@@ -55,14 +56,6 @@ function CreateGroup(props) {
             var user = users.filter(x => x.mail === id);
 
             setMember([...member, user[0]]);
-            // const avatar = (
-            //     <div className={inputStyles.avatarWrapper}>
-            //         <img src="/images/penguin2.png" alt={user.name} className={inputStyles.avatar} />
-            //         <button className={inputStyles.removeMemberBtn} onClick={() => onClickRemoveMember(user.idUser)}>
-            //             <i className="fa-solid fa-circle-xmark"></i>
-            //         </button>
-            //     </div>
-            // )
         }
         else {
             const newState = member.filter((item) => item.mail !== id);
@@ -73,7 +66,10 @@ function CreateGroup(props) {
 
     const onClickRemoveMember = (id) => {
         const checkBox = document.getElementById(id);
-        checkBox.checked = false;
+        console.log(checkBox)
+        if(checkBox){
+            checkBox.checked = false;
+        }
         const newState = member.filter((item) => item.mail !== id);
         setMember(newState);
     }
@@ -202,59 +198,7 @@ function CreateGroup(props) {
                         <div className={styles.taskContainer + ' ' + tableStyles.content}
                             style={{ 'overflowX': 'auto', 'margin': '0 auto', 'overflowY': 'auto' }}
                         >
-                            <UserSelectList users={users} onCheckBoxChange={onCheckBoxChange} />
-                            {/* <table className={tableStyles.table100} >
-                                <thead className={tableStyles.Table100Head}>
-                                    <tr>
-                                        <th>Select</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody className={tableStyles.Table100Body}>
-                                    <tr>
-                                        <td>
-                                            <input className={inputStyles.checkBox}
-                                                type="checkbox"
-                                                email='nigga@gmail.com'
-                                                name='Hello kitty'
-                                                id='id1'
-                                                style={{cursor:'pointer'}}
-                                                onClick={() => onCheckBoxChange('id1')}
-                                            />
-                                        </td>
-                                        <td>Hello kitty</td>
-                                        <td>nigga@gmail.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input className={inputStyles.checkBox}
-                                                type="checkbox"
-                                                email='nigga1@gmail.com'
-                                                name='Hello kitty1'
-                                                id='id2'
-                                                onClick={() => onCheckBoxChange('id2')}
-                                            />
-                                        </td>
-                                        <td>Hello kitty1</td>
-                                        <td>nigga1@gmail.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input className={inputStyles.checkBox}
-                                                type="checkbox"
-                                                email='nigga2@gmail.com'
-                                                name='Hello kitty2'
-                                                id='id3'
-                                                onClick={() => onCheckBoxChange('id3')}
-                                            />
-                                        </td>
-                                        <td>Hello kitty2</td>
-                                        <td>nigg2@gmail.com</td>
-                                    </tr>
-
-                                </tbody>
-                            </table> */}
+                            <UserSelectList users={users} members={member} onCheckBoxChange={onCheckBoxChange} />
                         </div>
                     </div>
                 </div>

@@ -91,13 +91,14 @@ function UpdateGroup(props) {
         }
     }
 
+    console.log('reload')
     const onClickRemoveMember = (id) => {
         const checkBox = document.getElementById(id);
         if(checkBox){
             checkBox.checked = false;
         }
         const newState = member.filter((item) => item.mail !== id);
-        setMember({...member, newState});
+        setMember(newState);
     }
 
     const handleMouseEnterAvatar = (id) => {

@@ -22,7 +22,7 @@ function UserSelectList({ users, onCheckBoxChange, members }) {
                                     name={user.name}
                                     id={user.mail}
                                     style={{ cursor: 'pointer' }}
-                                    defaultChecked={members.filter(member => member.mail===user.mail).length>0 ? true : false}
+                                    defaultChecked={members.filter(member => member.mail === user.mail).length > 0 ? true : false}
                                     onClick={() => onCheckBoxChange(user.mail)}
                                 />
                             </td>
