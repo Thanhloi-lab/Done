@@ -20,6 +20,7 @@ import MyProjects from './Containers/Job/MyProjects';
 import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP, PROJECTS, MY_PROJECTS} from './asset/js/constant';
 import TaskInfo from './Containers/Job/TaskInfo';
 import ErrorPage from './Containers/ErrorPage';
+import UpdateGroup from './Containers/Job/UpdateGroup';
 import CreateGroup from './Containers/Job/CreateGroup';
 import CreateProject from './Containers/Job/CreateProject';
 
@@ -34,7 +35,9 @@ function App() {
                 <Route path="/sign-up" exact element={< SignUp />}/>
                 <Route path="/forgot-password" exact element={< ForgotPassword />}/>
                 <Route path="/job/create-group" exact element={< CreateGroup />}/>
+                <Route path="/job/update-group/:id" exact element={< UpdateGroup />}/>
                 <Route path="/job/create-project" exact element={< CreateProject />}/>
+                <Route path="/job/:id/projects" exact element={< Project />}/>
 
                 {/* Task tab */}
                 <Route path={COMPLETED_TAB} exact element={<CompletedTask/>}/>

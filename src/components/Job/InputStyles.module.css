@@ -137,6 +137,10 @@
     cursor: pointer;
 }
 
+.removeMemberBtn:hover{
+    opacity: 0.7;
+}
+
 @media(max-width: 760px){
      td:nth-of-type(1):before { content: "Select"; }
 	 td:nth-of-type(2):before { content: "Name"; }

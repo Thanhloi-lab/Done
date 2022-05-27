@@ -34,10 +34,10 @@ function CreateGroup(props) {
     const handleOnClickAddMember = (e) => {
         const listMember = document.getElementById('ListMember');
         if (listMember.classList.contains(inputStyles.active)) {
-            if(member.length>0){
+            if (member.length > 0) {
                 handleCreateGroup();
             }
-            else{
+            else {
                 handleClickOpen();
             }
             // listMember.classList.remove(inputStyles.active);
@@ -109,16 +109,16 @@ function CreateGroup(props) {
     }
 
     const handleCreateGroup = () => {
-        if(groupName.trim()==""){
+        if (groupName.trim() === "") {
             alert("Group name must be enter");
             return;
         }
         var data = {
             NameGroup: groupName.trim(),
             IdUser: 2,
-            Users:[]
+            Users: []
         }
-        member.forEach(x=>{
+        member.forEach(x => {
             data.Users.push(x.idUser);
         })
 
@@ -266,18 +266,20 @@ function CreateGroup(props) {
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                maxWidth='sm'
+                fullWidth
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Alert"}
+                    <span style={{ fontSize: '2.5rem' }}>Alert</span>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Are you really want to create a group without member?
+                        <span style={{ fontSize: '2rem' }}>Are you really want to create a group without member?</span>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleAgree}>Agree</Button>
-                    <Button onClick={handleClose} autoFocus>Cancel</Button>
+                    <Button onClick={handleAgree} variant="contained" size="large" fontSize='2rem' color='primary'>Agree</Button>
+                    <Button onClick={handleClose} autoFocus variant="outlined" size="large" fontSize='2rem'>Cancel</Button>
                 </DialogActions>
             </Dialog>
         </div>
@@ -285,4 +287,4 @@ function CreateGroup(props) {
 
 }
 
-export default CreateGroup;
+export default memo(CreateGroup);

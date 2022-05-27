@@ -21,13 +21,16 @@ function MyGroupPage(props) {
     console.log("MyGroupPage component rendered");
     let navigate = useNavigate();
     const [groups, setGroups] = useState([]);
+    const [fullGroups, setFullGroups] = useState([]);
+    const [searchText, setSearchText] = useState('');
+
     const [openDelete, setOpenDelete] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
-    const [groupEdit, setGroupEdit] = useState({nameGroup:'', idGroup:0});
+    const [groupEdit, setGroupEdit] = useState({ nameGroup: '', idGroup: 0 });
     const titleEdit = "Change group's name";
     const editContent = "Enter new group's name here to edit group's name";
-    const titleDelete = "Delete group " ;
+    const titleDelete = "Delete group ";
     const deleteContent = "Deleting group will also delete project and task inside. Are you sure you want to delete?";
 
     useEffect(() => {
@@ -37,15 +40,29 @@ function MyGroupPage(props) {
     const getAllGroup = () => {
         var resultPromise = allUserGroup(2);
         resultPromise.then((result) => {
-            console.log(result);
+            setFullGroups(result);
             setGroups(result);
         })
             .catch((err) => console.log(err))
     }
 
     const handleLinkGroupDetail = (groupId) => {
+        navigate(`/job/groupDetail/${groupId}`);
+    }
 
-        navigate(`/groupDetail/${groupId}`);
+    const handleTextChange = (e) => {
+        setSearchText(e.target.value);
+        if(e.target.value.trim() !== '') {
+            setGroups(fullGroups.filter(x=>x.nameGroup.toLowerCase().includes(e.target.value.trim().toLowerCase())))
+        }
+        else{
+            setGroups(fullGroups);
+        }
+    }
+
+    const handleReload = ()=>{
+        getAllGroup();
+        setSearchText('');
     }
 
     const handleDeleteGroup = () => {
@@ -56,7 +73,7 @@ function MyGroupPage(props) {
         var result = deleteGroup(data);
         result.then(response => {
             if (response.isSuccessed) {
-                setGroupEdit({nameGroup:'', idGroup:0});
+                setGroupEdit({ nameGroup: '', idGroup: 0 });
                 getAllGroup();
                 handleClose();
                 alert(response.resultObject);
@@ -79,7 +96,7 @@ function MyGroupPage(props) {
         var result = editGroup(data);
         result.then(response => {
             if (response.isSuccessed) {
-                setGroupEdit({nameGroup:'', idGroup:0});
+                setGroupEdit({ nameGroup: '', idGroup: 0 });
                 getAllGroup();
                 handleClose();
                 alert(response.resultObject);
@@ -95,16 +112,17 @@ function MyGroupPage(props) {
 
     const handleClickEdit = (event, id, name) => {
         event.stopPropagation()
-        console.log(id);
-        setGroupEdit({...groupEdit, idGroup: id, nameGroup:name});
-        setOpenDelete(false);
-        setOpenEdit(true);
-        setOpenDialog(true);
+        navigate(`/job/update-group/${id}`);
+        // console.log(id);
+        // setGroupEdit({...groupEdit, idGroup: id, nameGroup:name});
+        // setOpenDelete(false);
+        // setOpenEdit(true);
+        // setOpenDialog(true);
     };
 
     const handleClickDelete = (event, id, name) => {
         event.stopPropagation()
-        setGroupEdit({...groupEdit, idGroup: id, nameGroup:name});
+        setGroupEdit({ ...groupEdit, idGroup: id, nameGroup: name });
         setOpenDelete(true);
         setOpenEdit(false);
         setOpenDialog(true);
@@ -118,16 +136,21 @@ function MyGroupPage(props) {
     };
 
     const handleGroupNameChange = (e) => {
-        setGroupEdit({...groupEdit, nameGroup:e.target.value});
+        setGroupEdit({ ...groupEdit, nameGroup: e.target.value });
     }
 
-    const handleActionModal = ()=>{
-        if(openDelete){
+    const handleActionModal = () => {
+        if (openDelete) {
             handleDeleteGroup();
         }
-        else if(openEdit){
+        else if (openEdit) {
             handleEditGroup();
         }
+    }
+
+    const navigateListProject = (event, id)=>{
+        event.stopPropagation()
+        navigate(`/job/${id}/Projects`);
     }
 
     const DialogEdit = () => {
@@ -157,10 +180,9 @@ function MyGroupPage(props) {
                             InputLabelProps={{ style: { fontSize: '2rem' } }}
                         />
                     }
-
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="contained" color='primary' size="medium" startIcon={<HighlightOffIcon />}>Cancel</Button>
+                    <Button onClick={handleClose} variant="contained" color='primary' size="medium" autoFocus startIcon={<HighlightOffIcon />}>Cancel</Button>
                     <Button onClick={handleActionModal} variant="outlined" size="medium"
                         startIcon={openEdit ? <EditIcon /> : <DeleteIcon />} fontSize='2rem'
                         color={openEdit ? 'secondary' : 'error'}>{openEdit ? "Edit" : "Delete"}
@@ -191,12 +213,12 @@ function MyGroupPage(props) {
                         </div>
                         <div className={styles.taskContainer + ' ' + stylesBtn.searchContainer}>
                             <div className={styles.toolBar}>
-                                <div className={styles.reloadBtn}>
+                                <div className={styles.reloadBtn} onClick={handleReload}>
                                     <span className={styles.reloadText}>Reload</span>
                                     <i className="fas fa-redo"></i>
                                 </div>
                                 <div className={styles.search}>
-                                    <input className={styles.searchInput} />
+                                    <input className={styles.searchInput} value={searchText} onChange={handleTextChange}/>
                                     <div className={styles.searchBtn}>
                                         <span className={styles.searchText}>Search</span>
                                         <i className="fas fa-search"></i>
@@ -213,7 +235,7 @@ function MyGroupPage(props) {
                                     <th>Order</th>
                                     <th>Name</th>
                                     <th>Creator's mail</th>
-                                    <th>Creator's phone</th>
+                                    <th>Projects</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -228,7 +250,11 @@ function MyGroupPage(props) {
                                             <td>{index + 1}</td>
                                             <td>{x.nameGroup}</td>
                                             <td>{x.mail}</td>
-                                            <td>{x.phone}</td>
+                                            <td >
+                                                <div className={tableStyles.LinkToProject} onClick={(event)=>navigateListProject(event, x.idGroup)}>
+                                                    {x.cntProject} projects
+                                                </div>
+                                            </td>
                                             <td>
                                                 <div className={stylesBtn.deleteBtn} onClick={(event) => handleClickDelete(event, x.idGroup, x.nameGroup)} >
                                                     <i className="fa-solid fa-trash-can"></i>
