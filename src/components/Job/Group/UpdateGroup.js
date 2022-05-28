@@ -21,7 +21,7 @@ function UpdateGroup(props) {
     const [users, setUsers] = useState([]);
     const [groupName, setGroupName] = useState("");
     const [open, setOpen] = useState(false);
-    const [loaded, setLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     let id = useParams().id;
@@ -46,7 +46,7 @@ function UpdateGroup(props) {
                 }
             })
             .catch(() => navigate(`/myGroups`))
-        setLoaded(true);
+        setLoading(true);
     }, [])
 
     const handleSearchUser = () => {
@@ -91,10 +91,9 @@ function UpdateGroup(props) {
         }
     }
 
-    console.log('reload')
     const onClickRemoveMember = (id) => {
         const checkBox = document.getElementById(id);
-        if(checkBox){
+        if (checkBox) {
             checkBox.checked = false;
         }
         const newState = member.filter((item) => item.mail !== id);
@@ -163,10 +162,16 @@ function UpdateGroup(props) {
         <div className={styles.limiter}>
 
             <div className={styles.container}>
-                {loaded &&
+                {loading &&
                     <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                         <div className={styles.contentHeader}>
                             <h1>UPDATE GROUP</h1>
+                        </div>
+                        <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
+                            <div className={styles.reloadBtn} onClick={()=>{navigate("/job/myGroups", { replace: true })}}>
+                                <i className="fas fa-long-arrow-alt-left"></i>
+                                <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
+                            </div>
                         </div>
                         <div className={styles.taskContainer + ' ' + styles.nonBoxShadow}>
                             <form className={inputStyles.form}>

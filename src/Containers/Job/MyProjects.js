@@ -7,7 +7,7 @@ function MyProjects(){
     return (
         <>
             <JobSidebar page={MY_PROJECTS}/>
-            <MyProject/>
+            <MyProject groupDetail={false} owner={true}/>
         </>
     )
 }

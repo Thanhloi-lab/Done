@@ -1,5 +1,6 @@
-import tableStyles from '../tableStyles.module.css'
-import inputStyles from '../InputStyles.module.css'
+import tableStyles from '../tableStyles.module.css';
+import inputStyles from '../InputStyles.module.css';
+import styles from '../Group/CreateGroup.module.css';
 
 function UserSelectList({ users, onCheckBoxChange, members }) {
     return (
@@ -11,7 +12,7 @@ function UserSelectList({ users, onCheckBoxChange, members }) {
                     <th>Email</th>
                 </tr>
             </thead>
-            <tbody className={tableStyles.Table100Body}>
+            <tbody className={tableStyles.Table100Body + ' ' + styles.table}>
                 {users && users.length > 0 && users.map(user => {
                     return (
                         <tr key={user.idUser}>

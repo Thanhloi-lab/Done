@@ -17,8 +17,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-function MyGroupPage(props) {
-    console.log("MyGroupPage component rendered");
+function MyGroupPage({ owner, ...props }) {
+    console.log("GroupPage component rendered " + owner);
     let navigate = useNavigate();
     const [groups, setGroups] = useState([]);
     const [fullGroups, setFullGroups] = useState([]);
@@ -40,27 +40,35 @@ function MyGroupPage(props) {
     const getAllGroup = () => {
         var resultPromise = allUserGroup(2);
         resultPromise.then((result) => {
-            setFullGroups(result);
-            setGroups(result);
+            if (owner) {
+                var temp = result.filter(x=>x.createUser === 2);
+                setFullGroups(temp);
+                setGroups(temp);
+            }
+            else {
+                setFullGroups(result);
+                setGroups(result);
+            }
+            
         })
             .catch((err) => console.log(err))
     }
 
     const handleLinkGroupDetail = (groupId) => {
-        navigate(`/job/groupDetail/${groupId}`);
+        navigate(`/job/group/${groupId}`);
     }
 
     const handleTextChange = (e) => {
         setSearchText(e.target.value);
-        if(e.target.value.trim() !== '') {
-            setGroups(fullGroups.filter(x=>x.nameGroup.toLowerCase().includes(e.target.value.trim().toLowerCase())))
+        if (e.target.value.trim() !== '') {
+            setGroups(fullGroups.filter(x => x.nameGroup.toLowerCase().includes(e.target.value.trim().toLowerCase())))
         }
-        else{
+        else {
             setGroups(fullGroups);
         }
     }
 
-    const handleReload = ()=>{
+    const handleReload = () => {
         getAllGroup();
         setSearchText('');
     }
@@ -148,7 +156,7 @@ function MyGroupPage(props) {
         }
     }
 
-    const navigateListProject = (event, id)=>{
+    const navigateListProject = (event, id) => {
         event.stopPropagation()
         navigate(`/job/${id}/Projects`);
     }
@@ -197,28 +205,30 @@ function MyGroupPage(props) {
             <div className={styles.container}>
                 <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                     <div className={styles.contentHeader}>
-                        <h1>MY GROUPS</h1>
+                        <h1>{owner ? 'MY GROUPS' : 'GROUPS'}</h1>
                     </div>
                     <div className={stylesBtn.FeatureContainer}>
-                        <div className={styles.taskContainer + ' ' + styles.toolBar
-                            + ' ' + styles.nonBoxShadow + ' ' + tableStyles.content
-                            + ' ' + stylesBtn.FlexContainer}
-                        >
-                            <div className={stylesBtn.btnContainer}>
-                                <Link className={stylesBtn.addBtn} to='/job/create-group'>
-                                    <i className="fa-solid fa-plus"></i>
-                                    <span className={styles.addtext} style={{ marginLeft: '10px' }}>New group</span>
-                                </Link>
+                        {owner &&
+                            <div className={styles.taskContainer + ' ' + styles.toolBar
+                                + ' ' + styles.nonBoxShadow + ' ' + tableStyles.content
+                                + ' ' + stylesBtn.FlexContainer}
+                            >
+                                <div className={stylesBtn.btnContainer}>
+                                    <Link className={stylesBtn.addBtn} to='/job/create-group'>
+                                        <i className="fa-solid fa-plus"></i>
+                                        <span className={styles.addtext} style={{ marginLeft: '10px' }}>New group</span>
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
-                        <div className={styles.taskContainer + ' ' + stylesBtn.searchContainer}>
+                        }
+                        <div className={styles.taskContainer + ' ' + stylesBtn.searchContainer} style={{ flex: !owner ? 1 : 'inherit' }}>
                             <div className={styles.toolBar}>
                                 <div className={styles.reloadBtn} onClick={handleReload}>
                                     <span className={styles.reloadText}>Reload</span>
                                     <i className="fas fa-redo"></i>
                                 </div>
                                 <div className={styles.search}>
-                                    <input className={styles.searchInput} value={searchText} onChange={handleTextChange}/>
+                                    <input className={styles.searchInput} value={searchText} onChange={handleTextChange} />
                                     <div className={styles.searchBtn}>
                                         <span className={styles.searchText}>Search</span>
                                         <i className="fas fa-search"></i>
@@ -236,7 +246,7 @@ function MyGroupPage(props) {
                                     <th>Name</th>
                                     <th>Creator's mail</th>
                                     <th>Projects</th>
-                                    <th></th>
+                                    {owner && <th></th>}
                                 </tr>
                             </thead>
                             <tbody className={stylesBtn.Table100Body}>
@@ -251,22 +261,24 @@ function MyGroupPage(props) {
                                             <td>{x.nameGroup}</td>
                                             <td>{x.mail}</td>
                                             <td >
-                                                <div className={tableStyles.LinkToProject} onClick={(event)=>navigateListProject(event, x.idGroup)}>
+                                                <div>
                                                     {x.cntProject} projects
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div className={stylesBtn.deleteBtn} onClick={(event) => handleClickDelete(event, x.idGroup, x.nameGroup)} >
-                                                    <i className="fa-solid fa-trash-can"></i>
-                                                    <span className={stylesBtn.deleteText} style={{ marginLeft: '10px' }}>Delete</span>
-                                                </div>
-                                                {/* onClick={(s, e) => handleDeleteGroup(x.idGroup)} */}
-                                                /
-                                                <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idGroup, x.nameGroup)}>
-                                                    <i className="fa-solid fa-pen-to-square"></i>
-                                                    <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Edit</span>
-                                                </div>
-                                            </td>
+                                            {owner &&
+                                                <td>
+                                                    <div className={stylesBtn.deleteBtn} onClick={(event) => handleClickDelete(event, x.idGroup, x.nameGroup)} >
+                                                        <i className="fa-solid fa-trash-can"></i>
+                                                        <span className={stylesBtn.deleteText} style={{ marginLeft: '10px' }}>Delete</span>
+                                                    </div>
+                                                    {/* onClick={(s, e) => handleDeleteGroup(x.idGroup)} */}
+                                                    /
+                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idGroup, x.nameGroup)}>
+                                                        <i className="fa-solid fa-pen-to-square"></i>
+                                                        <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Edit</span>
+                                                    </div>
+                                                </td>
+                                            }
                                         </tr>
                                     )
                                 })

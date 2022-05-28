@@ -32,9 +32,13 @@
 }
 
 .deleteBtn{
-    padding:8px;
+    padding:8px 20px 8px 20px;
     color:#eb5a5a;
     transition: 0.2s;
+    border: none;
+    background-color:transparent;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .deleteBtn:hover{
@@ -48,8 +52,10 @@
 }
 
 .editBtn{
-    padding:8px;
+    padding:8px 20px 8px 20px;
     color: #7171ed;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .editBtn:hover .editText{
@@ -153,9 +159,9 @@
 		white-space: nowrap;
     }
 
-    .table100 tbody td:nth-of-type(1):before { content: "Order"; }
-	.table100 tbody td:nth-of-type(2):before { content: "Name"; }
-	.table100 tbody td:nth-of-type(3):before { content: "Date create"; }
-	.table100 tbody td:nth-of-type(4):before { content: "Task"; }
+    .table100 tbody td:nth-of-type(1):before { content: "Order"; text-align:left; padding-left:15px;}
+	.table100 tbody td:nth-of-type(2):before { content: "Name"; text-align:left; padding-left:15px;}
+	.table100 tbody td:nth-of-type(3):before { content: "Date create"; text-align:left; padding-left:15px;}
+	.table100 tbody td:nth-of-type(4):before { content: "Task"; text-align:left; padding-left:15px;}
 
 }
