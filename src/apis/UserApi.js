@@ -1,8 +1,4 @@
-
-
-
-export const API_URL = "http://localhost:50003";
-
+import {API_URL} from '../asset/js/constant';
 
 export const register = async (data) => {
     const formData = new FormData();
@@ -11,7 +7,7 @@ export const register = async (data) => {
     formData.append("Name", data.name)
     formData.append("Phone", data.phone)
     formData.append("Avatar", data.avatar)
-    formData.append("Address", "dsadasdsad")
+    formData.append("Address", "a")
     formData.append("Gender", "Nam")
     formData.append("BirthDate", "2021-01-01")
 

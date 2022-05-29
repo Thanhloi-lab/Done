@@ -5,8 +5,6 @@ import { MY_GROUP } from '../../asset/js/constant';
 
 
 function UpdateGroup() {
-   
-
     return (
         <>
             <JobSidebar page={MY_GROUP} />

@@ -1,30 +1,33 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {Button} from './Button.js'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from './Button.js'
 import './Navbar.css'
-import {useSelector} from 'react-redux'
+import Avatar from './Avatar';
+import { useSelector } from 'react-redux'
 
-function Navbar(){
+function Navbar() {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
+    const user = useSelector((state) => state.users.userInfo);
 
-    const handleClick = ()=>{
+
+    const handleClick = () => {
         setClick(!click);
     }
 
-    const CloseMobileMenu = ()=>{
+    const CloseMobileMenu = () => {
         setClick(false);
     }
 
-    const showButton = ()=>{
-        if(window.innerWidth <=960){
+    const showButton = () => {
+        if (window.innerWidth <= 960) {
             setButton(false);
-        }else{
+        } else {
             setButton(true);
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         showButton();
     }, [])
 
@@ -35,10 +38,10 @@ function Navbar(){
         <nav className="navbar">
             <div className="navbar-container">
                 <Link to="/" className="navbar-logo" onClick={CloseMobileMenu}>
-                    DONE <i className="fab fa-typo3"/>
+                    DONE <i className="fab fa-typo3" />
                 </Link>
                 <div className="menu-icon" onClick={handleClick}>
-                    <i className={click ? 'fas fa-times' : 'fas fa-bars'}/>
+                    <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'} >
                     <li className="nav-item">
@@ -62,7 +65,8 @@ function Navbar(){
                         </Link>
                     </li>
                 </ul>
-                {button && <Button buttonStyle='btn--outline'>SIGN IN</Button>}
+                {user.token && button && <Avatar user={user} />}
+                {!user.token && button && <Button buttonStyle='btn--outline'>SIGN IN</Button>}
             </div>
         </nav>
     )

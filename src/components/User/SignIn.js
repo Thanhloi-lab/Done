@@ -53,11 +53,6 @@ function SignIn(){
                 window.location = '/verify-email/' + input.email;
             setMessage(data);
         }
-
-       
-       
-      
-        
     }
 
     return (

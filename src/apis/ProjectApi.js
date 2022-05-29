@@ -1,11 +1,13 @@
+import {API_URL} from '../asset/js/constant';
+
 export async function allUserProject(id) {
-    let response = await fetch(`http://192.168.43.93:50003/api/Projects/allProjectOf?Id=${id}`);
+    let response = await fetch(`API_URL/api/Projects/allProjectOf?Id=${id}`);
     let data = await response.json();
     return data;
 };
 
 export async function allProjectByGroupId(id) {
-    let response = await fetch(`http://192.168.43.93:50003/api/Projects/getByGroup?idGroup=${id}`);
+    let response = await fetch(`API_URL/api/Projects/getByGroup?idGroup=${id}`);
     let data = await response.json();
     return data;
 };
@@ -14,7 +16,7 @@ export async function allProjectByGroupId(id) {
 export async function createProject(data) {
     // Default options are marked with *
     //console.log(data);
-    const response = await fetch(`http://192.168.43.93:50003/api/Projects/create`, {
+    const response = await fetch(`API_URL/api/Projects/create`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -34,7 +36,7 @@ export async function createProject(data) {
 export async function editProject(data) {
     // Default options are marked with *
     // console.log(data);
-    const response = await fetch(`http://192.168.43.93:50003/api/Projects/Edit`, {
+    const response = await fetch(`API_URL/api/Projects/Edit`, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -55,7 +57,7 @@ export async function editProject(data) {
 
 export async function deleteProject(data) {
     // Default options are marked with *
-    const response = await fetch(`http://192.168.43.93:50003/api/Projects/removeProject`, {
+    const response = await fetch(`API_URL/api/Projects/removeProject`, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -77,7 +79,7 @@ export async function deleteProject(data) {
 export async function addProjectMembers(data) {
     // Default options are marked with *
     //console.log(data);
-    const response = await fetch(`http://192.168.43.93:50003/api/Projects/addMember`, {
+    const response = await fetch(`API_URL/api/Projects/addMember`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -97,7 +99,7 @@ export async function addProjectMembers(data) {
 export async function removeProjectMembers(data) {
     // Default options are marked with *
     //console.log(data);
-    const response = await fetch(`http://192.168.43.93:50003/api/Projects/removeMember`, {
+    const response = await fetch(`API_URL/api/Projects/removeMember`, {
         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

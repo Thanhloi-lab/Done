@@ -2,10 +2,11 @@ import {memo, useState} from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-import styles from '../Common/Form.module.css'
-import '../Common/util.css'
-import {validate} from '../../asset/js/validation.js'
-import {changePassword,API_URL} from '../../apis/UserApi.js'
+import styles from '../Common/Form.module.css';
+import '../Common/util.css';
+import {validate} from '../../asset/js/validation.js';
+import {changePassword} from '../../apis/UserApi.js';
+import {API_URL} from '../../asset/js/constant';
 
 function ChangePasswordComponent(){
     //console.log("ForgotPassword component rendered");

@@ -21,7 +21,7 @@ export const FORGOT_PASSWORD = '/forgot-password';
 export const SIGN_IN = '/sign-in';
 export const SIGN_UP = '/sign-up';
 
-export const API_URL = 'http://192.168.0.103:50003'
+export const API_URL = 'http://192.168.0.103:50003';
 
 
 export const STATUS = {
