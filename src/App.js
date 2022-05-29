@@ -9,30 +9,84 @@ import Services from './Containers/Services';
 import SignIn from './Containers/User/SignIn';
 import SignUp from './Containers/User/SignUp';
 import ForgotPassword from './Containers/User/ForgotPassword';
-import Footer from './components/Common/Footer';
-import Uncompleted from './Containers/Job/UncompletedTask';
-import CompletedTask from './Containers/Job/CompletedTask';
-import BugTask from './Containers/Job/BugTask';
-import HomeJob from './Containers/Job/HomeJob';
-import ExpiredTask from './Containers/Job/ExpiredTask';
-import Groups from './Containers/Job/Groups';
-import MyGroups from './Containers/Job/MyGroups';
+import Footer from './components/Common/Footer'
+import Uncompleted from './Containers/Job/UncompletedTask'
+import CompletedTask from './Containers/Job/CompletedTask'
+import BugTask from './Containers/Job/BugTask'
+import HomeJob from './Containers/Job/HomeJob'
+import ExpiredTask from './Containers/Job/ExpiredTask'
+import Groups from './Containers/Job/Groups'
+import MyGroups from './Containers/Job/MyGroups'
+import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, EXPIRED_TAB, GROUPS, MY_GROUP} from './asset/js/constant'
+import TaskInfo from './Containers/Job/TaskInfo'
+import {useState} from 'react'
+import {onMessageListener, onSubcribleToTopic} from './firebaseInit'
+import {ReactNotificationComponent} from './components/Chat/ReactNotificationComponent'
+import Notification from './components/Chat/Notification'
+import TaskCommon from './Containers/Task/TaskInfo';
+import CreateGroup from './Containers/Job/CreateGroup';
+import ErrorPage from './Containers/ErrorPage';
+import VerifyEmail from './Containers/User/VerifyUser'; 
+import ChangePassword from './Containers/User/ChangePassword';
+import UpdateUserInfo from './Containers/User/UpdateUserInfo';
 import Project from './Containers/Job/Project';
 import MyProjects from './Containers/Job/MyProjects';
 
-import TaskInfo from './Containers/Job/TaskInfo';
-import ErrorPage from './Containers/ErrorPage';
-import UpdateGroup from './Containers/Job/UpdateGroup';
-import CreateGroup from './Containers/Job/CreateGroup';
 import CreateProject from './Containers/Job/CreateProject';
 import GroupDetail from './Containers/Job/GroupDetail';
 
 
+
+
 function App() {
+    const [show, setShow] = useState(false);
+    const [notification, setNotification]=useState({title:"",body:""});
+    onMessageListener()
+    .then((payload) => {
+        setShow(true);
+        setNotification({
+            title: payload.notification.title,
+            body: payload.notification.body,
+        });
+        console.log(payload.notification);
+    })
+    .catch((err) => console.log("failed: ", err));
+
+    const user = JSON.parse( localStorage.getItem('user'));
+    //console.log(user);
+    // onSubcribleToTopic(localStorage.getItem("token_notyfi"),'user-' + user.idUser).then(
+    //     (res) => 
+    //     {
+    //         console.log(res);
+    //     }
+    // );
+
+
+    
+    
+
+
+
+    
+
+
+    
+
+// inside the jsx being returned:
+
     return (
         <>
+            {show ? (<ReactNotificationComponent
+                title = {notification.title}
+                body = {notification.body}
+            />):(<></>)}
             <Navbar />
+            <Notification/>
             <Routes>
+
+                <Route path="/verify-email/:email"  exact element={< VerifyEmail />}/>
+                <Route path="/change-password" exact element={< ChangePassword />}/>
+
                 <Route path="/" exact element={< Home />} />
                 <Route path="/services" exact element={< Services />} />
 
@@ -64,6 +118,7 @@ function App() {
 
                 {/* error */}
                 <Route path='*' element={<ErrorPage />} />
+
             </Routes>
             <Footer />
         </>

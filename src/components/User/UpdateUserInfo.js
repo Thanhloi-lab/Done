@@ -1,28 +1,54 @@
-import {memo, useState} from 'react';
+import {memo, useEffect, useState, useRef} from 'react';
 import clsx from 'clsx';
 import { Link, Navigate } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
 import {validate} from '../../asset/js/validation.js'
-import {register} from '../../apis/UserApi.js'
-import { Toast } from 'bootstrap';
+import {editInfo, getUserInfoById,API_URL,editAvatar } from '../../apis/UserApi.js'
+import { useSnackbar } from 'notistack';
 
-function SignUp(){
+function UpdateUserInfoComponent(){
   
+    const idUser = JSON.parse(localStorage.getItem("user")).idUser;
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+   
     
-    const initValue = {
-        email:'',
-        password:'',
-        confirmPassword:'',
+    var initValue = {
+        id: idUser,
         name: '',
-        phone: '',
-        avatar: null
+        phone: ''
     };
+
     const [input, setInput] = useState(initValue);
     const [avatar, setAvatar] = useState('images/img-login.png');
+    const [image, setImage] = useState(null);
     const [message, setMessage] = useState(null);
-    const [isSuccess, setIsSuccess] = useState(false);
+
+
+    const handerNotify = (message, variant) => {
+        enqueueSnackbar(message ,{
+            variant: variant
+        });      
+    }
+
+    useEffect(() => {
+        getUserInfoById(idUser).then(
+            (res) => res.json().then((data) => 
+            {
+                console.log("userEffect")
+                setInput( {
+                    
+                    id: idUser,
+                    name: data.name,
+                    phone: data.phone
+                });
+                setAvatar(API_URL +'/' + data.avatar);
+            }))
+    },[])
+    
+
 
     const handleInputValidation = (event) =>{
         const inputValue = event.target.parentNode;
@@ -44,16 +70,30 @@ function SignUp(){
     }
 
     const handleSubmit = async (event)=>{
-        var res = await register(input);
+        var res = await editInfo(input);
+       
         var data = await res.text();
         if(res.status === 200)
+        {           
+            handerNotify(data,'success');
+        }else
         {
-           window.location = '/verify-email/' + input.email;
+            handerNotify(data,'error');
+        }
+    }
+
+    const handleSubmitAvatar = async (event) =>{
+        var res = await editAvatar({id:idUser,avatar:image});
+        var data = await res.text();
+        if(res.status === 200)
+        {           
+           //new Toast('Cập nhật thành công');
         }else
         {
             setMessage(data);
         }
     }
+
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             var url = URL.createObjectURL(event.target.files[0]);
@@ -61,10 +101,7 @@ function SignUp(){
             var match = /\.(\w+)$/.exec(fileName);
             var type = match ? `image/${match[1]}` : `image`;
             setAvatar(url);
-            setInput({
-                ...input,
-                avatar:  event.target.files[0] 
-            })
+            setImage(event.target.files[0]);
           }
     }
 
@@ -77,30 +114,23 @@ function SignUp(){
                             <label htmlFor='image' style={{display:"block"}}>
                                 <img src={avatar} alt="IMG" className={styles.circularSquare} name='avatar'/>  
                             </label>     
-                            <input type="file" onChange={onImageChange} id="image" accept='image/*' hidden  />                 
+                            <input type="file" onChange={onImageChange} id="image" accept='image/*' hidden  /> 
+                            {image ? 
+                            <div className={styles.containerLogin100FormBtn}>
+                                <button className={styles.login100FormBtn} onClick={handleSubmitAvatar}>
+                                    Cập nhật
+                                </button>
+                            </div> : null
+                        }              
                         </div>
                        
 
                         <div className={clsx(styles.login100Form, styles.validateForm)}>
                             <span className={styles.login100FormTitle}>
-                                Register
+                                Cập nhật thông tin cá nhân
                             </span>
 
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Valid email is required: ex@abc.xyz">
-
-                                <input className={styles.input100} type="text" name="email" 
-                                    placeholder="Email" onBlur={handleInputValidation} 
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        email: e.target.value
-                                    })}}
-                                />
-
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-envelope" aria-hidden="true"></i>
-                                </span>
-                            </div>
+                            
 
                             <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Must enter your name">
 
@@ -109,7 +139,7 @@ function SignUp(){
                                     onChange={e=>{setInput({
                                         ...input,
                                         name: e.target.value
-                                    })}}
+                                    })}} value = {input.name}
                                 />
 
                                 <span className={styles.focusInput100}></span>
@@ -125,7 +155,7 @@ function SignUp(){
                                     onChange={e=>{setInput({
                                         ...input,
                                         phone: e.target.value
-                                    })}}
+                                    })}} value={input.phone}
                                 />
 
                                 <span className={styles.focusInput100}></span>
@@ -135,40 +165,11 @@ function SignUp(){
                                 </span>
                             </div>
 
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate = "Password must be 8 chars include number and uppercase">
-                                <input className={styles.input100} type="password" name="password" 
-                                    placeholder="Password" onBlur={handleInputValidation}
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        password: e.target.value
-                                    })}}
-                                />
-                                
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-lock" aria-hidden="true"></i>
-                                </span>
-                            </div>
-
-                            <div className={clsx(styles.wrapInput100, styles.validateInput)} 
-                                data-validate = "Confirm-password is not match">
-                                <input className={styles.input100} type="password" name="confirm-password" 
-                                    placeholder="Confirm-password" onBlur={handleInputValidation}
-                                    onChange={e=>{setInput({
-                                        ...input,
-                                        confirmPassword: e.target.value
-                                    })}}
-                                />
-                                
-                                <span className={styles.focusInput100}></span>
-                                <span className={styles.symbolInput100}>
-                                    <i className="fa fa-lock" aria-hidden="true"></i>
-                                </span>
-                            </div>
+                           
                             
                             <div className={styles.containerLogin100FormBtn}>
                                 <button className={styles.login100FormBtn} onClick={handleSubmit}>
-                                    Register
+                                    Cập nhật
                                 </button>
                             </div>
 
@@ -178,12 +179,7 @@ function SignUp(){
                                 </span>
                             </div> : null}
 
-                            <div className={styles.textCenter + " p-t-136"}>
-                                <Link to='/sign-in' className={styles.txt2}>
-                                    You have an account
-                                    <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                                </Link>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -192,4 +188,4 @@ function SignUp(){
     )
 }
 
-export default memo(SignUp);
+export default memo(UpdateUserInfoComponent);
