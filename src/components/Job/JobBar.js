@@ -108,7 +108,7 @@ function JobBar(props) {
                                     return (
                                         <li className={styles.projectItem} key={job.idTask}>
                                             <p className={styles.taskName}>{job.nameTask}</p>
-                                            <Link to={'/job/' + job.idTask} className={styles[`${props.status}Arrow`]}>
+                                            <Link to={'/job/task/' + job.idTask} className={styles[`${props.status}Arrow`]}>
                                                 <i className="fas fa-chevron-right"></i>
                                             </Link>
                                         </li>

@@ -15,11 +15,12 @@ function TaskInfo(props) {
         for (let item of listItem) {
             if (item.classList.contains(tableStyles.unActive)) {
                 item.classList.remove(tableStyles.unActive);
+                item.setAttribute('style', 'border-bottom:1px solid #dddddd;')
                 item.lastChild.setAttribute('style', 'padding:12px 15px;')
             }
             else {
                 item.classList.add(tableStyles.unActive);
-                item.setAttribute('style', 'border-bottom:0px;',)
+                item.setAttribute('style', 'border-bottom:0px;')
                 item.lastChild.setAttribute('style', 'padding:1px')
 
             }

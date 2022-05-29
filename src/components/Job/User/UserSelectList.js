@@ -1,8 +1,8 @@
-import { memo } from 'react';
-import tableStyles from '../tableStyles.module.css'
-import inputStyles from '../InputStyles.module.css'
+import tableStyles from '../tableStyles.module.css';
+import inputStyles from '../InputStyles.module.css';
+import styles from '../Group/CreateGroup.module.css';
 
-function UserSelectList({ users, onCheckBoxChange }) {
+function UserSelectList({ users, onCheckBoxChange, members }) {
     return (
         <table className={tableStyles.table100} >
             <thead className={tableStyles.Table100Head}>
@@ -12,7 +12,7 @@ function UserSelectList({ users, onCheckBoxChange }) {
                     <th>Email</th>
                 </tr>
             </thead>
-            <tbody className={tableStyles.Table100Body}>
+            <tbody className={tableStyles.Table100Body + ' ' + styles.table}>
                 {users && users.length > 0 && users.map(user => {
                     return (
                         <tr key={user.idUser}>
@@ -23,6 +23,7 @@ function UserSelectList({ users, onCheckBoxChange }) {
                                     name={user.name}
                                     id={user.mail}
                                     style={{ cursor: 'pointer' }}
+                                    defaultChecked={members.filter(member => member.mail === user.mail).length > 0 ? true : false}
                                     onClick={() => onCheckBoxChange(user.mail)}
                                 />
                             </td>
@@ -32,34 +33,6 @@ function UserSelectList({ users, onCheckBoxChange }) {
                     )
                 })
                 }
-
-                {/* <tr>
-                    <td>
-                        <input className={inputStyles.checkBox}
-                            type="checkbox"
-                            email='nigga1@gmail.com'
-                            name='Hello kitty1'
-                            id='id2'
-                            onClick={() => onCheckBoxChange('id2')}
-                        />
-                    </td>
-                    <td>Hello kitty1</td>
-                    <td>nigga1@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>
-                        <input className={inputStyles.checkBox}
-                            type="checkbox"
-                            email='nigga2@gmail.com'
-                            name='Hello kitty2'
-                            id='id3'
-                            onClick={() => onCheckBoxChange('id3')}
-                        />
-                    </td>
-                    <td>Hello kitty2</td>
-                    <td>nigg2@gmail.com</td>
-                </tr> */}
-
             </tbody>
         </table>
     )

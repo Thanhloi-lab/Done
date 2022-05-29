@@ -1,10 +1,9 @@
 import { memo, useEffect, useState } from 'react';
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
-import stylesBtn from './MyProject.module.css'
+import stylesBtn from './MyGroup.module.css'
 import { Link, useNavigate } from 'react-router-dom';
-import { allUserProject, deleteProject, editProject } from '../../../asset/js/API/ProjectApi';
-import GroupDetail from '../Group/GroupDetail';
+import { allUserGroup, deleteGroup, editGroup } from '../../../asset/js/API/GroupApi';
 
 //mui
 import Button from '@mui/material/Button';
@@ -18,72 +17,72 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-function MyProjectPage({ groupDetail, owner, ...props }) {
-    console.log("projectPage component rendered " + owner);
+function MyGroupPage({ owner, ...props }) {
+    console.log("GroupPage component rendered " + owner);
     let navigate = useNavigate();
-    const [projects, setProjects] = useState([]);
-    const [fullProjects, setFullProjects] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [fullGroups, setFullGroups] = useState([]);
     const [searchText, setSearchText] = useState('');
 
     const [openDelete, setOpenDelete] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
-    const [projectEdit, setProjectEdit] = useState({ nameProject: '', idProject: 0 });
-    const titleEdit = "Change project's name";
-    const editContent = "Enter new project's name here to edit project's name";
-    const titleDelete = "Delete project ";
-    const deleteContent = "Deleting project will also delete project and task inside. Are you sure you want to delete?";
+    const [groupEdit, setGroupEdit] = useState({ nameGroup: '', idGroup: 0 });
+    const titleEdit = "Change group's name";
+    const editContent = "Enter new group's name here to edit group's name";
+    const titleDelete = "Delete group ";
+    const deleteContent = "Deleting group will also delete project and task inside. Are you sure you want to delete?";
 
     useEffect(() => {
-        getAllProject();
+        getAllGroup();
     }, [])
 
-    const getAllProject = () => {
-        var resultPromise = allUserProject(2);
+    const getAllGroup = () => {
+        var resultPromise = allUserGroup(2);
         resultPromise.then((result) => {
             if (owner) {
-                var temp = result.filter(x => x.createUser === 2);
-                setFullProjects(temp);
-                setProjects(temp);
+                var temp = result.filter(x=>x.createUser === 2);
+                setFullGroups(temp);
+                setGroups(temp);
             }
             else {
-                setFullProjects(result);
-                setProjects(result);
+                setFullGroups(result);
+                setGroups(result);
             }
-
+            
         })
             .catch((err) => console.log(err))
     }
 
-    const handleLinkProjectDetail = (projectId) => {
-        navigate(`/job/projectDetail/${projectId}`);
+    const handleLinkGroupDetail = (groupId) => {
+        navigate(`/job/group/${groupId}`);
     }
 
     const handleTextChange = (e) => {
         setSearchText(e.target.value);
         if (e.target.value.trim() !== '') {
-            setProjects(fullProjects.filter(x => x.nameProject.toLowerCase().includes(e.target.value.trim().toLowerCase())))
+            setGroups(fullGroups.filter(x => x.nameGroup.toLowerCase().includes(e.target.value.trim().toLowerCase())))
         }
         else {
-            setProjects(fullProjects);
+            setGroups(fullGroups);
         }
     }
 
     const handleReload = () => {
-        getAllProject();
+        getAllGroup();
         setSearchText('');
     }
 
-    const handleDeleteProject = () => {
+    const handleDeleteGroup = () => {
         var data = {
             IdUser: 2,
-            IdSth: projectEdit.idProject
+            IdSth: groupEdit.idGroup
         }
-        var result = deleteProject(data);
+        var result = deleteGroup(data);
         result.then(response => {
             if (response.isSuccessed) {
-                setProjectEdit({ nameProject: '', idProject: 0 });
-                getAllProject();
+                setGroupEdit({ nameGroup: '', idGroup: 0 });
+                getAllGroup();
                 handleClose();
                 alert(response.resultObject);
             }
@@ -96,17 +95,17 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
             })
     }
 
-    const handleEditProject = (projectId) => {
+    const handleEditGroup = (groupId) => {
         var data = {
-            projectName: projectEdit.nameProject,
+            GroupName: groupEdit.nameGroup,
             IdUser: 2,
-            IdProject: projectEdit.idProject
+            IdGroup: groupEdit.idGroup
         }
-        var result = editProject(data);
+        var result = editGroup(data);
         result.then(response => {
             if (response.isSuccessed) {
-                setProjectEdit({ nameProject: '', idProject: 0 });
-                getAllProject();
+                setGroupEdit({ nameGroup: '', idGroup: 0 });
+                getAllGroup();
                 handleClose();
                 alert(response.resultObject);
             }
@@ -114,16 +113,16 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                 alert(response.message);
             }
         })
-            .catch(() => {
+            .catch(err => {
                 alert("Sửa thất bại")
             })
     }
 
     const handleClickEdit = (event, id, name) => {
         event.stopPropagation()
-        navigate(`/job/update-project/${id}`);
+        navigate(`/job/update-group/${id}`);
         // console.log(id);
-        // setprojectEdit({...projectEdit, idproject: id, nameproject:name});
+        // setGroupEdit({...groupEdit, idGroup: id, nameGroup:name});
         // setOpenDelete(false);
         // setOpenEdit(true);
         // setOpenDialog(true);
@@ -131,7 +130,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
 
     const handleClickDelete = (event, id, name) => {
         event.stopPropagation()
-        setProjectEdit({ ...projectEdit, idProject: id, nameProject: name });
+        setGroupEdit({ ...groupEdit, idGroup: id, nameGroup: name });
         setOpenDelete(true);
         setOpenEdit(false);
         setOpenDialog(true);
@@ -144,26 +143,22 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
         setOpenDelete(false);
     };
 
-    const handleProjectNameChange = (e) => {
-        setProjectEdit({ ...projectEdit, nameProject: e.target.value });
+    const handleGroupNameChange = (e) => {
+        setGroupEdit({ ...groupEdit, nameGroup: e.target.value });
     }
 
     const handleActionModal = () => {
         if (openDelete) {
-            handleDeleteProject();
+            handleDeleteGroup();
         }
         else if (openEdit) {
-            handleEditProject();
+            handleEditGroup();
         }
     }
 
     const navigateListProject = (event, id) => {
-        event.stopPropagation();
+        event.stopPropagation()
         navigate(`/job/${id}/Projects`);
-    }
-    const handleNavigateGroupDetail = (event, id) => {
-        event.stopPropagation();
-        navigate(`/job/groupDetail/21`);
     }
 
     const DialogEdit = () => {
@@ -173,7 +168,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                 fullWidth
             // PaperProps={{sx: { fontSize: '2rem !important' }}}
             >
-                <DialogTitle><span style={{ fontSize: '2.5rem' }}>{openEdit && titleEdit}{openDelete && titleDelete + projectEdit.nameProject}</span></DialogTitle>
+                <DialogTitle><span style={{ fontSize: '2.5rem' }}>{openEdit && titleEdit}{openDelete && titleDelete + groupEdit.nameGroup}</span></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <span style={{ fontSize: '2rem' }}>{openEdit && editContent}{openDelete && deleteContent}</span>
@@ -182,11 +177,11 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="newProjectName"
-                            label="project's name"
+                            id="newGroupName"
+                            label="Group's name"
                             type="text"
-                            value={projectEdit.nameProject}
-                            onChange={handleProjectNameChange}
+                            value={groupEdit.nameGroup}
+                            onChange={handleGroupNameChange}
                             fullWidth
                             variant="standard"
                             InputProps={{ style: { fontSize: '1.8rem', fontWeight: '700' } }}
@@ -205,31 +200,28 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
         )
     }
 
-
     return (
         <div className={styles.limiter}>
             <div className={styles.container}>
                 <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                     <div className={styles.contentHeader}>
-                        <h1>{!groupDetail && (owner ? 'MY PROJECTS' : 'PROJECTS')} {groupDetail && 'GROUP DETAIL'}</h1>
+                        <h1>{owner ? 'MY GROUPS' : 'GROUPS'}</h1>
                     </div>
-
-                    {groupDetail && <GroupDetail />}
                     <div className={stylesBtn.FeatureContainer}>
-                        {groupDetail && owner &&
+                        {owner &&
                             <div className={styles.taskContainer + ' ' + styles.toolBar
                                 + ' ' + styles.nonBoxShadow + ' ' + tableStyles.content
                                 + ' ' + stylesBtn.FlexContainer}
                             >
                                 <div className={stylesBtn.btnContainer}>
-                                    <Link className={stylesBtn.addBtn} to='/job/21/create-project'>
+                                    <Link className={stylesBtn.addBtn} to='/job/create-group'>
                                         <i className="fa-solid fa-plus"></i>
-                                        <span className={styles.addtext} style={{ marginLeft: '10px' }}>New project</span>
+                                        <span className={styles.addtext} style={{ marginLeft: '10px' }}>New group</span>
                                     </Link>
                                 </div>
                             </div>
                         }
-                        <div className={styles.taskContainer + ' ' + stylesBtn.searchContainer} style={{ flex: !groupDetail ? 1 : 'inherit' }}>
+                        <div className={styles.taskContainer + ' ' + stylesBtn.searchContainer} style={{ flex: !owner ? 1 : 'inherit' }}>
                             <div className={styles.toolBar}>
                                 <div className={styles.reloadBtn} onClick={handleReload}>
                                     <span className={styles.reloadText}>Reload</span>
@@ -251,47 +243,37 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                             <thead className={stylesBtn.Table100Head}>
                                 <tr>
                                     <th>Order</th>
-                                    {!groupDetail &&
-                                        <th>Group</th>
-                                    }
                                     <th>Name</th>
                                     <th>Creator's mail</th>
-                                    <th>Tasks</th>
+                                    <th>Projects</th>
                                     {owner && <th></th>}
                                 </tr>
                             </thead>
                             <tbody className={stylesBtn.Table100Body}>
 
-                                {projects && projects.map((x, index) => {
+                                {groups && groups.map((x, index) => {
                                     return (
-                                        <tr key={x.idProject} style={{ cursor: 'pointer' }} onClick={(s, e) => {
+                                        <tr key={x.idGroup} style={{ cursor: 'pointer' }} onClick={(s, e) => {
                                             s.stopPropagation();
-                                            handleLinkProjectDetail(x.idProject);
+                                            handleLinkGroupDetail(x.idGroup);
                                         }}>
                                             <td>{index + 1}</td>
-                                            {!groupDetail &&
-                                                <td>
-                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleNavigateGroupDetail(event, x.idGroup)}>
-                                                        <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Group test</span>
-                                                    </div>
-                                                </td>
-                                            }
-                                            <td>{x.nameProject}</td>
+                                            <td>{x.nameGroup}</td>
                                             <td>{x.mail}</td>
                                             <td >
                                                 <div>
-                                                    {x.cntTask} tasks
+                                                    {x.cntProject} projects
                                                 </div>
                                             </td>
                                             {owner &&
                                                 <td>
-                                                    <div className={stylesBtn.deleteBtn} onClick={(event) => handleClickDelete(event, x.idProject, x.nameProject)} >
+                                                    <div className={stylesBtn.deleteBtn} onClick={(event) => handleClickDelete(event, x.idGroup, x.nameGroup)} >
                                                         <i className="fa-solid fa-trash-can"></i>
                                                         <span className={stylesBtn.deleteText} style={{ marginLeft: '10px' }}>Delete</span>
                                                     </div>
-                                                    {/* onClick={(s, e) => handleDeleteproject(x.idproject)} */}
+                                                    {/* onClick={(s, e) => handleDeleteGroup(x.idGroup)} */}
                                                     /
-                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idproject, x.nameProject)}>
+                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idGroup, x.nameGroup)}>
                                                         <i className="fa-solid fa-pen-to-square"></i>
                                                         <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Edit</span>
                                                     </div>
@@ -313,4 +295,4 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
     )
 }
 
-export default memo(MyProjectPage);
+export default memo(MyGroupPage);

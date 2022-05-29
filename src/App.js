@@ -1,7 +1,9 @@
 
 import './App.css';
 import Navbar from './components/Common/Navbar';
-import {Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import * as constant from './asset/js/constant';
+
 import Home from './Containers/Home';
 import Services from './Containers/Services';
 import SignIn from './Containers/User/SignIn';
@@ -29,7 +31,10 @@ import ChangePassword from './Containers/User/ChangePassword';
 import UpdateUserInfo from './Containers/User/UpdateUserInfo';
 import Project from './Containers/Job/Project';
 import MyProjects from './Containers/Job/MyProjects';
+
 import CreateProject from './Containers/Job/CreateProject';
+import GroupDetail from './Containers/Job/GroupDetail';
+
 
 
 
@@ -78,35 +83,44 @@ function App() {
             <Navbar />
             <Notification/>
             <Routes>
-                <Route path="/" exact element={< Home />}/>
-                {/* <Route path="/task/id" exact element={< Task />}/> */}
-                <Route path="/services" exact element={< Services />}/>
-                <Route path="/sign-in" exact element={< SignIn />}/>
+
                 <Route path="/verify-email/:email"  exact element={< VerifyEmail />}/>
                 <Route path="/change-password" exact element={< ChangePassword />}/>
-                <Route path="/sign-up" exact element={< SignUp />}/>
-                <Route path="/forgot-password" exact element={< ForgotPassword />}/>
-                <Route path="/update-user-info" exact element={< UpdateUserInfo />}/>
-                <Route path="/job/create-group" exact element={< CreateGroup />}/>
-                <Route path="/job/create-project" exact element={< CreateProject />}/>
 
-                {/* Task tab */}
-                <Route path={COMPLETED_TAB} exact element={<CompletedTask/>}/>
-                <Route path={UNCOMPLETED_TAB} exact element={<Uncompleted/>}/>
-                <Route path={BUG_TAB} exact element={<BugTask/>}/>
-                <Route path={EXPIRED_TAB} exact element={<ExpiredTask/>}/>
-                <Route path={GROUPS} exact element={<Groups/>}/>
-                <Route path={MY_GROUP} exact element={<MyGroups/>}/>
-                {/* <Route path={PROJECTS} exact element={<Project/>}/>
-                <Route path={MY_PROJECTS} exact element={<MyProjects/>}/> */}
-                <Route path={HOME_JOB +"/*"} exact element={<HomeJob/>}/>
+                <Route path="/" exact element={< Home />} />
+                <Route path="/services" exact element={< Services />} />
 
-                {/* task detail */}
-                <Route path="/task/" exact element={<TaskCommon/>}/>
-                <Route path="/job/:id" exact element={<TaskInfo taskName='DONE' status='COMPLETED' name='Completed'/>}/>
-                <Route path='/*' element={<ErrorPage/>}/>
+                {/* USER */}
+                <Route path={constant.SIGN_IN} exact element={< SignIn />} />
+                <Route path={constant.SIGN_UP} exact element={< SignUp />} />
+                <Route path={constant.FORGOT_PASSWORD} exact element={< ForgotPassword />} />
+
+                {/* GROUPs */}
+                <Route path={constant.CREATE_GROUP} exact element={< CreateGroup />} />
+                <Route path={constant.UPDATE_GROUP} exact element={< UpdateGroup />} />
+                <Route path={constant.GROUPS} exact element={<Groups />} />
+                <Route path={constant.MY_GROUP} exact element={<MyGroups />} />
+                <Route path={constant.GROUP_DETAIL} exact element={<GroupDetail />} />
+
+                {/* projects */}
+                <Route path={constant.CREATE_PROJECTS} exact element={< CreateProject />} />
+                <Route path={constant.UPDATE_PROJECTS} exact element={< CreateProject />} />
+                <Route path={constant.PROJECTS} exact element={<Project />} />
+                <Route path={constant.MY_PROJECTS} exact element={<MyProjects />} />
+
+                {/* Task */}
+                <Route path={constant.HOME_JOB} exact element={<HomeJob />} />
+                <Route path={constant.COMPLETED_TAB} exact element={<CompletedTask />} />
+                <Route path={constant.UNCOMPLETED_TAB} exact element={<Uncompleted />} />
+                <Route path={constant.BUG_TAB} exact element={<BugTask />} />
+                <Route path={constant.EXPIRED_TAB} exact element={<ExpiredTask />} />
+                <Route path={constant.TASK_DETAIL} exact element={<TaskInfo />} />
+
+                {/* error */}
+                <Route path='*' element={<ErrorPage />} />
+
             </Routes>
-            <Footer/>
+            <Footer />
         </>
     );
 }

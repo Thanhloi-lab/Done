@@ -1,3 +1,73 @@
+.addBtn{
+    font-size: 2rem;
+    color: black;
+    padding: 10px;
+    background: linear-gradient(-65deg, #06a7feb6, #25a6708e);
+    border-radius: 20px;
+    opacity: 0.9;
+}
+
+.addBtn:hover{
+    opacity: 1;
+}
+
+.btnContainer{
+    width: 200px;
+    
+}
+
+.FeatureContainer{
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 30px;
+}
+
+.searchContainer{
+    margin-bottom: 0px;
+}
+
+.FlexContainer{
+    flex:1;
+}
+
+.deleteBtn{
+    padding:8px 20px 8px 20px;
+    color:#eb5a5a;
+    transition: 0.2s;
+    border: none;
+    background-color:transparent;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.deleteBtn:hover{
+    background: #fff;
+    border-radius: 15px;
+    transition: 0.2s;
+}
+
+.deleteBtn:hover .deleteText{
+    color:#f03333;
+}
+
+.editBtn{
+    padding:8px 20px 8px 20px;
+    color: #7171ed;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.editBtn:hover .editText{
+    color: #2828d1;
+    
+}
+
+.editBtn:hover{
+    background: #fff;
+    border-radius: 15px;
+    transition: 0.2s;
+}
 
 .table100{
     font-size: 1.8rem;
@@ -46,6 +116,7 @@
     transition:0.3s;
 }
 
+
 @media(max-width: 760px){
     .table100,
     .table100 thead,
@@ -74,7 +145,6 @@
 		position: relative;
         padding-left: 45%;
         max-width:100%;
-        text-align: left;
     }
 
     .Table100Body td:before{
@@ -88,9 +158,10 @@
 		padding: 12px 5px;
 		white-space: nowrap;
     }
+
     .table100 tbody td:nth-of-type(1):before { content: "Order"; text-align:left; padding-left:15px;}
 	.table100 tbody td:nth-of-type(2):before { content: "Name"; text-align:left; padding-left:15px;}
-	.table100 tbody td:nth-of-type(3):before { content: "Create User"; text-align:left; padding-left:15px;}
-	.table100 tbody td:nth-of-type(4):before { content: "Date create"; text-align:left; padding-left:15px;}
-	.table100 tbody td:nth-of-type(5):before { content: "Project"; text-align:left; padding-left:15px;}
+	.table100 tbody td:nth-of-type(3):before { content: "Date create"; text-align:left; padding-left:15px;}
+	.table100 tbody td:nth-of-type(4):before { content: "Project"; text-align:left; padding-left:15px;}
+
 }

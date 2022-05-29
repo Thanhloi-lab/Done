@@ -22,8 +22,8 @@ function TaskInfo() {
     const jobs = Object.values(useSelector((state) => state.jobs.allTasks));
     // getArrayTaskFromObject(jobs, useParams().id);x
     let id = useParams().id;
-    let jobDetail = jobs.find(x=>x.idTask === id);
-    console.log(jobDetail);
+    let jobDetail = jobs.find(x=>x.idTask+"" === id+"");
+
     return (
         <>
             <JobSidebar page={useSelector((state) => state.jobs.path)} />
