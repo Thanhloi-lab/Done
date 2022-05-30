@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 
 
-const Avatar = ({children, type, onClick, user})=>{
+const Avatar = ({user, setToken})=>{
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -19,8 +19,9 @@ const Avatar = ({children, type, onClick, user})=>{
 
     const handleLogout = ()=>{
         dispatch(usersSlice.actions.removeUser());
+        setToken(usersSlice.initUser);
         localStorage.removeItem("user");
-        window.location.reload();
+        // window.location.reload();
     }
 
     return (

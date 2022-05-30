@@ -5,7 +5,7 @@ import './Navbar.css'
 import Avatar from './Avatar';
 import { useSelector } from 'react-redux'
 
-function Navbar() {
+function Navbar({setToken}) {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
     const user = useSelector((state) => state.users.userInfo);
@@ -65,7 +65,7 @@ function Navbar() {
                         </Link>
                     </li>
                 </ul>
-                {user.token && button && <Avatar user={user} />}
+                {user.token && button && <Avatar setToken={setToken} user={user} />}
                 {!user.token && button && <Button buttonStyle='btn--outline'>SIGN IN</Button>}
             </div>
         </nav>

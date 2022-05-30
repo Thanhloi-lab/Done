@@ -40,9 +40,8 @@ import UpdateGroup from './Containers/Job/UpdateGroup';
 
 
 function App() {
-    const user = useSelector((state) => state.users);
     const [show, setShow] = useState(false);
-    const [token, setToken] = useState(user);
+    const [token, setToken] = useState({});
 
     const dispatch = useDispatch();
     const [notification, setNotification] = useState({ title: "", body: "" });
@@ -59,7 +58,7 @@ function App() {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
-        if (user && user.token!=='') {
+        if (user && user.token !== '') {
             dispatch(usersSlice.actions.setUser(user));
             setToken(user);
         }
@@ -71,7 +70,7 @@ function App() {
                 title={notification.title}
                 body={notification.body}
             />) : (<></>)}
-            <Navbar />
+            <Navbar setToken={setToken} />
             <Notification />
             <Routes>
 
@@ -79,11 +78,13 @@ function App() {
                 <Route path="/services" exact element={< Services />} />
 
                 {/* USER */}
-                <Route path={constant.SIGN_IN} exact element={< SignIn />} />
-                <Route path={constant.SIGN_UP} exact element={< SignUp />} />
-                <Route path={constant.FORGOT_PASSWORD} exact element={< ForgotPassword />} />
-
-                {!token.token ? <Route path='*' exact element={< SignIn setToken={setToken}/>} /> : <>
+                {token && token.token ? <Route path='*' exact element={< Home />} /> : <>
+                    <Route path={constant.SIGN_IN} exact element={< SignIn />} />
+                    <Route path={constant.SIGN_UP} exact element={< SignUp />} />
+                    <Route path={constant.FORGOT_PASSWORD} exact element={< ForgotPassword />} />
+                </>
+                }
+                {!token || !token.token ? <Route path='*' exact element={< SignIn setToken={setToken} />} /> : <>
 
                     <Route path="/verify-email/:email" exact element={< VerifyEmail />} />
                     <Route path="/change-password" exact element={< ChangePassword />} />
@@ -109,11 +110,10 @@ function App() {
                     <Route path={constant.BUG_TAB} exact element={<BugTask />} />
                     <Route path={constant.EXPIRED_TAB} exact element={<ExpiredTask />} />
                     <Route path={constant.TASK_DETAIL} exact element={<TaskInfo />} />
-
-                    {/* error */}
-                    <Route path='*' element={<ErrorPage />} />
                 </>
                 }
+                {/* error */}
+                <Route path='*' element={<ErrorPage />} />
             </Routes>
             <Footer />
         </>
