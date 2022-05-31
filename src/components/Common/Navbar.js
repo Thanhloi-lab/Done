@@ -4,10 +4,15 @@ import { Button } from './Button.js'
 import './Navbar.css'
 import Avatar from './Avatar';
 import { useSelector } from 'react-redux'
+import NotificationSideBar from '../Job/Notification/Notification'
 
-function Navbar({setToken}) {
+
+function Navbar({setToken,messageStateParam}) {
+    console.log('navbar ' , messageStateParam);
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
+    const [showNoti, setShowNoti] = useState(false);
+    const [messageState, setMessageState] = useState (null);
     const user = useSelector((state) => state.users.userInfo);
 
 
@@ -26,10 +31,14 @@ function Navbar({setToken}) {
             setButton(true);
         }
     }
+    const showNotiBar =() => {
+        setShowNoti(!showNoti);
+    }
 
     useEffect(() => {
+        setMessageState(messageStateParam);
         showButton();
-    }, [])
+    }, [messageStateParam])
 
 
     window.addEventListener('resize', showButton);
@@ -64,11 +73,30 @@ function Navbar({setToken}) {
                             Sign-in
                         </Link>
                     </li>
+                    <li className="nav-item">
+                       
+                        <label  className="nav-links" htmlFor="input-notify" onClick={showNotiBar}>
+                        <i className="fa-solid fa-bells"></i>
+                            {console.log(messageState)}
+                            {  
+                                messageState === false ?
+                                <i className="fa-solid fa-bell"></i>
+                                :
+                                <i className="fa-solid fa-bell" style={{color: '#9d261d' }}></i>
+                            }
+                           
+                        </label>
+                       
+                     
+
+                    </li>
                 </ul>
                 {user.token && button && <Avatar setToken={setToken} user={user} />}
                 {!user.token && button && <Button buttonStyle='btn--outline'>SIGN IN</Button>}
             </div>
+            {showNoti === true ? <NotificationSideBar/> : null}
         </nav>
+         
     )
 }
 

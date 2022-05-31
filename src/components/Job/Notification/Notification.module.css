@@ -1,0 +1,30 @@
+.sideBarNotification {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    width: 300px;
+    max-width: 100%;
+    background-color: #fff;
+    display: block;
+   
+}
+.sideBarListficationList{
+    
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  
+}
+.sideBarNotificationItem{
+    padding: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.sideBarNotificationItem :hover{
+   opacity: 0.5;
+}
+

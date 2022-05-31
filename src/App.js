@@ -42,17 +42,21 @@ import UpdateGroup from './Containers/Job/UpdateGroup';
 function App() {
     const [show, setShow] = useState(false);
     const [token, setToken] = useState({});
-
+    const [messageState, setMessageState] = useState(false);
     const dispatch = useDispatch();
     const [notification, setNotification] = useState({ title: "", body: "" });
     onMessageListener()
         .then((payload) => {
+            setMessageState(true);
             setShow(true);
             setNotification({
                 title: payload.notification.title,
                 body: payload.notification.body,
             });
-            console.log(payload.notification);
+            
+            //console.log(payload.notification);
+            
+            //console.log("message state " + messageState);
         })
         .catch((err) => console.log("failed: ", err));
 
@@ -70,7 +74,7 @@ function App() {
                 title={notification.title}
                 body={notification.body}
             />) : (<></>)}
-            <Navbar setToken={setToken} />
+            <Navbar setToken={setToken} messageStateParam={messageState}  />
             <Notification />
             <Routes>
 
