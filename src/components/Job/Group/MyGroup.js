@@ -4,6 +4,7 @@ import tableStyles from '../tableStyles.module.css'
 import stylesBtn from './MyGroup.module.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { allUserGroup, deleteGroup, editGroup } from '../../../asset/js/API/GroupApi';
+import { useSelector, useDispatch } from "react-redux";
 
 //mui
 import Button from '@mui/material/Button';
@@ -33,15 +34,18 @@ function MyGroupPage({ owner, ...props }) {
     const titleDelete = "Delete group ";
     const deleteContent = "Deleting group will also delete project and task inside. Are you sure you want to delete?";
 
+    const user = useSelector((state) => state.users);
+    //console.log(user)
+
     useEffect(() => {
         getAllGroup();
     }, [])
 
     const getAllGroup = () => {
-        var resultPromise = allUserGroup(2);
+        var resultPromise = allUserGroup(user.userInfo.idUser, user.userInfo.token);
         resultPromise.then((result) => {
             if (owner) {
-                var temp = result.filter(x=>x.createUser === 2);
+                var temp = result.filter(x => x.createUser === user.userInfo.idUser);
                 setFullGroups(temp);
                 setGroups(temp);
             }
@@ -49,7 +53,7 @@ function MyGroupPage({ owner, ...props }) {
                 setFullGroups(result);
                 setGroups(result);
             }
-            
+
         })
             .catch((err) => console.log(err))
     }
@@ -75,10 +79,10 @@ function MyGroupPage({ owner, ...props }) {
 
     const handleDeleteGroup = () => {
         var data = {
-            IdUser: 2,
+            IdUser: user.userInfo.idUser,
             IdSth: groupEdit.idGroup
         }
-        var result = deleteGroup(data);
+        var result = deleteGroup(data, user.userInfo.token);
         result.then(response => {
             if (response.isSuccessed) {
                 setGroupEdit({ nameGroup: '', idGroup: 0 });
@@ -98,10 +102,10 @@ function MyGroupPage({ owner, ...props }) {
     const handleEditGroup = (groupId) => {
         var data = {
             GroupName: groupEdit.nameGroup,
-            IdUser: 2,
+            IdUser: user.userInfo.idUser,
             IdGroup: groupEdit.idGroup
         }
-        var result = editGroup(data);
+        var result = editGroup(data, user.userInfo.token);
         result.then(response => {
             if (response.isSuccessed) {
                 setGroupEdit({ nameGroup: '', idGroup: 0 });

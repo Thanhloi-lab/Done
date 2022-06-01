@@ -1,8 +1,19 @@
-import {API_URL} from '../asset/js/constant';
+import { API_URL } from '../asset/js/constant';
 
-export async function allUserGroup(id) {
-
-    let response = await fetch(`API_URL/api/Groups/allGroupOf?Id=${id}`);
+export async function allUserGroup(id, token) {
+    let response = await fetch(`API_URL/api/Groups/allGroupOf?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };

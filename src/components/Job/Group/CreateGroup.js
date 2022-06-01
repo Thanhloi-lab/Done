@@ -6,6 +6,7 @@ import inputStyles from '../InputStyles.module.css';
 import UserSelectList from '../User/UserSelectList';
 import { getUserByText } from '../../../asset/js/API/UserApi';
 import { createGroup } from '../../../asset/js/API/GroupApi';
+import { useSelector, useDispatch } from "react-redux";
 
 import { API_URL } from '../../../asset/js/constant';
 import Dialog from '@mui/material/Dialog';
@@ -19,6 +20,7 @@ function CreateGroup(props) {
     const [users, setUsers] = useState([]);
     const [groupName, setGroupName] = useState("");
     const [open, setOpen] = useState(false);
+    const user = useSelector((state) => state.users);
 
     const handleSearchUser = () => {
         var searchText = document.getElementById('userSearchText').value;
@@ -26,7 +28,7 @@ function CreateGroup(props) {
             getUserByText(searchText)
                 .then((result) => {
                     //myid BUG
-                    setUsers(result.filter(x=>x.idUser!==2));
+                    setUsers(result.filter(x => x.idUser !== user.userInfo.idUser));
                 })
                 .catch((err) => console.log(err));
         }
@@ -67,7 +69,7 @@ function CreateGroup(props) {
     const onClickRemoveMember = (id) => {
         const checkBox = document.getElementById(id);
         console.log(checkBox)
-        if(checkBox){
+        if (checkBox) {
             checkBox.checked = false;
         }
         const newState = member.filter((item) => item.mail !== id);
@@ -111,14 +113,14 @@ function CreateGroup(props) {
         }
         var data = {
             NameGroup: groupName.trim(),
-            IdUser: 2,
+            IdUser: user.userInfo.idUser,
             Users: []
         }
         member.forEach(x => {
             data.Users.push(x.idUser);
         })
 
-        var result = createGroup(data);
+        var result = createGroup(data, user.userInfo.token);
         result
             .then(result => {
                 alert("Created!");

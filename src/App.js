@@ -37,7 +37,8 @@ import CreateProject from './Containers/Job/CreateProject';
 import GroupDetail from './Containers/Job/GroupDetail';
 import UpdateGroup from './Containers/Job/UpdateGroup';
 
-
+import CreateTask from './Containers/Task/CreateTask';
+import MyTask from './Containers/Task/MyTask';
 
 function App() {
     const [show, setShow] = useState(false);
@@ -110,6 +111,9 @@ function App() {
                     <Route path={constant.BUG_TAB} exact element={<BugTask />} />
                     <Route path={constant.EXPIRED_TAB} exact element={<ExpiredTask />} />
                     <Route path={constant.TASK_DETAIL} exact element={<TaskInfo />} />
+
+                    <Route path={constant.PROJECT_DETAIL} exact element={<MyTask />} />
+                    <Route path={constant.CREATE_TASK} exact element={<CreateTask />} />
                 </>
                 }
                 {/* error */}

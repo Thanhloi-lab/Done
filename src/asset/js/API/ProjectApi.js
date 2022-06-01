@@ -1,19 +1,43 @@
-import {API_URL} from '../constant';
+import { API_URL } from '../constant';
 
-export async function allUserProject(id) {
-    let response = await fetch(`${API_URL}/api/Projects/allProjectOf?Id=${id}`);
+export async function allUserProject(id, token) {
+    let response = await fetch(`${API_URL}/api/Projects/allProjectOf?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };
 
-export async function allProjectByGroupId(id) {
-    let response = await fetch(`${API_URL}/api/Projects/getByGroup?idGroup=${id}`);
+export async function allProjectByGroupId(id, token) {
+    let response = await fetch(`${API_URL}/api/Projects/getByGroup?idGroup=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };
 
 
-export async function createProject(data) {
+export async function createProject(data, token) {
     // Default options are marked with *
     //console.log(data);
     const response = await fetch(`${API_URL}/api/Projects/create`, {
@@ -22,7 +46,8 @@ export async function createProject(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -33,7 +58,7 @@ export async function createProject(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function editProject(data) {
+export async function editProject(data, token) {
     // Default options are marked with *
     // console.log(data);
     const response = await fetch(`${API_URL}/api/Projects/Edit`, {
@@ -42,7 +67,8 @@ export async function editProject(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -55,7 +81,7 @@ export async function editProject(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function deleteProject(data) {
+export async function deleteProject(data, token) {
     // Default options are marked with *
     const response = await fetch(`${API_URL}/api/Projects/removeProject`, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
@@ -63,7 +89,8 @@ export async function deleteProject(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },

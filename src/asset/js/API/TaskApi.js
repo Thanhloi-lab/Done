@@ -1,12 +1,24 @@
-import {API_URL} from '../constant';
+import { API_URL } from '../constant';
 
-export async function allTaskOfUser(id) {
-    let response = await fetch(`${API_URL}/api/Tasks/allTaskOf?Id=${id}`);
+export async function allTaskOfUser(id, token) {
+    let response = await fetch(`${API_URL}/api/Tasks/allTaskOf?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };
 
-export async function createTask(data) {
+export async function createTask(data, token) {
     // Default options are marked with *
     //console.log(data);
     const response = await fetch(`${API_URL}/api/Tasks/create`, {
@@ -15,7 +27,8 @@ export async function createTask(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -26,7 +39,7 @@ export async function createTask(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function editTask(data) {
+export async function editTask(data, token) {
     // Default options are marked with *
     // console.log(data);
     const response = await fetch(`${API_URL}/api/Tasks/Edit`, {
@@ -35,7 +48,8 @@ export async function editTask(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -48,7 +62,7 @@ export async function editTask(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function updateStatus(data) {
+export async function updateStatus(data, token) {
     // Default options are marked with *
     // console.log(data);
     const response = await fetch(`${API_URL}/api/Tasks/updateStatus`, {
@@ -57,7 +71,8 @@ export async function updateStatus(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -70,7 +85,7 @@ export async function updateStatus(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function deleteTask(data) {
+export async function deleteTask(data, token) {
     // Default options are marked with *
     const response = await fetch(`${API_URL}/api/Tasks/removeTask`, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
@@ -78,7 +93,8 @@ export async function deleteTask(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },

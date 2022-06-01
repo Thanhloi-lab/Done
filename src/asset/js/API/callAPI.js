@@ -1,4 +1,4 @@
-import { STATUS_NAME} from '../constant'
+import { STATUS_NAME } from '../constant'
 
 const api = "http://localhost:50003/api";
 
@@ -17,13 +17,25 @@ function groupByProjectStatus(list) {
     return Array.from(map, ([idProject, value]) => ({ idProject, value }));
 }
 
-async function handleLoadAllTasks(id) {
-    let response = await fetch(`${api}/Tasks/allTaskOf?Id=${id}`);
+async function handleLoadAllTasks(id, token) {
+    let response = await fetch(`${api}/Tasks/allTaskOf?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 }
 
-const getAllTaskGroupBy = (data) =>{
+const getAllTaskGroupBy = (data) => {
     const all = {
         completedJobs: groupByProjectStatus(data.filter(job => {
             return job.statusId === STATUS_NAME.COMPLETED
@@ -44,23 +56,23 @@ const getAllTaskGroupBy = (data) =>{
 const getArrayTaskFromObject = (obj, id) => {
     const jobs = Object.values(obj);
     let detail;
-    
+
     jobs.forEach(project => {
         project.forEach(projects => {
             projects.value.forEach(project => {
                 if (project.idTask + "" === id) {
                     detail = project;
                 }
-                if(detail)
+                if (detail)
                     return;
             })
-            if(detail)
+            if (detail)
                 return;
         })
-        if(detail)
+        if (detail)
             return;
     })
     return detail;
 }
 
-export { handleLoadAllTasks, groupByProjectStatus, getArrayTaskFromObject, getAllTaskGroupBy}
+export { handleLoadAllTasks, groupByProjectStatus, getArrayTaskFromObject, getAllTaskGroupBy }

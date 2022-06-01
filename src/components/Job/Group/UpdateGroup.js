@@ -8,6 +8,7 @@ import { getUserByText } from '../../../asset/js/API/UserApi';
 import { createGroup, getGroupById } from '../../../asset/js/API/GroupApi';
 import { getUserByGroupId } from '../../../asset/js/API/UserApi';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
 
 import { API_URL } from '../../../asset/js/constant';
 import Dialog from '@mui/material/Dialog';
@@ -24,12 +25,14 @@ function UpdateGroup(props) {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const user = useSelector((state) => state.users);
+
     let id = useParams().id;
 
     const [group, setGroup] = useState({});
 
     useEffect(() => {
-        getGroupById(id)
+        getGroupById(user.userInfo.idUser, user.userInfo.token)
             .then((result) => {
                 if (result) {
                     setGroup(result);
@@ -168,7 +171,7 @@ function UpdateGroup(props) {
                             <h1>UPDATE GROUP</h1>
                         </div>
                         <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
-                            <div className={styles.reloadBtn} onClick={()=>{navigate("/job/myGroups", { replace: true })}}>
+                            <div className={styles.reloadBtn} onClick={() => { navigate("/job/myGroups", { replace: true }) }}>
                                 <i className="fas fa-long-arrow-alt-left"></i>
                                 <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
                             </div>
