@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
 import stylesBtn from './MyTask.module.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { allTaskOfUser, deleteTask, editTask } from '../../../asset/js/API/TaskApi';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -26,6 +26,8 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
     const [fullTasks, setFullTasks] = useState([]);
     const [searchText, setSearchText] = useState('');
 
+    const location = useLocation();
+
     const user = useSelector((state) => state.users);
 
     const [openDelete, setOpenDelete] = useState(false);
@@ -47,9 +49,10 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
         var resultPromise = allTaskOfUser(user.userInfo.idUser, user.userInfo.token);
         resultPromise.then((result) => {
             if (owner) {
-                var temp = result.filter(x => x.createUser === user.userInfo.idUser);
+                var temp = result.filter(x => x.userCreateProject === user.userInfo.idUser && x.idProject === location.state.idProject);
                 setFullTasks(temp);
                 setTasks(temp);
+                console.log(result)
             }
             else {
                 setFullTasks(result);
@@ -219,22 +222,21 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
                         <h1>{!projectDetail && (owner ? 'MY TASKS' : 'TASKS')} {projectDetail && 'PROJECT DETAIL'}</h1>
                     </div>
 
-                    {projectDetail}
                     <div className={stylesBtn.FeatureContainer}>
-                        {projectDetail && owner &&
+                        {!projectDetail && owner &&
                             <div className={styles.taskContainer + ' ' + styles.toolBar
                                 + ' ' + styles.nonBoxShadow + ' ' + tableStyles.content
                                 + ' ' + stylesBtn.FlexContainer}
                             >
-                                <div className={stylesBtn.btnContainer}>
-                                    <Link className={stylesBtn.addBtn} to='/job/21/create-project'>
-                                        <i className="fa-solid fa-plus"></i>
+                                <div className={stylesBtn.btnContainer} style={{ marginRight: '30px' }}>
+                                    <div className={stylesBtn.addBtn}>
+                                        <i className="fa-solid fa-plus" ></i>
                                         <span className={styles.addtext} style={{ marginLeft: '10px' }}>New task</span>
-                                    </Link>
+                                    </div>
                                 </div>
                             </div>
                         }
-                        <div className={styles.taskContainer + ' ' + stylesBtn.searchContainer} style={{ flex: !projectDetail ? 1 : 'inherit' }}>
+                        <div className={styles.taskContainer + ' ' + stylesBtn.searchContainer} style={{ flex: 'inherit' }}>
                             <div className={styles.toolBar}>
                                 <div className={styles.reloadBtn} onClick={handleReload}>
                                     <span className={styles.reloadText}>Reload</span>
@@ -256,12 +258,11 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
                             <thead className={stylesBtn.Table100Head}>
                                 <tr>
                                     <th>Order</th>
-                                    {!projectDetail &&
-                                        <th>Group</th>
-                                    }
                                     <th>Name</th>
-                                    <th>Creator's mail</th>
-                                    <th>Tasks</th>
+                                    <th>
+                                        Deadline
+                                    </th>
+                                    <th>Task Create Date</th>
                                     {owner && <th></th>}
                                 </tr>
                             </thead>
@@ -274,20 +275,9 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
                                             handleLinkTaskDetail(x.idTask);
                                         }}>
                                             <td>{index + 1}</td>
-                                            {!projectDetail &&
-                                                <td>
-                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleNavigateTaskDetail(event, x.idTask)}>
-                                                        <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Group test</span>
-                                                    </div>
-                                                </td>
-                                            }
                                             <td>{x.nameTask}</td>
-                                            <td>{x.mail}</td>
-                                            <td >
-                                                <div>
-                                                    {x.cntTask} tasks
-                                                </div>
-                                            </td>
+                                            <td>{x.deadline}</td>
+                                            <td >{x.taskCreateDate}</td>
                                             {owner &&
                                                 <td>
                                                     <div className={stylesBtn.deleteBtn} onClick={(event) => handleClickDelete(event, x.idTask, x.nameTask)} >

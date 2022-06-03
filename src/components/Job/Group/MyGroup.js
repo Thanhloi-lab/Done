@@ -59,7 +59,11 @@ function MyGroupPage({ owner, ...props }) {
     }
 
     const handleLinkGroupDetail = (groupId) => {
-        navigate(`/job/group/${groupId}`);
+        navigate(`/job/group/${groupId}`, {
+            state: {
+                idGroup: groupId,
+            }
+        });
     }
 
     const handleTextChange = (e) => {

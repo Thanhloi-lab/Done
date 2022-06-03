@@ -1,35 +1,35 @@
-import {useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB, PROJECTS, MY_PROJECTS} from '../../../asset/js/constant'
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB, PROJECTS, MY_PROJECTS } from '../../../asset/js/constant'
 import './JobSidebar.css'
 import jobsSlice from '../jobsSlice'
 
 
-function JobSidebar(props){
+function JobSidebar(props) {
     console.log('Sidebar rendered');
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         const state = {
             path: props.page,
         }
         dispatch(jobsSlice.actions.changeTab(state))
     }, [])
 
-    const handleClickToggle = () =>{
+    const handleClickToggle = () => {
         dispatch(jobsSlice.actions.toggleSideBar())
     }
 
-    return(
+    return (
         <>
-            <input type="checkbox" id="check" checked={useSelector((state) => state.jobs.sideBarStatus)} onChange={handleClickToggle}/>
+            <input type="checkbox" id="check" checked={useSelector((state) => state.jobs.sideBarStatus)} onChange={handleClickToggle} />
             <label htmlFor="check" className="check-label">
                 <i className="fas fa-bars" id='btn'></i>
                 <i className="fas fa-times" id='cancel'></i>
             </label>
             <div className="sideBar">
-                
+
                 <header>Side bar</header>
                 <ul className="sideBar-list">
                     <li className={props.page === HOME_JOB ? 'sideBar-item active' : 'sideBar-item'}>
@@ -62,31 +62,31 @@ function JobSidebar(props){
                             EXPIRED
                         </Link>
                     </li>  */}
-                    <li className={props.page === PROJECTS? 'sideBar-item active' : 'sideBar-item'}>
+                    <li className={props.page === PROJECTS ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={PROJECTS} className="sideBar-link">
                             <i className="fas fa-users-cog sidebar_icon"></i>
                             PROJECTS
                         </Link>
                     </li>
-                    <li className={props.page === MY_PROJECTS? 'sideBar-item active' : 'sideBar-item'}>
+                    <li className={props.page === MY_PROJECTS ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={MY_PROJECTS} className="sideBar-link">
                             <i className="fas fa-users-cog sidebar_icon"></i>
                             MY PROJECTS
                         </Link>
                     </li>
-                    <li className={props.page === GROUPS? 'sideBar-item active' : 'sideBar-item'}>
+                    <li className={props.page === GROUPS ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={GROUPS} className="sideBar-link">
                             <i className="fas fa-users sidebar_icon"></i>
                             GROUPS
                         </Link>
                     </li>
-                    <li className={props.page === MY_GROUP? 'sideBar-item active' : 'sideBar-item'}>
+                    <li className={props.page === MY_GROUP ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={MY_GROUP} className="sideBar-link">
                             <i className="fas fa-users-cog sidebar_icon"></i>
                             MY GROUPS
                         </Link>
                     </li>
-                    
+
                 </ul>
             </div>
         </>

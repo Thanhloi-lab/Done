@@ -106,7 +106,7 @@ export async function deleteGroup(data, token) {
 
 export async function addGroupMembers(data, token) {
     // Default options are marked with *
-    //console.log(data);
+    console.log(data);
     const response = await fetch(`${API_URL}/api/Groups/addMember`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin

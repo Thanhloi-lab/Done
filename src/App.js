@@ -36,6 +36,7 @@ import MyProjects from './Containers/Job/MyProjects';
 import CreateProject from './Containers/Job/CreateProject';
 import GroupDetail from './Containers/Job/GroupDetail';
 import UpdateGroup from './Containers/Job/UpdateGroup';
+import UpdateProject from './Containers/Job/UpdateProject';
 
 import CreateTask from './Containers/Task/CreateTask';
 import MyTask from './Containers/Task/MyTask';
@@ -100,7 +101,7 @@ function App() {
 
                     {/* projects */}
                     <Route path={constant.CREATE_PROJECTS} exact element={< CreateProject />} />
-                    <Route path={constant.UPDATE_PROJECTS} exact element={< CreateProject />} />
+                    <Route path={constant.UPDATE_PROJECTS} exact element={< UpdateProject />} />
                     <Route path={constant.PROJECTS} exact element={<Project />} />
                     <Route path={constant.MY_PROJECTS} exact element={<MyProjects />} />
 

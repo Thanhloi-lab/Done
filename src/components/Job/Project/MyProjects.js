@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
 import stylesBtn from './MyProject.module.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { allUserProject, deleteProject, editProject } from '../../../asset/js/API/ProjectApi';
 import GroupDetail from '../Group/GroupDetail';
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +21,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 function MyProjectPage({ groupDetail, owner, ...props }) {
     console.log("projectPage component rendered " + owner);
     let navigate = useNavigate();
+    let location = useLocation();
     const [projects, setProjects] = useState([]);
     const [fullProjects, setFullProjects] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -59,7 +60,11 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
     }
 
     const handleLinkProjectDetail = (projectId) => {
-        navigate(`/job/project/${projectId}`);
+        navigate(`/job/project/${projectId}`, {
+            state: {
+                idProject: projectId,
+            }
+        });
     }
 
     const handleTextChange = (e) => {
@@ -166,7 +171,16 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
     }
     const handleNavigateGroupDetail = (event, id) => {
         event.stopPropagation();
-        navigate(`/job/groupDetail/21`);
+        navigate(`/job/groupDetail/${id}`);
+    }
+
+    const handleNavigateCreateProject = (event, id) => {
+        event.stopPropagation();
+        navigate(`/job/${id}/create-project`, {
+            state: {
+                groupId: id,
+            }
+        });
     }
 
     const DialogEdit = () => {
@@ -217,7 +231,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                         <h1>{!groupDetail && (owner ? 'MY PROJECTS' : 'PROJECTS')} {groupDetail && 'GROUP DETAIL'}</h1>
                     </div>
 
-                    {groupDetail && <GroupDetail />}
+
                     <div className={stylesBtn.FeatureContainer}>
                         {groupDetail && owner &&
                             <div className={styles.taskContainer + ' ' + styles.toolBar
@@ -225,10 +239,10 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                                 + ' ' + stylesBtn.FlexContainer}
                             >
                                 <div className={stylesBtn.btnContainer}>
-                                    <Link className={stylesBtn.addBtn} to='/job/21/create-project'>
+                                    <div className={stylesBtn.addBtn} style={{ marginRight: '30px' }} onClick={(event) => handleNavigateCreateProject(event, location.state.idGroup)}>
                                         <i className="fa-solid fa-plus"></i>
                                         <span className={styles.addtext} style={{ marginLeft: '10px' }}>New project</span>
-                                    </Link>
+                                    </div>
                                 </div>
                             </div>
                         }

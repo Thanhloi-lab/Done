@@ -104,6 +104,7 @@ function CreateGroup(props) {
 
     const handleAgree = () => {
         handleCreateGroup();
+        setOpen(false);
     }
 
     const handleCreateGroup = () => {

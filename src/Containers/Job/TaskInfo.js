@@ -7,11 +7,13 @@ import { useParams } from 'react-router-dom'
 import { handleLoadAllTasks } from '../../asset/js/API/callAPI'
 import jobsSlice from '../../components/Job/jobsSlice'
 
+
 function TaskInfo() {
     const dispatch = useDispatch();
     const isLoaded = useSelector((state) => state.jobs.allTasks);
-    if (Object.keys(isLoaded).length===0) {
-        handleLoadAllTasks(2)
+    const user = useSelector((state) => state.users);
+    if (Object.keys(isLoaded).length === 0) {
+        handleLoadAllTasks(user.userInfo.idUser, user.userInfo.token)
             .then(result => {
                 dispatch(jobsSlice.actions.getAllTasks(result));
             })
@@ -22,12 +24,12 @@ function TaskInfo() {
     const jobs = Object.values(useSelector((state) => state.jobs.allTasks));
     // getArrayTaskFromObject(jobs, useParams().id);x
     let id = useParams().id;
-    let jobDetail = jobs.find(x=>x.idTask+"" === id+"");
+    let jobDetail = jobs.find(x => x.idTask + "" === id + "");
 
     return (
         <>
             <JobSidebar page={useSelector((state) => state.jobs.path)} />
-            <Task detail={jobDetail} taskId={useParams().id}/>
+            <Task detail={jobDetail} taskId={useParams().id} />
             <Chat />
         </>
     )
