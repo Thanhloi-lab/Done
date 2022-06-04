@@ -22,7 +22,9 @@ function NotificationSideBar(){
     }, [])
 
     const handleClick  = (idNotify)  => {
-        updateSeen(idNotify);
+        updateSeen(idNotify).then((data) => {
+
+        });
     }
 
     return (
