@@ -1,6 +1,7 @@
 import styles from  './Notification.module.css';
 import {getAllByUser} from '../../../apis/NotifyApi.js';
 import {useState, useEffect} from 'react'
+import {updateSeen} from   '../../../asset/js/API/NotifyAPI';
 function NotificationSideBar(){
     const idUser = JSON.parse(localStorage.getItem("user")).idUser;
     const [notifies, setNotify] = useState([]);
@@ -19,20 +20,27 @@ function NotificationSideBar(){
             );
     }, [])
 
+    const handleClick  = (idNotify)  => {
+        updateSeen(idNotify);
+    }
+
     return (
-        <div className= {styles.sideBarNotification}>
+        <div className= {`${styles.sideBarNotification} test`}>
             <div className= {styles.sideBarListficationList}>
             {             
                 notifies.map((value, index) => {
                     return (
                         <div className= {styles.sideBarNotificationItem} key={index}
-                        style={value.isSeen === false ? {backgroundColor:'#81cff3'} : null}
-                        >
-                            <div style={{fontWeight: 'bold'}}>
+                        //style={value.isSeen === false ? {backgroundColor:'#f6f6f6'} : null}
+                        onClick = {value.isSeen === false ? ()=> handleClick(value.idNotify): null}>
+                            <div style={{}}>
                                 {value.name}
                             </div>
-                            <div>
+                            <div style={value.isSeen === false ? {color:'#1876f1'}: {}}>
                                 {value.content}
+                            </div>
+                            <div className={styles.line}>
+
                             </div>
                         </div>
                     );

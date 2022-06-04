@@ -141,3 +141,24 @@ textarea:-ms-input-placeholder { color: #999999; }
     transition:0s;
     font-size:1.7rem;
 }
+
+.test::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.test::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius:20px;
+}
+ 
+/* Handle */
+.test::-webkit-scrollbar-thumb {
+  background: #aaa; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.test::-webkit-scrollbar-thumb:hover {
+  background: #888; 
+}

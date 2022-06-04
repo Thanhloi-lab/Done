@@ -1,11 +1,14 @@
 .sideBarNotification {
     position: fixed;
     top: 80px;
-    right: 0;
+    right: 0px;
     width: 300px;
     max-width: 100%;
     background-color: #fff;
     display: block;
+    height: 100%;
+    overflow-y: scroll;
+    
    
 }
 .sideBarListficationList{
@@ -19,12 +22,19 @@
     padding: 5px;
     margin-left: 10px;
     margin-right: 10px;
-    margin-bottom: 10px;
+    
     border-radius: 5px;
     display: inline-block;
+    font-size: 1.5rem;
 }
 
-.sideBarNotificationItem :hover{
+.sideBarNotificationItem:hover{
    opacity: 0.5;
+}
+.line{
+    height: 1px;
+    width: 100%;
+    background: #ddd;
+    margin: 10px 0px 0px 0px;
 }
 

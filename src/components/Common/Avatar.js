@@ -2,6 +2,8 @@ import './Avatar.css'
 import usersSlice from '../User/UsersSlice';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
+import {API_URL} from '../../asset/js/constant';
+
 
 
 const Avatar = ({user, setToken})=>{
@@ -23,10 +25,14 @@ const Avatar = ({user, setToken})=>{
         localStorage.removeItem("user");
         // window.location.reload();
     }
+    
+    //const user = JSON.parse(localStorage.getItem('user'));
 
     return (
         <div className="header__navbar-item header__navbar-user">
-            <img src='/images/penguin1.png' className="header__navbar-user-avatar"/>
+            <img src={ user.avatar ? `${API_URL}/${user.avatar}`  : '/images/penguin1.png'
+            }
+             className="header__navbar-user-avatar"/>
             <span className="header__navbar-user-name">{user.name}</span>
             <ul className="header__navbar-user-menu">
                 <li className="header__navbar-user-item">
