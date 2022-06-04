@@ -2,6 +2,7 @@ import styles from  './Notification.module.css';
 import {getAllByUser} from '../../../apis/NotifyApi.js';
 import {useState, useEffect} from 'react'
 import {updateSeen} from   '../../../asset/js/API/NotifyAPI';
+import {time_ago} from   '../../../asset/js/utils';
 function NotificationSideBar(){
     const idUser = JSON.parse(localStorage.getItem("user")).idUser;
     const [notifies, setNotify] = useState([]);
@@ -35,6 +36,9 @@ function NotificationSideBar(){
                         onClick = {value.isSeen === false ? ()=> handleClick(value.idNotify): null}>
                             <div style={{}}>
                                 {value.name}
+                            </div>
+                            <div className={styles.time}>
+                                {time_ago(value.timeCreated)}
                             </div>
                             <div style={value.isSeen === false ? {color:'#1876f1'}: {}}>
                                 {value.content}
