@@ -54,9 +54,6 @@ function App() {
                 body: payload.notification.body,
             });
             
-            //console.log(payload.notification);
-            
-            //console.log("message state " + messageState);
         })
         .catch((err) => console.log("failed: ", err));
 
@@ -74,7 +71,7 @@ function App() {
                 title={notification.title}
                 body={notification.body}
             />) : (<></>)}
-            <Navbar setToken={setToken} messageStateParam={messageState}  />
+            <Navbar setToken={setToken} messageStateParam={messageState} timeStamp={Date.now()} />
             <Notification />
             <Routes>
 

@@ -3,11 +3,11 @@ import {getAllByUser} from '../../../apis/NotifyApi.js';
 import {useState, useEffect} from 'react'
 import {updateSeen} from   '../../../asset/js/API/NotifyAPI';
 import {time_ago} from   '../../../asset/js/utils';
-function NotificationSideBar(){
+function NotificationSideBar({timeStamp}){
     const idUser = JSON.parse(localStorage.getItem("user")).idUser;
     const [notifies, setNotify] = useState([]);
     console.log("rerender ")
-    console.log(notifies);
+    //console.log(notifies);
     useEffect(() => {
         getAllByUser(idUser).then(
         
@@ -19,7 +19,7 @@ function NotificationSideBar(){
                 
             })
             );
-    }, [])
+    }, [timeStamp])
 
     const handleClick  = (idNotify)  => {
         updateSeen(idNotify).then((data) => {

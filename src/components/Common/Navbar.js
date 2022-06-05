@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import NotificationSideBar from '../Job/Notification/Notification'
 
 
-function Navbar({setToken,messageStateParam}) {
+function Navbar({setToken,messageStateParam,timeStamp}) {
     console.log('navbar ' , messageStateParam);
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
@@ -39,7 +39,8 @@ function Navbar({setToken,messageStateParam}) {
     useEffect(() => {
         setMessageState(messageStateParam);
         showButton();
-    }, [messageStateParam])
+        setShowNoti(showNoti);
+    }, [timeStamp])
 
 
     window.addEventListener('resize', showButton);
@@ -78,7 +79,7 @@ function Navbar({setToken,messageStateParam}) {
                        
                         <label  className="nav-links" htmlFor="input-notify" onClick={showNotiBar}>
                         <i className="fa-solid fa-bells"></i>
-                            {console.log(messageState)}
+                            {console.log('messageState ' + messageState)}
                             {  
                                 messageState === false ?
                                 <i className="fa-solid fa-bell"></i>
@@ -87,15 +88,12 @@ function Navbar({setToken,messageStateParam}) {
                             }
                            
                         </label>
-                       
-                     
-
                     </li>
                 </ul>
                 {user.token && button && <Avatar setToken={setToken} user={user} />}
                 {!user.token && button && <Button buttonStyle='btn--outline'>SIGN IN</Button>}
             </div>
-            {showNoti === true ? <NotificationSideBar/> : null}
+            {showNoti === true ? <NotificationSideBar timeStamp={Date.now()}/> : null}
         </nav>
          
     )

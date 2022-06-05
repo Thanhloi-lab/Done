@@ -1,13 +1,14 @@
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import styles from  './Notification.module.css';
 export const ReactNotificationComponent = ({ title, body }) => {
   console.log("noty " + title , body )
   toast.info(<Display />);
   function Display() {
     return (
-      <div>
-        <h4>{title}</h4>
-        <p>{body}</p>
+      <div className={styles.text}>
+        <div>{title}</div>
+        <div>{body}</div>
       </div>
     );
   }
