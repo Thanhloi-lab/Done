@@ -32,6 +32,7 @@ function Navbar({setToken,messageStateParam}) {
         }
     }
     const showNotiBar =() => {
+        setMessageState(false) ;
         setShowNoti(!showNoti);
     }
 
