@@ -39,7 +39,7 @@ export async function allProjectByGroupId(id, token) {
 
 export async function createProject(data, token) {
     // Default options are marked with *
-    //console.log(data);
+    console.log(data);
     const response = await fetch(`${API_URL}/api/Projects/create`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin

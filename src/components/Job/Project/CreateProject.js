@@ -7,7 +7,7 @@ import UserSelectList from '../User/UserSelectList';
 import { getUserByText } from '../../../asset/js/API/UserApi';
 import { createProject } from '../../../asset/js/API/ProjectApi';
 import { useSelector } from "react-redux";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { API_URL } from '../../../asset/js/constant';
 import Dialog from '@mui/material/Dialog';
@@ -23,6 +23,7 @@ function CreateProject(props) {
     const [open, setOpen] = useState(false);
     const user = useSelector((state) => state.users);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const handleSearchUser = () => {
         var searchText = document.getElementById('userSearchText').value;
@@ -144,6 +145,12 @@ function CreateProject(props) {
                 <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                     <div className={styles.contentHeader}>
                         <h1>CREATE PROJECT</h1>
+                    </div>
+                    <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
+                        <div className={styles.reloadBtn} onClick={() => { navigate("/job/myProjects", { replace: true }) }}>
+                            <i className="fas fa-long-arrow-alt-left"></i>
+                            <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
+                        </div>
                     </div>
                     <div className={styles.taskContainer + ' ' + styles.nonBoxShadow}>
                         <form className={inputStyles.form}>

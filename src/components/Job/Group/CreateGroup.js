@@ -6,7 +6,8 @@ import inputStyles from '../InputStyles.module.css';
 import UserSelectList from '../User/UserSelectList';
 import { getUserByText } from '../../../asset/js/API/UserApi';
 import { createGroup } from '../../../asset/js/API/GroupApi';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 import { API_URL } from '../../../asset/js/constant';
 import Dialog from '@mui/material/Dialog';
@@ -21,6 +22,7 @@ function CreateGroup(props) {
     const [groupName, setGroupName] = useState("");
     const [open, setOpen] = useState(false);
     const user = useSelector((state) => state.users);
+    const navigate = useNavigate();
 
     const handleSearchUser = () => {
         var searchText = document.getElementById('userSearchText').value;
@@ -141,6 +143,12 @@ function CreateGroup(props) {
                 <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                     <div className={styles.contentHeader}>
                         <h1>CREATE GROUP</h1>
+                    </div>
+                    <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
+                        <div className={styles.reloadBtn} onClick={() => { navigate("/job/myGroups", { replace: true }) }}>
+                            <i className="fas fa-long-arrow-alt-left"></i>
+                            <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
+                        </div>
                     </div>
                     <div className={styles.taskContainer + ' ' + styles.nonBoxShadow}>
                         <form className={inputStyles.form}>

@@ -5,6 +5,7 @@ import stylesBtn from './MyTask.module.css'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { allTaskOfUser, deleteTask, editTask } from '../../../asset/js/API/TaskApi';
 import { useSelector, useDispatch } from "react-redux";
+import jobsSlice from '../jobsSlice'
 
 
 //mui
@@ -20,6 +21,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 function MyTaskPage({ projectDetail, owner, ...props }) {
+    const dispatch = useDispatch();
     console.log("taskPage component rendered " + owner);
     let navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
@@ -28,7 +30,10 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
 
     const location = useLocation();
 
+
     const user = useSelector((state) => state.users);
+
+    const [show, setShow] = useState(location.state.createUser === user.userInfo.idUser ? true : false);
 
     const [openDelete, setOpenDelete] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
@@ -40,6 +45,7 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
     const titleDelete = "Delete task ";
     const deleteContent = "Are you sure you want to task?";
 
+    console.log(show, location.state.createUser, user.userInfo.idUser)
 
     useEffect(() => {
         getAllTask();
@@ -49,10 +55,11 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
         var resultPromise = allTaskOfUser(user.userInfo.idUser, user.userInfo.token);
         resultPromise.then((result) => {
             if (owner) {
+                dispatch(jobsSlice.actions.getAllTasks(result));
                 var temp = result.filter(x => x.userCreateProject === user.userInfo.idUser && x.idProject === location.state.idProject);
                 setFullTasks(temp);
                 setTasks(temp);
-                console.log(result)
+                console.log(result, user)
             }
             else {
                 setFullTasks(result);
@@ -90,10 +97,11 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
         var result = deleteTask(data, user.userInfo.token);
         result.then(response => {
             if (response.isSuccessed) {
-                setTaskEdit({ nameTask: '', idProject: 0 });
+
+                setTaskEdit({ nameTask: '', idTask: 0 });
                 getAllTask();
                 handleClose();
-                alert(response.resultObject);
+                alert("Removed!");
             }
             else {
                 alert(response.message);
@@ -127,9 +135,14 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
             })
     }
 
-    const handleClickEdit = (event, id, name) => {
+    const handleClickEdit = (event, id, name, id1, id2) => {
         event.stopPropagation()
-        navigate(`/job/update-task/${id}`);
+        navigate(`/job/update-task/${id}`, {
+            state: {
+                groupId: id1,
+                projectId: id2,
+            }
+        });
         // console.log(id);
         // setprojectEdit({...projectEdit, idproject: id, nameproject:name});
         // setOpenDelete(false);
@@ -173,6 +186,18 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
         event.stopPropagation();
         navigate(`/job/task/${id}`);
     }
+
+
+    const handleNavigateCreateTask = (event, id1, id2) => {
+        event.stopPropagation();
+        navigate(`/job/${id2}/create-task`, {
+            state: {
+                groupId: id1,
+                projectId: id2,
+            }
+        });
+    }
+
 
     const DialogEdit = () => {
         return (
@@ -221,15 +246,29 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
                     <div className={styles.contentHeader}>
                         <h1>{!projectDetail && (owner ? 'MY TASKS' : 'TASKS')} {projectDetail && 'PROJECT DETAIL'}</h1>
                     </div>
+                    <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
+                        <div className={styles.reloadBtn} onClick={() => {
+                            navigate(`/job/group/${location.state.idGroup}`, {
+                                state: {
+
+                                    idGroup: location.state.idGroup,
+                                }
+                            }, { replace: true })
+                        }}>
+                            <i className="fas fa-long-arrow-alt-left"></i>
+                            <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
+                        </div>
+                    </div>
 
                     <div className={stylesBtn.FeatureContainer}>
-                        {!projectDetail && owner &&
+
+                        {!projectDetail && owner && show &&
                             <div className={styles.taskContainer + ' ' + styles.toolBar
                                 + ' ' + styles.nonBoxShadow + ' ' + tableStyles.content
                                 + ' ' + stylesBtn.FlexContainer}
                             >
                                 <div className={stylesBtn.btnContainer} style={{ marginRight: '30px' }}>
-                                    <div className={stylesBtn.addBtn}>
+                                    <div className={stylesBtn.addBtn} onClick={(event) => handleNavigateCreateTask(event, location.state.idGroup, location.state.idProject)}>
                                         <i className="fa-solid fa-plus" ></i>
                                         <span className={styles.addtext} style={{ marginLeft: '10px' }}>New task</span>
                                     </div>
@@ -286,7 +325,7 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
                                                     </div>
                                                     {/* onClick={(s, e) => handleDeleteproject(x.idproject)} */}
                                                     /
-                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idTask, x.nameTask)}>
+                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idTask, x.nameTask, location.state.idGroup, location.state.idProject)}>
                                                         <i className="fa-solid fa-pen-to-square"></i>
                                                         <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Edit</span>
                                                     </div>

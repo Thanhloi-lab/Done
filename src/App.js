@@ -39,6 +39,7 @@ import UpdateGroup from './Containers/Job/UpdateGroup';
 import UpdateProject from './Containers/Job/UpdateProject';
 
 import CreateTask from './Containers/Task/CreateTask';
+import UpdateTask from './Containers/Task/UpdateTask';
 import MyTask from './Containers/Task/MyTask';
 
 function App() {
@@ -115,6 +116,7 @@ function App() {
 
                     <Route path={constant.PROJECT_DETAIL} exact element={<MyTask />} />
                     <Route path={constant.CREATE_TASK} exact element={<CreateTask />} />
+                    <Route path={constant.UPDATE_TASK} exact element={<UpdateTask />} />
                 </>
                 }
                 {/* error */}

@@ -49,6 +49,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                 var temp = result.filter(x => x.createUser === user.userInfo.idUser);
                 setFullProjects(temp);
                 setProjects(temp);
+                console.log(result, location)
             }
             else {
                 setFullProjects(result);
@@ -59,10 +60,12 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
             .catch((err) => console.log(err))
     }
 
-    const handleLinkProjectDetail = (projectId) => {
+    const handleLinkProjectDetail = (projectId, groupId, user) => {
         navigate(`/job/project/${projectId}`, {
             state: {
                 idProject: projectId,
+                idGroup: groupId,
+                createUser: user
             }
         });
     }
@@ -171,7 +174,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
     }
     const handleNavigateGroupDetail = (event, id) => {
         event.stopPropagation();
-        navigate(`/job/groupDetail/${id}`);
+        navigate(`/job/group/${id}`);
     }
 
     const handleNavigateCreateProject = (event, id) => {
@@ -230,7 +233,12 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                     <div className={styles.contentHeader}>
                         <h1>{!groupDetail && (owner ? 'MY PROJECTS' : 'PROJECTS')} {groupDetail && 'GROUP DETAIL'}</h1>
                     </div>
-
+                    <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
+                        <div className={styles.reloadBtn} onClick={() => { navigate("/job/myGroups", { replace: true }) }}>
+                            <i className="fas fa-long-arrow-alt-left"></i>
+                            <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
+                        </div>
+                    </div>
 
                     <div className={stylesBtn.FeatureContainer}>
                         {groupDetail && owner &&
@@ -283,13 +291,13 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                                     return (
                                         <tr key={x.idProject} style={{ cursor: 'pointer' }} onClick={(s, e) => {
                                             s.stopPropagation();
-                                            handleLinkProjectDetail(x.idProject);
+                                            handleLinkProjectDetail(x.idProject, x.idGroup, x.createUser);
                                         }}>
                                             <td>{index + 1}</td>
                                             {!groupDetail &&
                                                 <td>
                                                     <div className={stylesBtn.editBtn} onClick={(event) => handleNavigateGroupDetail(event, x.idGroup)}>
-                                                        <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Group test</span>
+                                                        <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>{x.idGroup}</span>
                                                     </div>
                                                 </td>
                                             }
