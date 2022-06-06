@@ -1,20 +1,44 @@
-import {API_URL} from '../constant';
+import { API_URL } from '../constant';
 
-export async function allUserGroup(id) {
+export async function allUserGroup(id, token) {
 
-    let response = await fetch(`${API_URL}/api/Groups/allGroupOf?Id=${id}`);
+    let response = await fetch(`${API_URL}/api/Groups/allGroupOf?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };
 
-export async function getGroupById(id) {
-    let response = await fetch(`${API_URL}/api/Groups/getById?Id=${id}`);
+export async function getGroupById(id, token) {
+    let response = await fetch(`${API_URL}/api/Groups/getById?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };
 
 
-export async function createGroup(data) {
+export async function createGroup(data, token) {
     // Default options are marked with *
     //console.log(data);
     const response = await fetch(`${API_URL}/api/Groups/create`, {
@@ -23,7 +47,8 @@ export async function createGroup(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -34,7 +59,7 @@ export async function createGroup(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function editGroup(data) {
+export async function editGroup(data, token) {
     // Default options are marked with *
     // console.log(data);
     const response = await fetch(`${API_URL}/api/Groups/Edit`, {
@@ -43,7 +68,8 @@ export async function editGroup(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -56,7 +82,7 @@ export async function editGroup(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function deleteGroup(data) {
+export async function deleteGroup(data, token) {
     // Default options are marked with *
     const response = await fetch(`${API_URL}/api/Groups/removeGroup`, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
@@ -64,7 +90,8 @@ export async function deleteGroup(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -77,16 +104,17 @@ export async function deleteGroup(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function addGroupMembers(data) {
+export async function addGroupMembers(data, token) {
     // Default options are marked with *
-    //console.log(data);
+    console.log(data);
     const response = await fetch(`${API_URL}/api/Groups/addMember`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -97,7 +125,7 @@ export async function addGroupMembers(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function removeGroupMembers(data) {
+export async function removeGroupMembers(data, token) {
     // Default options are marked with *
     //console.log(data);
     const response = await fetch(`${API_URL}/api/Groups/removeMember`, {
@@ -106,7 +134,8 @@ export async function removeGroupMembers(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },

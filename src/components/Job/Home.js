@@ -14,6 +14,7 @@ function Home() {
     const dispatch = useDispatch();
     const jobs = useSelector(taskRemainingSelector);
     const homeActions = useSelector((state) => state.jobs.homeActions);
+    const user = useSelector((state) => state.users);
 
     const handleTextChange = (e) => {
         dispatch(filtersSlice.actions.filtersTextChange(e.target.value));
@@ -21,16 +22,16 @@ function Home() {
     }
 
     const handleReload = (event) => {
-        handleLoadAllTasks(2)
-        .then(result => {
-            // console.log(result);
-            dispatch(jobsSlice.actions.getAllTasks(result));
-            if (event === 'reload')
-                dispatch(jobsSlice.actions.reloadJobAction());
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        handleLoadAllTasks(user.userInfo.idUser, user.userInfo.token)
+            .then(result => {
+                // console.log(result);
+                dispatch(jobsSlice.actions.getAllTasks(result));
+                if (event === 'reload')
+                    dispatch(jobsSlice.actions.reloadJobAction());
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     useEffect(() => {
@@ -49,7 +50,7 @@ function Home() {
     //             console.log(err);
     //         })
     // }
-    
+
     return (
         <div className={styles.limiter}>
             <div className={styles.container}>

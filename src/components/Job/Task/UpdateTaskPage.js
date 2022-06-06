@@ -5,10 +5,16 @@ import tableStyles from '../tableStyles.module.css';
 import inputStyles from '../InputStyles.module.css';
 import UserSelectList from '../User/UserSelectList';
 import { getUserByText } from '../../../asset/js/API/UserApi';
-import { editGroup, getGroupById, addGroupMembers, removeGroupMembers } from '../../../asset/js/API/GroupApi';
-import { getUserByGroupId } from '../../../asset/js/API/UserApi';
+import { getTaskById, addTaskMembers, removeTaskMembers, editTask, updateStatus } from '../../../asset/js/API/TaskApi';
+import { getUserByTaskId } from '../../../asset/js/API/TaskApi';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from 'react-router-dom';
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { IconButton, InputAdornment } from "@material-ui/core";
+import SnoozeIcon from "@material-ui/icons/Snooze";
+import AlarmIcon from "@material-ui/icons/AddAlarm";
+import DateFnsUtils from '@date-io/date-fns';
 
 import { API_URL } from '../../../asset/js/constant';
 import Dialog from '@mui/material/Dialog';
@@ -17,31 +23,43 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function UpdateGroup(props) {
+function UpdateTask(props) {
     const [member, setMember] = useState([]);
     const [users, setUsers] = useState([]);
-    const [groupName, setGroupName] = useState("");
+    const [taskName, setTaskName] = useState("");
+    const [taskContent, setTaskContent] = useState("");
+    const [taskStatus, setTaskStatus] = useState("");
+    const [tempStatus, setTempStatus] = useState("");
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [mail, setMail] = useState("");
     const [memberDelete, setMemberDelete] = useState([]);
+    const location = useLocation();
+    const [date, setDate] = useState();
+
+    const [tempDate, setTempDate] = useState();
 
     const user = useSelector((state) => state.users);
 
     let id = useParams().id;
 
-
-    const [group, setGroup] = useState({});
+    const [task, setTask] = useState({});
 
     useEffect(() => {
-        getGroupById(id, user.userInfo.token)
+        getTaskById(id, user.userInfo.token)
             .then((result) => {
                 if (result) {
+                    //console.log(result)
+                    setTempDate(result.deadline);
+                    setDate(result.deadline);
                     setMail(result.mail);
-                    setGroup(result);
-                    setGroupName(result.nameGroup);
-                    getUserByGroupId(result.idGroup, user.userInfo.token)
+                    setTask(result);
+                    setTaskStatus(result.statusId);
+                    setTempStatus(result.statusId);
+                    setTaskName(result.nameTask);
+                    setTaskContent(result.content);
+                    getUserByTaskId(result.idTask, user.userInfo.token)
                         .then((result1) => {
                             setMember(result1);
                             setUsers(result1);
@@ -50,21 +68,21 @@ function UpdateGroup(props) {
                         .catch((err) => alert(err));
                 }
                 else {
-                    navigate(`/myGroups`);
+                    navigate(`/myTasks`);
                 }
             })
-            .catch(() => navigate(`/myGroups`))
+            .catch(() => navigate(`/myTasks`))
         setLoading(true);
     }, [])
 
     const handleReloadPage = () => {
-        getGroupById(id, user.userInfo.token)
+        getTaskById(id, user.userInfo.token)
             .then((result) => {
                 if (result) {
                     setMail(result.mail);
-                    setGroup(result);
-                    setGroupName(result.nameGroup);
-                    getUserByGroupId(result.idGroup, user.userInfo.token)
+                    setTask(result);
+                    setTaskName(result.nameTask);
+                    getUserByTaskId(result.idTask, user.userInfo.token)
                         .then((result1) => {
                             setMember(result1);
                             setUsers(result1);
@@ -73,12 +91,13 @@ function UpdateGroup(props) {
                         .catch((err) => alert(err));
                 }
                 else {
-                    navigate(`/myGroups`);
+                    navigate(`/myTasks`);
                 }
             })
-            .catch(() => navigate(`/myGroups`))
+            .catch(() => navigate(`/myTasks`))
         setLoading(true);
     }
+
 
     const handleSearchUser = () => {
         var searchText = document.getElementById('userSearchText').value;
@@ -95,7 +114,7 @@ function UpdateGroup(props) {
         const listMember = document.getElementById('ListMember');
         if (listMember.classList.contains(inputStyles.active)) {
             if (member.length > 0) {
-                handleUpdateGroup();
+                handleUpdateTask();
             }
             else {
                 handleClickOpen();
@@ -105,7 +124,7 @@ function UpdateGroup(props) {
         }
         else {
             listMember.classList.add(inputStyles.active);
-            e.target.innerText = 'Update group';
+            e.target.innerText = 'Update task';
         }
     }
 
@@ -132,8 +151,9 @@ function UpdateGroup(props) {
             setMember(newState);
         }
         else {
-            alert("Can't delete creator");
+            alert("can't remove creator")
         }
+
     }
 
     const handleMouseEnterAvatar = (id) => {
@@ -146,8 +166,11 @@ function UpdateGroup(props) {
         email.setAttribute('style', 'visibility:hidden;')
     }
 
-    const handleGroupNameChange = (e) => {
-        setGroupName(e.target.value);
+    const handleTaskNameChange = (e) => {
+        setTaskName(e.target.value);
+    }
+    const handleTaskContentChange = (e) => {
+        setTaskContent(e.target.value);
     }
 
     const handleErrorImg = (e) => {
@@ -163,31 +186,63 @@ function UpdateGroup(props) {
     };
 
     const handleAgree = () => {
-        handleUpdateGroup();
+        handleUpdateTask();
     }
 
+    const handleUpdateTask = () => {
+        var deadlineTime;
+        if (date !== tempDate) {
+            deadlineTime = date.toISOString();
+        }
+        else {
+            deadlineTime = date;
+        }
+        console.log(date, deadlineTime, taskStatus)
 
-    const handleUpdateGroup = () => {
 
-        if (groupName.trim() === "") {
-            alert("Group name must be enter");
+        if (taskName.trim() === "") {
+            alert("Task name must be enter");
             return;
         }
-        var data = {
-            IdGroup: id,
-            groupName: groupName.trim(),
-            IdUser: user.userInfo.idUser,
+        if (taskContent.trim() === "") {
+            alert("Task content must be enter");
+            return;
         }
-        var result = editGroup(data, user.userInfo.token);
+
+        var data = {
+            idTask: id,
+            idUser: user.userInfo.idUser,
+            taskName: taskName.trim(),
+            deadline: deadlineTime,
+            content: taskContent.trim(),
+
+        }
+        var result = editTask(data, user.userInfo.token);
         result
             .then(result => {
+
                 handleRemoveMember();
                 handleAddMember();
-
             })
             .catch(err => {
                 alert(err);
             })
+
+        if (tempStatus !== taskStatus) {
+            var status = {
+                idTask: id,
+                idStatus: taskStatus,
+            }
+            var result = updateStatus(status, user.userInfo.token);
+            result
+                .then(result => {
+
+                })
+                .catch(err => {
+                    alert(err);
+                })
+
+        }
 
 
     }
@@ -211,11 +266,11 @@ function UpdateGroup(props) {
         if (data.length > 0) {
             data.forEach(x => {
                 var newData = {
-                    idGroup: id,
+                    IdTask: id,
                     IdUser: user.userInfo.idUser,
                     IdSth: x,
                 }
-                var result = removeGroupMembers(newData, user.userInfo.token);
+                var result = removeTaskMembers(newData, user.userInfo.token);
                 result
                     .then(result => {
                         console.log("deleted");
@@ -233,7 +288,7 @@ function UpdateGroup(props) {
     const handleAddMember = () => {
         var memData = [];
         var memDelData = [];
-        var IdMembers = [];
+        var IdMember = [];
 
         member.forEach(x => {
             memData.push(x.idUser);
@@ -243,19 +298,19 @@ function UpdateGroup(props) {
         })
         memData.forEach(x => {
             if (!memDelData.includes(x)) {
-                IdMembers.push({
+                IdMember.push({
                     Id: x,
                 });
             }
         })
         var data = {
-            IdMembers,
-            idGroup: id,
+            IdMember,
+            IdTask: id,
             IdUser: user.userInfo.idUser,
         }
 
-        if (data.IdMembers.length > 0) {
-            var result = addGroupMembers(data, user.userInfo.token);
+        if (data.IdMember.length > 0) {
+            var result = addTaskMembers(data, user.userInfo.token);
             result
                 .then(result => {
                     alert("updated");
@@ -268,10 +323,8 @@ function UpdateGroup(props) {
         else {
             alert("updated");
         }
-
-
-
     }
+
 
 
     return (
@@ -281,10 +334,10 @@ function UpdateGroup(props) {
                 {loading &&
                     <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                         <div className={styles.contentHeader}>
-                            <h1>UPDATE GROUP</h1>
+                            <h1>UPDATE TASK</h1>
                         </div>
                         <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
-                            <div className={styles.reloadBtn} onClick={() => { navigate("/job/myGroups", { replace: true }) }}>
+                            <div className={styles.reloadBtn} onClick={() => { navigate(`/job/project/${location.state.projectId}`, { state: { idProject: location.state.projectId, idGroup: location.state.groupId } }, { replace: true }) }}>
                                 <i className="fas fa-long-arrow-alt-left"></i>
                                 <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
                             </div>
@@ -292,14 +345,74 @@ function UpdateGroup(props) {
                         <div className={styles.taskContainer + ' ' + styles.nonBoxShadow}>
                             <form className={inputStyles.form}>
                                 <span className={inputStyles.label}>
-                                    Group's name:
+                                    Task's name:
                                 </span>
-                                <div className={inputStyles.inputContainer}>
-                                    <input className={inputStyles.input} type="text" name="groupName"
-                                        value={groupName} onChange={handleGroupNameChange}
-                                        placeholder="Enter your group's name..."
+                                <div className={inputStyles.inputContainer} style={{ marginLeft: '40px' }}>
+                                    <input className={inputStyles.input} type="text" name="TaskName"
+                                        value={taskName} onChange={handleTaskNameChange}
+                                        placeholder="Enter your task's name..."
                                     />
                                 </div>
+                            </form>
+                            <form className={inputStyles.form}>
+                                <span className={inputStyles.label}>
+                                    Task's deadline:
+                                </span>
+                                <div style={{ marginLeft: '22px', marginTop: '10px' }}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <DateTimePicker
+                                            value={date}
+                                            onChange={setDate}
+                                            autoOk
+                                            hideTabs
+                                            ampm={false}
+                                            allowKeyboardControl={false}
+                                            disablePast
+                                            leftArrowIcon={<AlarmIcon />}
+                                            leftArrowButtonProps={{ "aria-label": "Prev month" }}
+                                            rightArrowButtonProps={{ "aria-label": "Next month" }}
+                                            rightArrowIcon={<SnoozeIcon />}
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton>
+                                                            <AlarmIcon />
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </div>
+
+                            </form>
+                            <form className={inputStyles.form}>
+
+
+                                <span className={inputStyles.label}>
+                                    Task's content:
+                                </span>
+                                <div className={inputStyles.inputContainer} style={{ marginLeft: '22px' }}>
+                                    <textarea className={inputStyles.input} name="TaskContent" cols="40" rows="6" value={taskContent} onChange={handleTaskContentChange}></textarea>
+                                </div>
+                            </form>
+                            <form className={inputStyles.form}>
+
+
+                                <span className={inputStyles.label}>
+                                    Task's status:
+                                </span>
+
+                                <select className={inputStyles.inputContainer} style={{ marginLeft: '30px', marginTop: '10px' }} value={taskStatus} onChange={(e) => {
+                                    const selectedStatus = e.target.value;
+                                    setTaskStatus(selectedStatus);
+                                }}>
+                                    <option value="1">UNCOMPLETED</option>
+                                    <option value="2">COMPLETED</option>
+                                    <option value="3">BUG</option>
+                                    <option value="4">EXPIRED</option>
+                                </select>
+
                             </form>
                             <div className={inputStyles.memberContainer}>
                                 <p className={inputStyles.label}>
@@ -366,7 +479,7 @@ function UpdateGroup(props) {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Are you really want to update a group without change member?
+                        Are you really want to update a task without update member?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -379,4 +492,4 @@ function UpdateGroup(props) {
 
 }
 
-export default memo(UpdateGroup);
+export default memo(UpdateTask);

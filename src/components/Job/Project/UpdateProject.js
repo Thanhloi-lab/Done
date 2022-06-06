@@ -5,8 +5,8 @@ import tableStyles from '../tableStyles.module.css';
 import inputStyles from '../InputStyles.module.css';
 import UserSelectList from '../User/UserSelectList';
 import { getUserByText } from '../../../asset/js/API/UserApi';
-import { editGroup, getGroupById, addGroupMembers, removeGroupMembers } from '../../../asset/js/API/GroupApi';
-import { getUserByGroupId } from '../../../asset/js/API/UserApi';
+import { getProjectById, addProjectMembers, removeProjectMembers, editProject } from '../../../asset/js/API/ProjectApi';
+import { getUserByProjectId } from '../../../asset/js/API/ProjectApi';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -17,10 +17,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function UpdateGroup(props) {
+function UpdateProject(props) {
     const [member, setMember] = useState([]);
     const [users, setUsers] = useState([]);
-    const [groupName, setGroupName] = useState("");
+    const [projectName, setProjectName] = useState("");
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -31,17 +31,16 @@ function UpdateGroup(props) {
 
     let id = useParams().id;
 
-
-    const [group, setGroup] = useState({});
+    const [project, setProject] = useState({});
 
     useEffect(() => {
-        getGroupById(id, user.userInfo.token)
+        getProjectById(id, user.userInfo.token)
             .then((result) => {
                 if (result) {
                     setMail(result.mail);
-                    setGroup(result);
-                    setGroupName(result.nameGroup);
-                    getUserByGroupId(result.idGroup, user.userInfo.token)
+                    setProject(result);
+                    setProjectName(result.nameProject);
+                    getUserByProjectId(result.idProject, user.userInfo.token)
                         .then((result1) => {
                             setMember(result1);
                             setUsers(result1);
@@ -50,21 +49,21 @@ function UpdateGroup(props) {
                         .catch((err) => alert(err));
                 }
                 else {
-                    navigate(`/myGroups`);
+                    navigate(`/myProjects`);
                 }
             })
-            .catch(() => navigate(`/myGroups`))
+            .catch(() => navigate(`/myProjects`))
         setLoading(true);
     }, [])
 
     const handleReloadPage = () => {
-        getGroupById(id, user.userInfo.token)
+        getProjectById(id, user.userInfo.token)
             .then((result) => {
                 if (result) {
                     setMail(result.mail);
-                    setGroup(result);
-                    setGroupName(result.nameGroup);
-                    getUserByGroupId(result.idGroup, user.userInfo.token)
+                    setProject(result);
+                    setProjectName(result.nameProject);
+                    getUserByProjectId(result.idProject, user.userInfo.token)
                         .then((result1) => {
                             setMember(result1);
                             setUsers(result1);
@@ -73,12 +72,13 @@ function UpdateGroup(props) {
                         .catch((err) => alert(err));
                 }
                 else {
-                    navigate(`/myGroups`);
+                    navigate(`/myProjects`);
                 }
             })
-            .catch(() => navigate(`/myGroups`))
+            .catch(() => navigate(`/myProjects`))
         setLoading(true);
     }
+
 
     const handleSearchUser = () => {
         var searchText = document.getElementById('userSearchText').value;
@@ -95,7 +95,7 @@ function UpdateGroup(props) {
         const listMember = document.getElementById('ListMember');
         if (listMember.classList.contains(inputStyles.active)) {
             if (member.length > 0) {
-                handleUpdateGroup();
+                handleUpdateProject();
             }
             else {
                 handleClickOpen();
@@ -105,7 +105,7 @@ function UpdateGroup(props) {
         }
         else {
             listMember.classList.add(inputStyles.active);
-            e.target.innerText = 'Update group';
+            e.target.innerText = 'Update project';
         }
     }
 
@@ -132,8 +132,9 @@ function UpdateGroup(props) {
             setMember(newState);
         }
         else {
-            alert("Can't delete creator");
+            alert("can't remove creator")
         }
+
     }
 
     const handleMouseEnterAvatar = (id) => {
@@ -146,8 +147,8 @@ function UpdateGroup(props) {
         email.setAttribute('style', 'visibility:hidden;')
     }
 
-    const handleGroupNameChange = (e) => {
-        setGroupName(e.target.value);
+    const handleProjectNameChange = (e) => {
+        setProjectName(e.target.value);
     }
 
     const handleErrorImg = (e) => {
@@ -163,22 +164,21 @@ function UpdateGroup(props) {
     };
 
     const handleAgree = () => {
-        handleUpdateGroup();
+        handleUpdateProject();
     }
 
-
-    const handleUpdateGroup = () => {
-
-        if (groupName.trim() === "") {
-            alert("Group name must be enter");
+    const handleUpdateProject = () => {
+        if (projectName.trim() === "") {
+            alert("Project name must be enter");
             return;
         }
         var data = {
-            IdGroup: id,
-            groupName: groupName.trim(),
             IdUser: user.userInfo.idUser,
+            IdProject: id,
+            ProjectName: projectName.trim(),
+
         }
-        var result = editGroup(data, user.userInfo.token);
+        var result = editProject(data, user.userInfo.token);
         result
             .then(result => {
                 handleRemoveMember();
@@ -188,8 +188,6 @@ function UpdateGroup(props) {
             .catch(err => {
                 alert(err);
             })
-
-
     }
 
     const handleRemoveMember = () => {
@@ -211,11 +209,11 @@ function UpdateGroup(props) {
         if (data.length > 0) {
             data.forEach(x => {
                 var newData = {
-                    idGroup: id,
+                    IdProject: id,
                     IdUser: user.userInfo.idUser,
                     IdSth: x,
                 }
-                var result = removeGroupMembers(newData, user.userInfo.token);
+                var result = removeProjectMembers(newData, user.userInfo.token);
                 result
                     .then(result => {
                         console.log("deleted");
@@ -233,7 +231,7 @@ function UpdateGroup(props) {
     const handleAddMember = () => {
         var memData = [];
         var memDelData = [];
-        var IdMembers = [];
+        var IdMember = [];
 
         member.forEach(x => {
             memData.push(x.idUser);
@@ -243,19 +241,19 @@ function UpdateGroup(props) {
         })
         memData.forEach(x => {
             if (!memDelData.includes(x)) {
-                IdMembers.push({
+                IdMember.push({
                     Id: x,
                 });
             }
         })
         var data = {
-            IdMembers,
-            idGroup: id,
+            IdMember,
+            IdProject: id,
             IdUser: user.userInfo.idUser,
         }
 
-        if (data.IdMembers.length > 0) {
-            var result = addGroupMembers(data, user.userInfo.token);
+        if (data.IdMember.length > 0) {
+            var result = addProjectMembers(data, user.userInfo.token);
             result
                 .then(result => {
                     alert("updated");
@@ -268,10 +266,8 @@ function UpdateGroup(props) {
         else {
             alert("updated");
         }
-
-
-
     }
+
 
 
     return (
@@ -281,10 +277,10 @@ function UpdateGroup(props) {
                 {loading &&
                     <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                         <div className={styles.contentHeader}>
-                            <h1>UPDATE GROUP</h1>
+                            <h1>UPDATE PROJECT</h1>
                         </div>
                         <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
-                            <div className={styles.reloadBtn} onClick={() => { navigate("/job/myGroups", { replace: true }) }}>
+                            <div className={styles.reloadBtn} onClick={() => { navigate("/job/myProjects", { replace: true }) }}>
                                 <i className="fas fa-long-arrow-alt-left"></i>
                                 <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
                             </div>
@@ -292,12 +288,12 @@ function UpdateGroup(props) {
                         <div className={styles.taskContainer + ' ' + styles.nonBoxShadow}>
                             <form className={inputStyles.form}>
                                 <span className={inputStyles.label}>
-                                    Group's name:
+                                    Project's name:
                                 </span>
                                 <div className={inputStyles.inputContainer}>
-                                    <input className={inputStyles.input} type="text" name="groupName"
-                                        value={groupName} onChange={handleGroupNameChange}
-                                        placeholder="Enter your group's name..."
+                                    <input className={inputStyles.input} type="text" name="projectName"
+                                        value={projectName} onChange={handleProjectNameChange}
+                                        placeholder="Enter your project's name..."
                                     />
                                 </div>
                             </form>
@@ -366,7 +362,7 @@ function UpdateGroup(props) {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Are you really want to update a group without change member?
+                        Are you really want to update a project without update member?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -379,4 +375,4 @@ function UpdateGroup(props) {
 
 }
 
-export default memo(UpdateGroup);
+export default memo(UpdateProject);

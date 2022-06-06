@@ -6,6 +6,8 @@ import inputStyles from '../InputStyles.module.css';
 import UserSelectList from '../User/UserSelectList';
 import { getUserByText } from '../../../asset/js/API/UserApi';
 import { createProject } from '../../../asset/js/API/ProjectApi';
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { API_URL } from '../../../asset/js/constant';
 import Dialog from '@mui/material/Dialog';
@@ -19,6 +21,9 @@ function CreateProject(props) {
     const [users, setUsers] = useState([]);
     const [projectName, setProjectName] = useState("");
     const [open, setOpen] = useState(false);
+    const user = useSelector((state) => state.users);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleSearchUser = () => {
         var searchText = document.getElementById('userSearchText').value;
@@ -26,7 +31,7 @@ function CreateProject(props) {
             getUserByText(searchText)
                 .then((result) => {
                     //myid BUG
-                    setUsers(result.filter(x=>x.idUser!==2));
+                    setUsers(result.filter(x => x.idUser !== user.userInfo.idUser));
                 })
                 .catch((err) => console.log(err));
         }
@@ -67,7 +72,7 @@ function CreateProject(props) {
     const onClickRemoveMember = (id) => {
         const checkBox = document.getElementById(id);
         console.log(checkBox)
-        if(checkBox){
+        if (checkBox) {
             checkBox.checked = false;
         }
         const newState = member.filter((item) => item.mail !== id);
@@ -102,6 +107,7 @@ function CreateProject(props) {
 
     const handleAgree = () => {
         handleCreateProject();
+        setOpen(false);
     }
 
     const handleCreateProject = () => {
@@ -111,14 +117,15 @@ function CreateProject(props) {
         }
         var data = {
             NameProject: projectName.trim(),
-            IdUser: 2,
+            IdUser: user.userInfo.idUser,
+            IdGroup: location.state.groupId,
             Users: []
         }
         member.forEach(x => {
             data.Users.push(x.idUser);
         })
 
-        var result = createProject(data);
+        var result = createProject(data, user.userInfo.token);
         result
             .then(result => {
                 alert("Created!");
@@ -138,6 +145,12 @@ function CreateProject(props) {
                 <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                     <div className={styles.contentHeader}>
                         <h1>CREATE PROJECT</h1>
+                    </div>
+                    <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
+                        <div className={styles.reloadBtn} onClick={() => { navigate("/job/myProjects", { replace: true }) }}>
+                            <i className="fas fa-long-arrow-alt-left"></i>
+                            <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
+                        </div>
                     </div>
                     <div className={styles.taskContainer + ' ' + styles.nonBoxShadow}>
                         <form className={inputStyles.form}>
