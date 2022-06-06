@@ -1,13 +1,18 @@
 import { memo, useState } from 'react';
 import Button from '@mui/material/Button';
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { IconButton, InputAdornment } from "@material-ui/core";
+import SnoozeIcon from "@material-ui/icons/Snooze";
+import AlarmIcon from "@material-ui/icons/AddAlarm";
+import DateFnsUtils from '@date-io/date-fns';
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css';
 import inputStyles from '../InputStyles.module.css';
 import UserSelectList from '../User/UserSelectList';
 import { getUserByText } from '../../../asset/js/API/UserApi';
-import { createGroup } from '../../../asset/js/API/GroupApi';
+import { createTask } from '../../../asset/js/API/TaskApi';
 import { useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { API_URL } from '../../../asset/js/constant';
 import Dialog from '@mui/material/Dialog';
@@ -16,13 +21,18 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function CreateGroup(props) {
+function CreateTask(props) {
     const [member, setMember] = useState([]);
     const [users, setUsers] = useState([]);
-    const [groupName, setGroupName] = useState("");
+    const [taskName, setTaskName] = useState("");
+    const [taskContent, setTaskContent] = useState("");
     const [open, setOpen] = useState(false);
     const user = useSelector((state) => state.users);
+    const location = useLocation();
     const navigate = useNavigate();
+
+    const [date, setDate] = useState(new Date());
+
 
     const handleSearchUser = () => {
         var searchText = document.getElementById('userSearchText').value;
@@ -40,7 +50,7 @@ function CreateGroup(props) {
         const listMember = document.getElementById('ListMember');
         if (listMember.classList.contains(inputStyles.active)) {
             if (member.length > 0) {
-                handleCreateGroup();
+                handleCreateTask();
             }
             else {
                 handleClickOpen();
@@ -50,7 +60,7 @@ function CreateGroup(props) {
         }
         else {
             listMember.classList.add(inputStyles.active);
-            e.target.innerText = 'Create group';
+            e.target.innerText = 'Create Task';
         }
     }
 
@@ -88,8 +98,12 @@ function CreateGroup(props) {
         email.setAttribute('style', 'visibility:hidden;')
     }
 
-    const handleGroupNameChange = (e) => {
-        setGroupName(e.target.value);
+    const handleTaskNameChange = (e) => {
+        setTaskName(e.target.value);
+    }
+
+    const handleTaskContentChange = (e) => {
+        setTaskContent(e.target.value);
     }
 
     const handleErrorImg = (e) => {
@@ -105,35 +119,56 @@ function CreateGroup(props) {
     };
 
     const handleAgree = () => {
-        handleCreateGroup();
+        handleCreateTask();
         setOpen(false);
     }
 
-    const handleCreateGroup = () => {
-        if (groupName.trim() === "") {
-            alert("Group name must be enter");
+
+
+    const handleCreateTask = () => {
+
+
+        let month = date.getMonth() + 1;
+        if (month < 10) { month = '0' + month }
+        let fDate = date.getFullYear() + '-' + month + '-' + date.getDate();
+        let fTime = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+        let deadlineTime = fDate + 'T' + fTime + 'Z';
+
+        console.log(date);
+        if (taskName.trim() === "") {
+            alert("Task name must be enter");
             return;
         }
-        var data = {
-            NameGroup: groupName.trim(),
-            IdUser: user.userInfo.idUser,
-            Users: []
+        if (taskContent.trim() === "") {
+            alert("Task content must be enter");
+            return;
         }
+
+        var data = {
+            IdUser: user.userInfo.idUser,
+            IdProject: location.state.projectId,
+            NameTask: taskName.trim(),
+            Deadline: date.toISOString(),
+            Content: taskContent.trim(),
+            Users: [],
+        }
+
         member.forEach(x => {
             data.Users.push(x.idUser);
         })
-
-        var result = createGroup(data, user.userInfo.token);
+        var result = createTask(data, user.userInfo.token);
         result
             .then(result => {
-                alert("Created!");
+
+                alert("created");
             })
             .catch(err => {
                 alert(err);
             })
-        setGroupName("");
-        setMember([]);
+
     }
+
+
 
 
     return (
@@ -142,10 +177,10 @@ function CreateGroup(props) {
             <div className={styles.container}>
                 <div className={styles.contentWrapper + ' ' + tableStyles.content}>
                     <div className={styles.contentHeader}>
-                        <h1>CREATE GROUP</h1>
+                        <h1>CREATE TASK</h1>
                     </div>
                     <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
-                        <div className={styles.reloadBtn} onClick={() => { navigate("/job/myGroups", { replace: true }) }}>
+                        <div className={styles.reloadBtn} onClick={() => { navigate(`/job/project/${location.state.projectId}`, { state: { idProject: location.state.projectId, idGroup: location.state.groupId } }, { replace: true }) }}>
                             <i className="fas fa-long-arrow-alt-left"></i>
                             <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
                         </div>
@@ -153,13 +188,57 @@ function CreateGroup(props) {
                     <div className={styles.taskContainer + ' ' + styles.nonBoxShadow}>
                         <form className={inputStyles.form}>
                             <span className={inputStyles.label}>
-                                Group's name:
+                                Task's name:
                             </span>
-                            <div className={inputStyles.inputContainer}>
-                                <input className={inputStyles.input} type="text" name="groupName"
-                                    value={groupName} onChange={handleGroupNameChange}
-                                    placeholder="Enter your group's name..."
+                            <div className={inputStyles.inputContainer} style={{ marginLeft: '40px' }}>
+                                <input className={inputStyles.input} type="text" name="TaskName"
+                                    value={taskName} onChange={handleTaskNameChange}
+                                    placeholder="Enter your Task's name..."
                                 />
+                            </div>
+
+
+                        </form>
+                        <form className={inputStyles.form}>
+                            <span className={inputStyles.label}>
+                                Task's deadline:
+                            </span>
+                            <div style={{ marginLeft: '22px' }}>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <DateTimePicker
+                                        value={date}
+                                        onChange={setDate}
+                                        autoOk
+                                        hideTabs
+                                        ampm={false}
+                                        allowKeyboardControl={false}
+                                        disablePast
+                                        leftArrowIcon={<AlarmIcon />}
+                                        leftArrowButtonProps={{ "aria-label": "Prev month" }}
+                                        rightArrowButtonProps={{ "aria-label": "Next month" }}
+                                        rightArrowIcon={<SnoozeIcon />}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton>
+                                                        <AlarmIcon />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </MuiPickersUtilsProvider>
+                            </div>
+
+                        </form>
+                        <form className={inputStyles.form}>
+
+
+                            <span className={inputStyles.label}>
+                                Task's content:
+                            </span>
+                            <div className={inputStyles.inputContainer} style={{ marginLeft: '22px' }}>
+                                <textarea className={inputStyles.input} name="TaskContent" cols="40" rows="6" value={taskContent} onChange={handleTaskContentChange}></textarea>
                             </div>
                         </form>
                         <div className={inputStyles.memberContainer}>
@@ -229,7 +308,7 @@ function CreateGroup(props) {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <span style={{ fontSize: '2rem' }}>Are you really want to create a group without member?</span>
+                        <span style={{ fontSize: '2rem' }}>Are you really want to create a Task without member?</span>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -242,4 +321,4 @@ function CreateGroup(props) {
 
 }
 
-export default memo(CreateGroup);
+export default memo(CreateTask);

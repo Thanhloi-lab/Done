@@ -1,28 +1,53 @@
-import {API_URL} from '../constant';
+import { API_URL } from '../constant';
 
-export async function allUserProject(id) {
-    let response = await fetch(`${API_URL}/api/Projects/allProjectOf?Id=${id}`);
+export async function allUserProject(id, token) {
+    let response = await fetch(`${API_URL}/api/Projects/allProjectOf?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };
 
-export async function allProjectByGroupId(id) {
-    let response = await fetch(`${API_URL}/api/Projects/getByGroup?idGroup=${id}`);
+export async function allProjectByGroupId(id, token) {
+    let response = await fetch(`${API_URL}/api/Projects/getByGroup?idGroup=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
     let data = await response.json();
     return data;
 };
 
 
-export async function createProject(data) {
+export async function createProject(data, token) {
     // Default options are marked with *
-    //console.log(data);
+    console.log(data);
     const response = await fetch(`${API_URL}/api/Projects/create`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -33,7 +58,7 @@ export async function createProject(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function editProject(data) {
+export async function editProject(data, token) {
     // Default options are marked with *
     // console.log(data);
     const response = await fetch(`${API_URL}/api/Projects/Edit`, {
@@ -42,7 +67,8 @@ export async function editProject(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -55,7 +81,7 @@ export async function editProject(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export async function deleteProject(data) {
+export async function deleteProject(data, token) {
     // Default options are marked with *
     const response = await fetch(`${API_URL}/api/Projects/removeProject`, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
@@ -63,7 +89,8 @@ export async function deleteProject(data) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
             // 'Content-Type': 'application/x-www-form-urlencoded',
             //Thêm token ở đây nha gái
         },
@@ -76,3 +103,83 @@ export async function deleteProject(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
+
+
+export async function getUserByProjectId(id, token) {
+    let response = await fetch(`${API_URL}/api/Projects/allMembers?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
+    let data = await response.json();
+    return data;
+};
+
+export async function getProjectById(id, token) {
+    let response = await fetch(`${API_URL}/api/Projects/getById?Id=${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
+    let data = await response.json();
+    return data;
+};
+
+
+export async function addProjectMembers(data, token) {
+    // Default options are marked with *
+    console.log(data);
+    const response = await fetch(`${API_URL}/api/Projects/addMember`, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            //Thêm token ở đây nha gái
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}
+
+export async function removeProjectMembers(data, token) {
+    // Default options are marked with *
+    //console.log(data);
+    const response = await fetch(`${API_URL}/api/Projects/removeMember`, {
+        method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            //Thêm token ở đây nha gái
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}

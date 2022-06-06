@@ -4,6 +4,8 @@ export const BUG_TAB = '/job/bug';
 export const COMPLETED_TAB = '/job/completed';
 export const UNCOMPLETED_TAB = '/job/uncompleted';
 export const TASK_DETAIL = '/job/task/:id';
+export const CREATE_TASK = '/job/:id/create-task';
+export const UPDATE_TASK = '/job/update-task/:id';
 
 export const GROUPS = '/job/groups';
 export const MY_GROUP = '/job/myGroups';
@@ -16,6 +18,8 @@ export const MY_PROJECTS = '/job/myProjects';
 export const UPDATE_PROJECTS = '/job/update-project/:id';
 export const CREATE_PROJECTS = '/job/:id/create-project';
 export const PROJECT_DETAIL = '/job/project/:id';
+
+
 
 export const FORGOT_PASSWORD = '/forgot-password';
 export const SIGN_IN = '/sign-in';
@@ -41,17 +45,17 @@ export const STATUS_ID = {
 
 export const STATUS_NAME = {
     'DELETED': 0,
-    'UNCOMPLETED' : 1,
-    'COMPLETED' : 2,
+    'UNCOMPLETED': 1,
+    'COMPLETED': 2,
     'BUG': 3,
-    'EXPIRED' : 4
+    'EXPIRED': 4
 }
 
 export const JOB_BAR_STATUS = [
-    {job:'completedJobs', task:'completedTask'},
-    {job:'unCompletedJobs', task:'unCompletedTask'},
-    {job:'expiredJobs', task:'expiredTask'},
-    {job:'bugJobs', task:'bugTask'}
+    { job: 'completedJobs', task: 'completedTask' },
+    { job: 'unCompletedJobs', task: 'unCompletedTask' },
+    { job: 'expiredJobs', task: 'expiredTask' },
+    { job: 'bugJobs', task: 'bugTask' }
 ]
 
 
