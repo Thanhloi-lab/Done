@@ -59,7 +59,7 @@ function ChangePasswordComponent() {
 
                         <div className={clsx(styles.login100Form, styles.validateForm)}>
                             <span className={styles.login100FormTitle}>
-                                Đổi mật khẩu
+                                Change Password
                             </span>
 
                             <div className={clsx(styles.wrapInput100, styles.validateInput)} data-validate="Password must be 8 chars include number and uppercase">
@@ -122,7 +122,7 @@ function ChangePasswordComponent() {
 
                             <div className={styles.containerLogin100FormBtn}>
                                 <button className={styles.login100FormBtn} onClick={handleSubmit}>
-                                    Đổi mậ khẩu
+                                    CHANGE
                                 </button>
                             </div>
 

@@ -11,6 +11,7 @@ import Home from './Containers/Home';
 import Services from './Containers/Services';
 import SignIn from './Containers/User/SignIn';
 import SignUp from './Containers/User/SignUp';
+
 import ForgotPassword from './Containers/User/ForgotPassword';
 import Footer from './components/Common/Footer'
 import Uncompleted from './Containers/Job/UncompletedTask'
@@ -56,7 +57,7 @@ function App() {
                 title: payload.notification.title,
                 body: payload.notification.body,
             });
-            
+
         })
         .catch((err) => console.log("failed: ", err));
 
@@ -92,8 +93,8 @@ function App() {
 
                     <Route path="/verify-email/:email" exact element={< VerifyEmail />} />
                     <Route path="/change-password" exact element={< ChangePassword />} />
-
-
+                    <Route path="/user/info" exact element={< UpdateUserInfo />} />
+                    <Route path="/change-password" exact element={< ChangePassword />} />
                     {/* GROUPs */}
                     <Route path={constant.CREATE_GROUP} exact element={< CreateGroup />} />
                     <Route path={constant.UPDATE_GROUP} exact element={< UpdateGroup />} />

@@ -114,7 +114,7 @@ function UpdateUserInfoComponent() {
                             {image ?
                                 <div className={styles.containerLogin100FormBtn}>
                                     <button className={styles.login100FormBtn} onClick={handleSubmitAvatar}>
-                                        Cập nhật
+                                        UPDATE
                                     </button>
                                 </div> : null
                             }
@@ -123,7 +123,7 @@ function UpdateUserInfoComponent() {
 
                         <div className={clsx(styles.login100Form, styles.validateForm)}>
                             <span className={styles.login100FormTitle}>
-                                Cập nhật thông tin cá nhân
+                                Update user info
                             </span>
 
 
@@ -169,7 +169,7 @@ function UpdateUserInfoComponent() {
 
                             <div className={styles.containerLogin100FormBtn}>
                                 <button className={styles.login100FormBtn} onClick={handleSubmit}>
-                                    Cập nhật
+                                    UPDATE
                                 </button>
                             </div>
 
