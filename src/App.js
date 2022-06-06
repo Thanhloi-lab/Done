@@ -43,6 +43,9 @@ import CreateTask from './Containers/Task/CreateTask';
 import UpdateTask from './Containers/Task/UpdateTask';
 import MyTask from './Containers/Task/MyTask';
 
+import MyMemberTask from './Containers/Task/MyMemberTask';
+import MyMemberProject from './Containers/Job/MyMemberProject';
+
 function App() {
     const [show, setShow] = useState(false);
     const [token, setToken] = useState({});
@@ -87,11 +90,12 @@ function App() {
                     <Route path={constant.SIGN_IN} exact element={< SignIn />} />
                     <Route path={constant.SIGN_UP} exact element={< SignUp />} />
                     <Route path={constant.FORGOT_PASSWORD} exact element={< ForgotPassword />} />
+                    <Route path="/verify-email/:email" exact element={< VerifyEmail />} />
                 </>
                 }
                 {!token || !token.token ? <Route path='*' exact element={< SignIn setToken={setToken} />} /> : <>
 
-                    <Route path="/verify-email/:email" exact element={< VerifyEmail />} />
+
                     <Route path="/change-password" exact element={< ChangePassword />} />
                     <Route path="/user/info" exact element={< UpdateUserInfo />} />
                     <Route path="/change-password" exact element={< ChangePassword />} />
@@ -107,6 +111,7 @@ function App() {
                     <Route path={constant.UPDATE_PROJECTS} exact element={< UpdateProject />} />
                     <Route path={constant.PROJECTS} exact element={<Project />} />
                     <Route path={constant.MY_PROJECTS} exact element={<MyProjects />} />
+                    <Route path={constant.PROJECT_MEMBER_DETAIL} exact element={<MyMemberProject />} />
 
                     {/* Task */}
                     <Route path={constant.HOME_JOB} exact element={<HomeJob />} />
@@ -115,6 +120,7 @@ function App() {
                     <Route path={constant.BUG_TAB} exact element={<BugTask />} />
                     <Route path={constant.EXPIRED_TAB} exact element={<ExpiredTask />} />
                     <Route path={constant.TASK_DETAIL} exact element={<TaskInfo />} />
+                    <Route path={constant.TASK_MEMBER_DETAIL} exact element={<MyMemberTask />} />
 
                     <Route path={constant.PROJECT_DETAIL} exact element={<MyTask />} />
                     <Route path={constant.CREATE_TASK} exact element={<CreateTask />} />

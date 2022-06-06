@@ -1,13 +1,32 @@
 import styles from '../page.module.css'
 import tableStyles from '../tableStyles.module.css'
 import { STATUS, STATUS_ID, STATUS_NAME } from '../../../asset/js/constant'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react'
 
 function TaskInfo(props) {
     const [groupShow, setGroupShow] = useState(false);
     const [projectShow, setProjectShow] = useState(false);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const handleReturn = () => {
+
+        if (location.state) {
+            navigate(`/job/project/${location.state.idProject}`, {
+                state: {
+
+                    idProject: location.state.idProject,
+                    idGroup: location.state.idGroup,
+                    createUser: location.state.createUser,
+                }
+            }, { replace: true })
+        }
+        else {
+            navigate("/job", { replace: true })
+        }
+    }
 
     const handleOnWrap = (className) => {
         const listItem = document.getElementsByClassName(className);
@@ -35,10 +54,10 @@ function TaskInfo(props) {
                         <h1>Task detail</h1>
                     </div>
                     <div className={styles.taskContainer + ' ' + styles.toolBar + ' ' + styles.nonBoxShadow}>
-                        <Link className={styles.reloadBtn} to={useSelector((state) => state.jobs.path)}>
+                        <div className={styles.reloadBtn} onClick={handleReturn}>
                             <i className="fas fa-long-arrow-alt-left"></i>
                             <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
-                        </Link>
+                        </div>
 
                         {props.detail && props.detail.statusId === STATUS_NAME['UNCOMPLETED'] &&
                             <button className={styles.checkBtn}>
@@ -121,15 +140,15 @@ function TaskInfo(props) {
                                             <Link to="/" className={tableStyles.LinkToProject}>{props.detail.nameProject}</Link>
                                         </td>
                                     </tr>
-                                    <tr className={tableStyles.unActive+ ' project'}>
+                                    <tr className={tableStyles.unActive + ' project'}>
                                         <th>Project creator:</th>
                                         <td style={{ padding: 1 }}>{props.detail.nameUserCreateProject}</td>
                                     </tr>
-                                    <tr className={tableStyles.unActive+ ' project'}>
+                                    <tr className={tableStyles.unActive + ' project'}>
                                         <th>Project creator's phone:</th>
                                         <td style={{ padding: 1 }}>{props.detail.phoneUserCreateProject}</td>
                                     </tr>
-                                    <tr className={tableStyles.unActive+ ' project'}>
+                                    <tr className={tableStyles.unActive + ' project'}>
                                         <th>Project creator's email:</th>
                                         <td style={{ padding: 1 }}><Link to="/" className={tableStyles.LinkToUser}>{props.detail.mailUserCreateProject}</Link></td>
                                     </tr>

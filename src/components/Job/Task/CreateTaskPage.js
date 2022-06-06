@@ -165,7 +165,9 @@ function CreateTask(props) {
             .catch(err => {
                 alert(err);
             })
-
+        setTaskName("");
+        setTaskContent("");
+        setMember([]);
     }
 
 

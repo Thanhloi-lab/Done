@@ -50,10 +50,10 @@ function UpdateTask(props) {
         getTaskById(id, user.userInfo.token)
             .then((result) => {
                 if (result) {
-                    //console.log(result)
+                    console.log(result)
                     setTempDate(result.deadline);
                     setDate(result.deadline);
-                    setMail(result.mail);
+                    setMail(location.state.mailUser);
                     setTask(result);
                     setTaskStatus(result.statusId);
                     setTempStatus(result.statusId);
