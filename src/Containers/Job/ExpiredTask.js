@@ -10,7 +10,7 @@ function Expired(){
         <>
             <LoadAllTask/>
             <JobSidebar page={EXPIRED_TAB}/>
-            <TaskPage taskName='DONE' status='EXPIRED' name='Expired'/>
+            <TaskPage jobStatus='expiredJobs' status='expired' title='Expired task'/>
             <Chat/>
         </>
     )

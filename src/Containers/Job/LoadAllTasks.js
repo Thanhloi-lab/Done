@@ -1,9 +1,6 @@
 import React from 'react'
-import JobSidebar from '../../components/Job/SideBar/JobSidebar'
-import Chat from '../../components/Job/Chat/Chat'
-import Task from '../../components/Job/JobStatus/TaskInfo'
 import { useSelector, useDispatch } from 'react-redux';
-import { handleLoadAllTasks } from '../../asset/js/callAPI'
+import { handleLoadAllTasks } from '../../asset/js/API/callAPI'
 import jobsSlice from '../../components/Job/jobsSlice'
 
 function LoadAllTask() {
@@ -13,6 +10,7 @@ function LoadAllTask() {
         handleLoadAllTasks(2)
             .then(result => {
                 dispatch(jobsSlice.actions.getAllTasks(result));
+                dispatch(jobsSlice.actions.reloadJobAction());
             })
             .catch(err => {
                 console.log(err);

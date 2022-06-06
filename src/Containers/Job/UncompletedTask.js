@@ -11,7 +11,7 @@ function Uncompleted(){
         <>
             <LoadAllTask/>
             <JobSidebar page={UNCOMPLETED_TAB}/>
-            <TaskPage taskName='DONE' status='UNCOMPLETED' name='Uncompleted'/>
+            <TaskPage jobStatus='unCompletedJobs' status='unCompleted' title='Uncompleted task'/>
             <Chat/>
         </>
     )

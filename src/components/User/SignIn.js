@@ -1,19 +1,28 @@
-import {memo, useState} from 'react';
+import React ,{memo, useState, useEffect} from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 import styles from '../Common/Form.module.css'
 import '../Common/util.css'
 import {validate} from '../../asset/js/validation.js'
+import {login} from '../../apis/UserApi'
+
+import { Alert } from 'bootstrap';
 
 function SignIn(){
-    console.log("Sign-in component rendered");
     
     const initValue = {
-        loginName:'',
+        email:'',
         password:''
     };
     const [input, setInput] = useState(initValue);
+    const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+        document.getElementById("btnLogin").addEventListener("click", function(event){
+            event.preventDefault()
+          });
+    },[])
 
 
     const handleInputValidation = (event) =>{
@@ -29,8 +38,21 @@ function SignIn(){
     }
 
 
-    const handleSubmit = (event)=>{
-        event.preventDefault();
+    const handleSubmit = async(s,e) =>{
+        //e.preventDefault();
+        const res = await login(input);
+        var data = await res.text();
+        
+        if(res.status === 200)
+        {
+            localStorage.setItem('user',data);           
+            window.location.pathname='';
+        }else
+        {
+            if(data === 'Vui lòng kích hoạt tài khoản')
+                window.location = '/verify-email/' + input.email;
+            setMessage(data);
+        }
     }
 
     return (
@@ -53,7 +75,7 @@ function SignIn(){
                                     placeholder="Email" onBlur={handleInputValidation} 
                                     onChange={e=>{setInput({
                                         ...input,
-                                        loginName: e.target.value
+                                        email: e.target.value
                                     })}}
                                 />
 
@@ -78,11 +100,17 @@ function SignIn(){
                                 </span>
                             </div>
                             
-                            <div className={styles.containerLogin100FormBtn}>
-                                <button className={styles.login100FormBtn} onClick={handleSubmit}>
+                            <div  className={styles.containerLogin100FormBtn}>
+                                <button id='btnLogin' className={styles.login100FormBtn} onClick={handleSubmit}>
                                     Login
                                 </button>
                             </div>
+
+                            {message ? <div className={styles.textCenter + " p-t-12"}>
+                                <span className={styles.txt1} style={{color:"red"}}>
+                                    {message} 
+                                </span>
+                            </div> : null}
 
                             <div className={styles.textCenter + " p-t-12"}>
                                 <span className={styles.txt1}>

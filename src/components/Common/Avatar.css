@@ -1,0 +1,126 @@
+.header__navbar-user-avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.header__navbar-user-name{
+    margin-left: 4px;
+    font-weight: 400;
+    font-size: 1.4rem;
+    color:#fff;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header__navbar-user{
+    display:flex;
+    justify-content:center;
+    position: relative;
+}
+
+.header__navbar-user:hover .header__navbar-user-menu{
+    display: block;
+    z-index: 555;
+}
+
+.header__navbar-user-menu{
+    position: absolute;
+    top:100%;
+    right: 0px;
+    width: 150px;
+    background-color:#fff;
+    z-index: 555;
+    list-style: none;
+    border-radius: 2px;
+    box-shadow: 0 5px 10px rgba(0,0,0, 0.2);
+    padding:0;
+    margin:0;
+    display:none;
+    will-change: opacity scale;
+    transform-origin: 90% top;
+    animation:headerNotifyGrowth ease-in 0.15s;
+}
+
+.header__navbar-user-menu:before{
+    content:"";
+    position: absolute;
+    right: 40px;
+    top: -16px;
+    border-width: 8px 12px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+}
+
+
+.header__navbar-user-item{
+    background-color:var(--primary);
+    
+}
+
+
+.header__navbar-user-item span{
+    text-decoration: none;
+    color:#333;
+    font-size: 1.5rem;
+    padding:12px 10px;
+    display:block;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+}
+
+.header__navbar-user-item:first-child{
+    border-radius: 2px;
+}
+
+.header__navbar-user-item:last-child{
+    border-radius: 2px;
+}
+
+.header__navbar-user-item:hover span{
+    background-color: #f9f9f9;
+    color: var(--hover);
+    border-radius: 2px;
+}
+
+.header__navbar-item{
+    margin:0 8px;
+    position:relative;
+    min-height: 26px;
+}
+
+.header__navbar-item,
+.header__navbar-item-link{
+    display:inline-block;
+    font-size: 1.3rem;
+    color:var(--white-color);
+    text-decoration: none;
+    font-weight: 300;
+}
+
+.header__navbar-item,
+.header__navbar-item-link,
+.header__navbar-icon-link{
+    display: flex;
+    align-items: center;
+}
+
+
+.header__navbar-item:hover, 
+.header__navbar-icon-link:hover{
+    color:rgba(255,255,255,0.7);
+    cursor: pointer;
+}
+
+
+@keyframes headerNotifyGrowth{
+    from{
+        opacity: 0;
+        transform: scale(0);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}

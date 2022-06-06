@@ -13,8 +13,6 @@ function HomeJob(){
             <Routes>
                 <Route path="/" exact element={<Home/>}/>
             </Routes>
-            
-            
         </>
         
     )

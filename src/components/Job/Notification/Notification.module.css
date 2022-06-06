@@ -1,0 +1,45 @@
+.sideBarNotification {
+    position: fixed;
+    top: 80px;
+    right: 0px;
+    width: 300px;
+    max-width: 100%;
+    background-color: #fff;
+    display: block;
+    height: 100%;
+    overflow-y: scroll;
+    
+    
+   
+}
+.sideBarListficationList{
+    
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  
+}
+.sideBarNotificationItem{
+    padding: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 1.5rem;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.sideBarNotificationItem:hover{
+    background: #ddd;
+}
+.line{
+    height: 1px;
+    width: 100%;
+    background: #ddd;
+    margin: 10px 0px 0px 0px;
+}
+.time{
+    color: #808080;
+}
+

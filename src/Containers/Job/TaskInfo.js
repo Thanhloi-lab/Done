@@ -4,7 +4,7 @@ import Chat from '../../components/Job/Chat/Chat'
 import Task from '../../components/Job/JobStatus/TaskInfo'
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { handleLoadAllTasks, getArrayTaskFromObject } from '../../asset/js/callAPI'
+import { handleLoadAllTasks } from '../../asset/js/API/callAPI'
 import jobsSlice from '../../components/Job/jobsSlice'
 
 function TaskInfo() {
@@ -20,7 +20,10 @@ function TaskInfo() {
             })
     }
     const jobs = Object.values(useSelector((state) => state.jobs.allTasks));
-    let jobDetail = getArrayTaskFromObject(jobs, useParams().id);
+    // getArrayTaskFromObject(jobs, useParams().id);x
+    let id = useParams().id;
+    let jobDetail = jobs.find(x=>x.idTask+"" === id+"");
+
     return (
         <>
             <JobSidebar page={useSelector((state) => state.jobs.path)} />

@@ -10,7 +10,7 @@ function CompletedTask(){
         <>
             <LoadAllTask/>
             <JobSidebar page={COMPLETED_TAB}/>
-            <TaskPage status='COMPLETED' name='Completed'/>
+            <TaskPage jobStatus='completedJobs' status='completed' title='Completed task'/>
             <Chat/>
         </>
     )

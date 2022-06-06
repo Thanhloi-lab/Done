@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB, STATUS} from '../../../asset/js/constant'
+import {useDispatch, useSelector} from 'react-redux';
+import {HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB, PROJECTS, MY_PROJECTS} from '../../../asset/js/constant'
 import './JobSidebar.css'
 import jobsSlice from '../jobsSlice'
 
@@ -17,9 +17,13 @@ function JobSidebar(props){
         dispatch(jobsSlice.actions.changeTab(state))
     }, [])
 
+    const handleClickToggle = () =>{
+        dispatch(jobsSlice.actions.toggleSideBar())
+    }
+
     return(
         <>
-            <input type="checkbox" id="check"/>
+            <input type="checkbox" id="check" checked={useSelector((state) => state.jobs.sideBarStatus)} onChange={handleClickToggle}/>
             <label htmlFor="check" className="check-label">
                 <i className="fas fa-bars" id='btn'></i>
                 <i className="fas fa-times" id='cancel'></i>
@@ -34,7 +38,7 @@ function JobSidebar(props){
                             HOME
                         </Link>
                     </li>
-                    <li className={props.page === COMPLETED_TAB ? 'sideBar-item active' : 'sideBar-item'}>
+                    {/* <li className={props.page === COMPLETED_TAB ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={COMPLETED_TAB} className="sideBar-link">
                             <i className="fas fa-check sidebar_icon"></i>
                             COMPLETED
@@ -52,10 +56,22 @@ function JobSidebar(props){
                             BUG
                         </Link>
                     </li>
-                    <li className={props.page === EXPIRED_TAB? 'sideBar-item active' : 'sideBar-item'}>
+                    <li className={props.page === EXPIRED_TAB? 'sideBar-item active' : 'sideBar-item'}> 
                         <Link to={EXPIRED_TAB} className="sideBar-link">
                             <i className="fas fa-calendar-times sidebar_icon"></i>
                             EXPIRED
+                        </Link>
+                    </li>  */}
+                    <li className={props.page === PROJECTS? 'sideBar-item active' : 'sideBar-item'}>
+                        <Link to={PROJECTS} className="sideBar-link">
+                            <i className="fas fa-users-cog sidebar_icon"></i>
+                            PROJECTS
+                        </Link>
+                    </li>
+                    <li className={props.page === MY_PROJECTS? 'sideBar-item active' : 'sideBar-item'}>
+                        <Link to={MY_PROJECTS} className="sideBar-link">
+                            <i className="fas fa-users-cog sidebar_icon"></i>
+                            MY PROJECTS
                         </Link>
                     </li>
                     <li className={props.page === GROUPS? 'sideBar-item active' : 'sideBar-item'}>

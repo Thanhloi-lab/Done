@@ -1,6 +1,12 @@
 
 
 /*---------------------------------------------*/
+.circularSquare {
+     border-radius: 50%;
+     background-size: cover;
+     width: 200px;
+     height: 200px;
+ }
 .textCenter > a {
     font-size: 14px;
     line-height: 1.7;
