@@ -75,6 +75,7 @@ function UpdateTask(props) {
         setLoading(true);
     }, [])
 
+
     const handleReloadPage = () => {
         getTaskById(id, user.userInfo.token)
             .then((result) => {
@@ -192,6 +193,7 @@ function UpdateTask(props) {
     const handleUpdateTask = () => {
         var deadlineTime;
         if (date !== tempDate) {
+            date.setTime(date.getTime() + (7 * 60 * 60 * 1000));
             deadlineTime = date.toISOString();
         }
         else {
@@ -243,6 +245,7 @@ function UpdateTask(props) {
                 })
 
         }
+        date.setTime(date.getTime() - (7 * 60 * 60 * 1000));
 
 
     }
