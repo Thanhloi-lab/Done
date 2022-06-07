@@ -186,7 +186,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
     }
     const handleNavigateGroupDetail = (event, id) => {
         event.stopPropagation();
-        navigate(`/job/group/${id}`);
+        navigate(`/job/groups`);
     }
 
     const handleNavigateCreateProject = (event, id) => {
