@@ -19,8 +19,8 @@ export const UPDATE_PROJECTS = '/job/update-project/:id';
 export const CREATE_PROJECTS = '/job/:id/create-project';
 export const PROJECT_DETAIL = '/job/project/:id';
 
-export const PROJECT_MEMBER_DETAIL = '/job/memberProjects';
-export const TASK_MEMBER_DETAIL = '/job/memberTasks';
+export const PROJECT_MEMBER_DETAIL = '/job/memberProjects/:id';
+export const TASK_MEMBER_DETAIL = '/job/memberTasks/:id';
 
 
 

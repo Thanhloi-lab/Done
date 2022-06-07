@@ -14,14 +14,26 @@ function TaskInfo(props) {
     const handleReturn = () => {
 
         if (location.state) {
-            navigate(`/job/project/${location.state.idProject}`, {
-                state: {
+            if (location.state.detail === 1) {
+                navigate(`/job/project/${location.state.idProject}`, {
+                    state: {
 
-                    idProject: location.state.idProject,
-                    idGroup: location.state.idGroup,
-                    createUser: location.state.createUser,
-                }
-            }, { replace: true })
+                        idProject: location.state.idProject,
+                        idGroup: location.state.idGroup,
+                        createUser: location.state.createUser,
+                    }
+                }, { replace: true })
+            }
+            if (location.state.detail === 2) {
+                navigate(`/job/memberTasks/${location.state.idProject}`, {
+                    state: {
+
+                        idProject: location.state.idProject,
+                        idGroup: location.state.idGroup,
+                        createUser: location.state.createUser,
+                    }
+                }, { replace: true })
+            }
         }
         else {
             navigate("/job", { replace: true })

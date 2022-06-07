@@ -191,3 +191,21 @@ export async function removeTaskMembers(data, token) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
+
+export async function allTaskByProjectId(idProject, idUser, token) {
+    let response = await fetch(`${API_URL}/api/Tasks/getByProject?idProject=${idProject}&idUser=${idUser}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + token,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+    });
+    let data = await response.json();
+    return data;
+};
