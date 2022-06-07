@@ -61,7 +61,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
     }
 
     const handleLinkProjectDetail = (projectId, groupId, userCreate) => {
-        if (userCreate === user.userInfo.iduser) {
+        if (userCreate === user.userInfo.idUser) {
             navigate(`/job/project/${projectId}`, {
                 state: {
                     idProject: projectId,
