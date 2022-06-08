@@ -1,16 +1,20 @@
 import styles from './Notification.module.css';
 import { getAllByUser } from '../../../apis/NotifyApi.js';
+import { getProjectById } from '../../../asset/js/API/ProjectApi.js';
+import { getTaskById } from '../../../asset/js/API/TaskApi.js';
+import { getGroupById } from '../../../asset/js/API/GroupApi.js';
 import { useState, useEffect } from 'react'
 import { updateSeen } from '../../../asset/js/API/NotifyAPI';
 import { time_ago } from '../../../asset/js/utils';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 function NotificationSideBar({ timeStamp }) {
     const idUser = JSON.parse(localStorage.getItem("user")).idUser;
     const [notifies, setNotify] = useState([]);
     //console.log("rerender ")
 
     //console.log(notifies);
-
+    const user = useSelector((state) => state.users);
     const navigate = useNavigate();
     useEffect(() => {
         getAllByUser(idUser).then(
@@ -34,12 +38,63 @@ function NotificationSideBar({ timeStamp }) {
     }
 
     const handleNavigate = (value) => {
-        if (value.type.includes("Task"))
-            navigate("/job");
-        if (value.type.includes("Group"))
-            navigate("/job/groups")
+        console.log(value)
+        if (value.type.includes("Task")) {
+            getTaskById(value.idTask, user.userInfo.token).then((result) => {
+                getProjectById(result.idProject, user.userInfo.token).then((data) => {
+                    if (data.createUser === user.userInfo.idUser) {
+                        navigate(`/job/project/${result.idProject}`, {
+                            state: {
+                                idProject: result.idProject,
+                                idGroup: result.idGroup,
+                                createUser: data.createUser,
+                            }
+                        });
+                    }
+                    else {
+                        navigate(`/job/memberTasks/${result.idProject}`, {
+                            state: {
+                                idProject: result.idProject,
+                                idGroup: result.idGroup,
+                                createUser: data.createUser,
+                            }
+                        });
+                    }
+                })
+                    .catch((err) => console.log(err))
+            })
+
+
+
+        }
+        if (value.type.includes("Group")) {
+            getGroupById(value.idGroup, user.userInfo.token).then((result) => {
+                if (result.createUser === user.userInfo.idUser) {
+                    navigate("/job/myGroups")
+                }
+                else {
+                    navigate("/job/groups")
+                }
+            })
+        }
+
         if (value.type.includes("Project"))
-            navigate("/job/Projects")
+            getProjectById(value.idProject, user.userInfo.token).then((result) => {
+                if (result.createUser === user.userInfo.idUser) {
+                    navigate(`/job/group/${result.idGroup}`, {
+                        state: {
+                            idGroup: result.idGroup,
+                        }
+                    });
+                }
+                else {
+                    navigate(`/job/memberProjects/${result.idGroup}`, {
+                        state: {
+                            idGroup: result.idGroup,
+                        }
+                    });
+                }
+            })
     }
 
     return (
