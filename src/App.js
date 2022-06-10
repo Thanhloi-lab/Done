@@ -43,6 +43,8 @@ import CreateTask from './Containers/Task/CreateTask';
 import UpdateTask from './Containers/Task/UpdateTask';
 import MyTask from './Containers/Task/MyTask';
 
+import ChartSummary from './Containers/Chart/ChartSummary'; 
+
 function App() {
     const [show, setShow] = useState(false);
     const [token, setToken] = useState({});
@@ -124,6 +126,7 @@ function App() {
                 {/* error */}
                 <Route path='*' element={<ErrorPage />} />
             </Routes>
+         
             <Footer />
         </>
     );

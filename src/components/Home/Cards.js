@@ -1,6 +1,7 @@
 import React from 'react';
 import CardItem from './CardItem'
-import './Cards.css'
+import './Cards.css';
+import ChartSummary from '../Chart/SummaryTaskChart'; 
 
 function Cards() {
     return (
@@ -41,6 +42,7 @@ function Cards() {
                 label='Adrenaline'
                 path='/sign-up'
               />
+              <ChartSummary/>
               
             </ul>
           </div>
