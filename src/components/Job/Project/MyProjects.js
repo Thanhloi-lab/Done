@@ -49,7 +49,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                 var temp = result.filter(x => x.createUser === user.userInfo.idUser);
                 setFullProjects(temp);
                 setProjects(temp);
-                console.log(result, location)
+                console.log(temp)
             }
             else {
                 setFullProjects(result);
@@ -60,14 +60,26 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
             .catch((err) => console.log(err))
     }
 
-    const handleLinkProjectDetail = (projectId, groupId, user) => {
-        navigate(`/job/project/${projectId}`, {
-            state: {
-                idProject: projectId,
-                idGroup: groupId,
-                createUser: user
-            }
-        });
+    const handleLinkProjectDetail = (projectId, groupId, userCreate) => {
+        if (userCreate === user.userInfo.idUser) {
+            navigate(`/job/project/${projectId}`, {
+                state: {
+                    idProject: projectId,
+                    idGroup: groupId,
+                    createUser: userCreate
+                }
+            });
+        }
+        else {
+            navigate(`/job/memberTasks/${projectId}`, {
+                state: {
+                    idProject: projectId,
+                    idGroup: groupId,
+                    createUser: userCreate
+                }
+            });
+        }
+
     }
 
     const handleTextChange = (e) => {
@@ -174,7 +186,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
     }
     const handleNavigateGroupDetail = (event, id) => {
         event.stopPropagation();
-        navigate(`/job/group/${id}`);
+        navigate(`/job/groups`);
     }
 
     const handleNavigateCreateProject = (event, id) => {

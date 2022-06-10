@@ -12,13 +12,13 @@ function JobBar(props) {
         const wrapper = document.getElementById(id);
         const btn = document.getElementById(id + 'Btn');
         try {
-            if(isShow) {
+            if (isShow) {
                 handleShow(wrapper, btn);
             }
-            else{
+            else {
                 handleHide(wrapper, btn, id);
             }
-        }   
+        }
         catch (e) {
             console.log(e)
             return
@@ -26,14 +26,14 @@ function JobBar(props) {
 
     }
 
-    const handleShow = (wrapper, btn) =>{
+    const handleShow = (wrapper, btn) => {
         if (!wrapper.classList.contains(styles.active)) {
             wrapper.classList.add(styles.active);
             btn.classList.add(styles.rotateBtn);
         }
     }
 
-    const handleHide = (wrapper, btn, id)=>{
+    const handleHide = (wrapper, btn, id) => {
         if (wrapper.classList.contains(styles.active) && btn.classList.contains(styles.rotateBtn)) {
             const childs = document.querySelectorAll('#' + id + " ." + styles.listProject);
             childs.forEach((child) => {
@@ -51,14 +51,14 @@ function JobBar(props) {
         }
     }
 
-    const handleOnClickWrapAll = (id)=>{
+    const handleOnClickWrapAll = (id) => {
         const state = {
             projectStatus: id
         }
         dispatch(jobsSlice.actions.setHomeActionsWidest(state));
     }
 
-    const handleOnClickWrapProject = (idProject, projectStatus)=>{
+    const handleOnClickWrapProject = (idProject, projectStatus) => {
         const state = {
             idProject,
             projectStatus
@@ -90,7 +90,7 @@ function JobBar(props) {
                             <div className={styles.projectContainer}>
                                 <span className={styles.projectTitle}>Project: {project.value[0].nameProject}</span>
                                 <span className={styles.wrapBtn} onClick={() => {
-                                    handleOnClickWrapProject(project.idProject, props.status+"Jobs")
+                                    handleOnClickWrapProject(project.idProject, props.status + "Jobs")
                                 }}>
                                     <i className={props.action.show &&
                                         props.action.projectId.includes(project.idProject) ? styles.rotateBtn + " fas fa-chevron-down" : 'fas fa-chevron-down'}

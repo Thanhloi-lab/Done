@@ -58,12 +58,21 @@ function MyGroupPage({ owner, ...props }) {
             .catch((err) => console.log(err))
     }
 
-    const handleLinkGroupDetail = (groupId) => {
-        navigate(`/job/group/${groupId}`, {
-            state: {
-                idGroup: groupId,
-            }
-        });
+    const handleLinkGroupDetail = (groupId, idUser) => {
+        if (idUser === user.userInfo.idUser) {
+            navigate(`/job/group/${groupId}`, {
+                state: {
+                    idGroup: groupId,
+                }
+            });
+        }
+        else {
+            navigate(`/job/memberProjects/${groupId}`, {
+                state: {
+                    idGroup: groupId,
+                }
+            });
+        }
     }
 
     const handleTextChange = (e) => {
@@ -263,7 +272,7 @@ function MyGroupPage({ owner, ...props }) {
                                     return (
                                         <tr key={x.idGroup} style={{ cursor: 'pointer' }} onClick={(s, e) => {
                                             s.stopPropagation();
-                                            handleLinkGroupDetail(x.idGroup);
+                                            handleLinkGroupDetail(x.idGroup, x.createUser);
                                         }}>
                                             <td>{index + 1}</td>
                                             <td>{x.nameGroup}</td>

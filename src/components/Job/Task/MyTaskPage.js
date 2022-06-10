@@ -45,7 +45,7 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
     const titleDelete = "Delete task ";
     const deleteContent = "Are you sure you want to task?";
 
-    console.log(show, location.state.createUser, user.userInfo.idUser)
+
 
     useEffect(() => {
         getAllTask();
@@ -71,7 +71,14 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
     }
 
     const handleLinkTaskDetail = (taskId) => {
-        navigate(`/job/task/${taskId}`);
+        navigate(`/job/task/${taskId}`, {
+            state: {
+                detail: 1,
+                idProject: location.state.idProject,
+                idGroup: location.state.idGroup,
+                createUser: location.state.createUser,
+            }
+        });
     }
 
     const handleTextChange = (e) => {
@@ -135,12 +142,13 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
             })
     }
 
-    const handleClickEdit = (event, id, name, id1, id2) => {
+    const handleClickEdit = (event, id, name, id1, id2, mail) => {
         event.stopPropagation()
         navigate(`/job/update-task/${id}`, {
             state: {
                 groupId: id1,
                 projectId: id2,
+                mailUser: mail,
             }
         });
         // console.log(id);
@@ -262,7 +270,7 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
 
                     <div className={stylesBtn.FeatureContainer}>
 
-                        {!projectDetail && owner && show &&
+                        {!projectDetail && owner &&
                             <div className={styles.taskContainer + ' ' + styles.toolBar
                                 + ' ' + styles.nonBoxShadow + ' ' + tableStyles.content
                                 + ' ' + stylesBtn.FlexContainer}
@@ -325,7 +333,7 @@ function MyTaskPage({ projectDetail, owner, ...props }) {
                                                     </div>
                                                     {/* onClick={(s, e) => handleDeleteproject(x.idproject)} */}
                                                     /
-                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idTask, x.nameTask, location.state.idGroup, location.state.idProject)}>
+                                                    <div className={stylesBtn.editBtn} onClick={(event) => handleClickEdit(event, x.idTask, x.nameTask, location.state.idGroup, location.state.idProject, x.mailUserCreateProject)}>
                                                         <i className="fa-solid fa-pen-to-square"></i>
                                                         <span className={stylesBtn.editText} style={{ marginLeft: '10px' }}>Edit</span>
                                                     </div>

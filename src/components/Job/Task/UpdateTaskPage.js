@@ -50,10 +50,10 @@ function UpdateTask(props) {
         getTaskById(id, user.userInfo.token)
             .then((result) => {
                 if (result) {
-                    //console.log(result)
+                    console.log(result)
                     setTempDate(result.deadline);
                     setDate(result.deadline);
-                    setMail(result.mail);
+                    setMail(location.state.mailUser);
                     setTask(result);
                     setTaskStatus(result.statusId);
                     setTempStatus(result.statusId);
@@ -74,6 +74,7 @@ function UpdateTask(props) {
             .catch(() => navigate(`/myTasks`))
         setLoading(true);
     }, [])
+
 
     const handleReloadPage = () => {
         getTaskById(id, user.userInfo.token)
@@ -192,6 +193,7 @@ function UpdateTask(props) {
     const handleUpdateTask = () => {
         var deadlineTime;
         if (date !== tempDate) {
+            date.setTime(date.getTime() + (7 * 60 * 60 * 1000));
             deadlineTime = date.toISOString();
         }
         else {
@@ -243,6 +245,7 @@ function UpdateTask(props) {
                 })
 
         }
+        date.setTime(date.getTime() - (7 * 60 * 60 * 1000));
 
 
     }
