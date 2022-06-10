@@ -4,13 +4,24 @@ import { STATUS, STATUS_ID, STATUS_NAME } from '../../../asset/js/constant'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react'
+import { updateStatus } from '../../../asset/js/API/TaskApi';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 function TaskInfo(props) {
     const [groupShow, setGroupShow] = useState(false);
     const [projectShow, setProjectShow] = useState(false);
-
+    const [open, setOpen] = useState(false);
+    const [taskStatus, setTaskStatus] = useState();
+    const [taskStatusID, setTaskStatusID] = useState();
     const location = useLocation();
     const navigate = useNavigate();
+
+    const user = useSelector((state) => state.users);
     const handleReturn = () => {
 
         if (location.state) {
@@ -58,6 +69,40 @@ function TaskInfo(props) {
         }
     }
 
+    const handleClickOpen = (id, status) => {
+        console.log(props);
+        setTaskStatusID(id);
+        setTaskStatus(status);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleAgree = () => {
+        handleUpdateStatus();
+        setOpen(false);
+    }
+
+    const handleUpdateStatus = () => {
+
+        var status = {
+            idTask: props.detail.idTask,
+            idStatus: taskStatusID,
+        }
+        var result = updateStatus(status, user.userInfo.token);
+        result
+            .then(result => {
+                alert("updated");
+                handleReturn();
+            })
+            .catch(err => {
+                alert(err);
+            })
+    }
+
+
     return (
         <div className={styles.limiter}>
             <div className={styles.container}>
@@ -70,13 +115,33 @@ function TaskInfo(props) {
                             <i className="fas fa-long-arrow-alt-left"></i>
                             <span className={styles.reloadText} style={{ marginLeft: '10px' }}>Back</span>
                         </div>
+                        <div>
+                            <div>
+                                {props.detail && (props.detail.statusId === STATUS_NAME['UNCOMPLETED'] || props.detail.statusId === STATUS_NAME['BUG'] || props.detail.statusId === STATUS_NAME['EXPIRED']) && props.detail.userCreateProject === user.userInfo.idUser &&
+                                    <button className={styles.checkBtn} onClick={() => handleClickOpen(2, "Completed")}>
+                                        <span className={styles.checkText}>Complete</span>
+                                        <i className="fas fa-check"></i>
+                                    </button>
+                                }
+                            </div>
+                            <div style={{ marginTop: "10px" }}>
+                                {props.detail && (props.detail.statusId === STATUS_NAME['UNCOMPLETED'] || props.detail.statusId === STATUS_NAME['COMPLETED']) && props.detail.userCreateProject === user.userInfo.idUser &&
+                                    <button className={styles.checkBug} onClick={() => handleClickOpen(3, "Bug")}>
+                                        <span className={styles.checkText}>Bug</span>
+                                        <i class="fa-solid fa-bug"></i>
+                                    </button>
+                                }
+                            </div>
 
-                        {props.detail && props.detail.statusId === STATUS_NAME['UNCOMPLETED'] &&
-                            <button className={styles.checkBtn}>
-                                <span className={styles.checkText}>Complete</span>
-                                <i className="fas fa-check"></i>
-                            </button>
-                        }
+                            <div style={{ marginTop: "10px" }}>
+                                {props.detail && (props.detail.statusId === STATUS_NAME['BUG'] || props.detail.statusId === STATUS_NAME['COMPLETED']) && props.detail.userCreateProject === user.userInfo.idUser &&
+                                    <button className={styles.checkUnCom} onClick={() => handleClickOpen(1, "Uncompleted")}>
+                                        <span className={styles.checkText}>Uncompleted</span>
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                }
+                            </div>
+                        </div>
                     </div>
                     {props.detail &&
                         <>
@@ -175,6 +240,27 @@ function TaskInfo(props) {
                     }
                 </div>
             </div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                maxWidth='sm'
+                fullWidth
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <span style={{ fontSize: '2.5rem' }}>Alert</span>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <span style={{ fontSize: '2rem' }}>Are you really want to edit this task status to {taskStatus} ?</span>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleAgree} variant="contained" size="large" fontSize='2rem' color='primary'>Agree</Button>
+                    <Button onClick={handleClose} autoFocus variant="outlined" size="large" fontSize='2rem'>Cancel</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

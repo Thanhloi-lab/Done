@@ -302,7 +302,7 @@ function MyProjectPage({ groupDetail, owner, ...props }) {
                                 {projects && projects.map((x, index) => {
                                     return (
                                         <tr key={x.idProject} style={{ cursor: 'pointer' }} onClick={(s, e) => {
-                                            s.stopPropagation();
+                                            s.stopPropagation(); 
                                             handleLinkProjectDetail(x.idProject, x.idGroup, x.createUser);
                                         }}>
                                             <td>{index + 1}</td>

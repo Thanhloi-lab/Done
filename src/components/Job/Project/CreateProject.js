@@ -173,7 +173,7 @@ function CreateProject(props) {
                                     return (
                                         <div className={inputStyles.avatarWrapper} key={index}>
                                             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                                                <img src={`${API_URL}+${item.avatar}`} onError={handleErrorImg}
+                                                <img src={`${API_URL}/${item.avatar}`} onError={handleErrorImg}
                                                     alt={item.name} className={inputStyles.avatar}
                                                     onMouseEnter={() => handleMouseEnterAvatar("userEmail" + item.idUser)}
                                                     onMouseLeave={() => handleMouseLeaveAvatar("userEmail" + item.idUser)}

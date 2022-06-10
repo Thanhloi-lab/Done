@@ -43,6 +43,7 @@ function UpdateGroup(props) {
                     setGroupName(result.nameGroup);
                     getUserByGroupId(result.idGroup, user.userInfo.token)
                         .then((result1) => {
+                            //console.log(result1);
                             setMember(result1);
                             setUsers(result1);
                             setMemberDelete(result1);
@@ -137,6 +138,7 @@ function UpdateGroup(props) {
     }
 
     const handleMouseEnterAvatar = (id) => {
+        //console.log(image)
         const email = document.getElementById(id);
         email.setAttribute('style', 'visibility:visible;')
     }
@@ -310,7 +312,7 @@ function UpdateGroup(props) {
                                         return (
                                             <div className={inputStyles.avatarWrapper} key={index}>
                                                 <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                                                    <img src={`${API_URL}+${item.avatar}`} onError={handleErrorImg}
+                                                    <img src={`${API_URL}/${item.avatar}`} onError={handleErrorImg}
                                                         alt={item.name} className={inputStyles.avatar}
                                                         onMouseEnter={() => handleMouseEnterAvatar("userEmail" + item.idUser)}
                                                         onMouseLeave={() => handleMouseLeaveAvatar("userEmail" + item.idUser)}
