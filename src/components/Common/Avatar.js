@@ -27,6 +27,7 @@ const Avatar = ({ user, setToken }) => {
     }
 
     const handleRedirectChange = () => {
+        console.log(user)
         navigate('/change-password')
     }
 
@@ -45,9 +46,7 @@ const Avatar = ({ user, setToken }) => {
                 <li className="header__navbar-user-item">
                     <span onClick={() => handleRedirectChange()}>Change Password</span>
                 </li>
-                <li className="header__navbar-user-item">
-                    <span onClick={() => handleRedirectNotification()}>Notify</span>
-                </li>
+
                 <li className="header__navbar-user-item header__navbar-user-item--sapareate">
                     <span onClick={() => handleLogout()}>Log out</span>
                 </li>
