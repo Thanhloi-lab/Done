@@ -67,7 +67,7 @@ export async function editTask(data, token) {
 
 export async function updateStatus(data, token) {
     // Default options are marked with *
-    // console.log(data);
+    //console.log(data);
     const response = await fetch(`${API_URL}/api/Tasks/updateStatus`, {
         method: 'PUT', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin

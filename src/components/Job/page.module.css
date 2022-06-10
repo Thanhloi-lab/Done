@@ -319,7 +319,7 @@
 }
 
 
-.searchBtn, .checkBtn{
+.searchBtn, .checkBtn,.checkBug,.checkUnCom{
     position: relative;
     font-size: 2rem;
     /* margin: 0 0 50px 100px; */
@@ -354,6 +354,39 @@
     background: #00c070;
 }
 
+.checkBug{
+    color:black;
+    background: #ff8181d7;
+    outline: none;
+    border:none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+.checkBug:hover{
+    background: #930303;
+}
+
+.checkUnCom{
+    color:black;
+    background: #faf686d7;
+    outline: none;
+    border:none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+.checkUnCom:hover{
+    background: #f5e504;
+}
 
 .nonBoxShadow{
     box-shadow: none;
