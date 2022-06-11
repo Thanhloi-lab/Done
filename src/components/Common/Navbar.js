@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux'
 import NotificationSideBar from '../Job/Notification/Notification'
 
 
-function Navbar({setToken,messageStateParam,timeStamp}) {
-    console.log('navbar ' , messageStateParam);
+function Navbar({ setToken, messageStateParam, timeStamp }) {
+    console.log('navbar ', messageStateParam);
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
     const [showNoti, setShowNoti] = useState(false);
-    const [messageState, setMessageState] = useState (null);
+    const [messageState, setMessageState] = useState(null);
     const user = useSelector((state) => state.users.userInfo);
 
 
@@ -31,8 +31,8 @@ function Navbar({setToken,messageStateParam,timeStamp}) {
             setButton(true);
         }
     }
-    const showNotiBar =() => {
-        setMessageState(false) ;
+    const showNotiBar = () => {
+        setMessageState(false);
         setShowNoti(!showNoti);
     }
 
@@ -60,11 +60,7 @@ function Navbar({setToken,messageStateParam,timeStamp}) {
                             Home
                         </Link>
                     </li>
-                    <li className="nav-item">
-                        <Link to="/task" className="nav-links">
-                            Task
-                        </Link>
-                    </li>
+
                     <li className="nav-item">
                         <Link to={useSelector((state) => state.jobs.path)} className="nav-links" onClick={CloseMobileMenu}>
                             Jobs
@@ -76,26 +72,26 @@ function Navbar({setToken,messageStateParam,timeStamp}) {
                         </Link>
                     </li>
                     <li className="nav-item">
-                       
-                        <label  className="nav-links" htmlFor="input-notify" onClick={showNotiBar}>
-                        <i className="fa-solid fa-bells"></i>
+
+                        <label className="nav-links" htmlFor="input-notify" onClick={showNotiBar}>
+                            <i className="fa-solid fa-bells"></i>
                             {console.log('messageState ' + messageState)}
-                            {  
+                            {
                                 messageState === false ?
-                                <i className="fa-solid fa-bell"></i>
-                                :
-                                <i className="fa-solid fa-bell" style={{color: '#9d261d' }}></i>
+                                    <i className="fa-solid fa-bell"></i>
+                                    :
+                                    <i className="fa-solid fa-bell" style={{ color: '#9d261d' }}></i>
                             }
-                           
+
                         </label>
                     </li>
                 </ul>
                 {user.token && button && <Avatar setToken={setToken} user={user} />}
                 {!user.token && button && <Button buttonStyle='btn--outline'>SIGN IN</Button>}
             </div>
-            {showNoti === true ? <NotificationSideBar timeStamp={Date.now()}/> : null}
+            {showNoti === true ? <NotificationSideBar timeStamp={Date.now()} /> : null}
         </nav>
-         
+
     )
 }
 

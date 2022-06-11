@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from '../Common/Button';
 import './HeroSection.css';
-
+import { useNavigate } from 'react-router-dom';
 function HeroSection() {
+  let navigate = useNavigate();
   return (
     <div className='hero-container'>
       <video src='/videos/video-1.mp4' autoPlay loop muted />
@@ -13,16 +14,11 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
+          onClick={navigate("/job/")}
         >
           GET STARTED
         </Button>
-        <Button
-          className='btns'
-          buttonStyle='btn--primary'
-          buttonSize='btn--large'
-        >
-          WATCH TRAILER <i className='far fa-play-circle' />
-        </Button>
+
       </div>
     </div>
   );
