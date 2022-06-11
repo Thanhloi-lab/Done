@@ -1,17 +1,18 @@
 import react, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
-import { allTaskOfUser } from "../../apis/TaskApi";
-import  '../Home/Cards.css'
+import { allTaskOfUser } from '../../asset/js/API/TaskApi';
+import '../Home/Cards.css'
+import { useSelector } from "react-redux";
 
 const SummaryTaskChart = () => {
   const [data, setData] = useState([]);
   const [dataGroup, setDataGroup] = useState([]);
   const [options, setOptions] = useState(null);
   const [optionGroups, setOptionGroups] = useState(null);
+  const user = useSelector((state) => state.users);
 
   useEffect(() => {
-    var user = JSON.parse(localStorage.getItem("user"));
-    allTaskOfUser(user.idUser, user.token).then((rawData) => {
+    allTaskOfUser(user.userInfo.idUser, user.userInfo.token).then((rawData) => {
       console.log(rawData);
       const map = new Map();
       const mapGroup = new Map();
@@ -42,7 +43,7 @@ const SummaryTaskChart = () => {
     setOptions({ title: "Tổng quan trạng thái" });
     setOptionGroups({ title: "Tổng quan trạng Task" });
 
-    
+
   }, []);
   return (
     <ul className='cards__items'>

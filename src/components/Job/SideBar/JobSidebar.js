@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB, PROJECTS, MY_PROJECTS } from '../../../asset/js/constant'
+import { HOME_JOB, UNCOMPLETED_TAB, COMPLETED_TAB, BUG_TAB, GROUPS, MY_GROUP, EXPIRED_TAB, PROJECTS, MY_PROJECTS, CHART } from '../../../asset/js/constant'
 import './JobSidebar.css'
 import jobsSlice from '../jobsSlice'
 
@@ -64,19 +64,19 @@ function JobSidebar(props) {
                     </li>  */}
                     <li className={props.page === PROJECTS ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={PROJECTS} className="sideBar-link">
-                            <i className="fas fa-users-cog sidebar_icon"></i>
+                            <i class="fa-solid fa-file"></i>
                             PROJECTS
                         </Link>
                     </li>
                     <li className={props.page === MY_PROJECTS ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={MY_PROJECTS} className="sideBar-link">
-                            <i className="fas fa-users-cog sidebar_icon"></i>
+                            <i class="fa-solid fa-file-signature"></i>
                             MY PROJECTS
                         </Link>
                     </li>
                     <li className={props.page === GROUPS ? 'sideBar-item active' : 'sideBar-item'}>
                         <Link to={GROUPS} className="sideBar-link">
-                            <i className="fas fa-users sidebar_icon"></i>
+                            <i class="fa-solid fa-users"></i>
                             GROUPS
                         </Link>
                     </li>
@@ -84,6 +84,13 @@ function JobSidebar(props) {
                         <Link to={MY_GROUP} className="sideBar-link">
                             <i className="fas fa-users-cog sidebar_icon"></i>
                             MY GROUPS
+                        </Link>
+                    </li>
+
+                    <li className={props.page === CHART ? 'sideBar-item active' : 'sideBar-item'}>
+                        <Link to={CHART} className="sideBar-link">
+                            <i class="fa-solid fa-chart-line"></i>
+                            CHART
                         </Link>
                     </li>
 

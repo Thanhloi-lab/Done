@@ -43,7 +43,7 @@ import CreateTask from './Containers/Task/CreateTask';
 import UpdateTask from './Containers/Task/UpdateTask';
 import MyTask from './Containers/Task/MyTask';
 
-import ChartSummary from './Containers/Chart/ChartSummary'; 
+import ChartSummary from './Containers/Chart/ChartSummary';
 import MyMemberTask from './Containers/Task/MyMemberTask';
 import MyMemberProject from './Containers/Job/MyMemberProject';
 
@@ -126,12 +126,16 @@ function App() {
                     <Route path={constant.PROJECT_DETAIL} exact element={<MyTask />} />
                     <Route path={constant.CREATE_TASK} exact element={<CreateTask />} />
                     <Route path={constant.UPDATE_TASK} exact element={<UpdateTask />} />
+
+
+
+                    <Route path={constant.CHART} exact element={<ChartSummary />} />
                 </>
                 }
                 {/* error */}
                 <Route path='*' element={<ErrorPage />} />
             </Routes>
-         
+
             <Footer />
         </>
     );

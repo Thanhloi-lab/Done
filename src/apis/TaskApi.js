@@ -1,4 +1,4 @@
-import {API_URL} from '../asset/js/constant';
+import { API_URL } from '../asset/js/constant';
 
 export async function allTaskOfUser(id) {
     // let response = await fetch(`https://192.168.0.103:50003/api/Tasks/allTaskOf?Id=${id}`);

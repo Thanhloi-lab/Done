@@ -12,6 +12,7 @@ export const MY_GROUP = '/job/myGroups';
 export const UPDATE_GROUP = '/job/update-group/:id';
 export const CREATE_GROUP = '/job/create-group';
 export const GROUP_DETAIL = '/job/group/:id';
+export const CHART = '/job/chart';
 
 export const PROJECTS = '/job/Projects';
 export const MY_PROJECTS = '/job/myProjects';
